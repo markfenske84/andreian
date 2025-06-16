@@ -1,0 +1,14 @@
+._sidebar {
+  width: 100%;
+  max-width: calc(28vw - 2rem);
+  background-color: white;
+  position: sticky;
+  top: -1px;
+  padding: var(--container-gutter);
+  @include breakpoint('lg') {
+    max-width: 100%;
+  }
+
+  .widget {}
+
+}

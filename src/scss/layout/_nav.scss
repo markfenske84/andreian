@@ -1,0 +1,217 @@
+$submenu_width_offset: 200px;
+
+// Shared Styles
+.menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  // for footer - unclear why .menu gets applied to ul in header, but applied to wrapper div in footer... 
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  } // end footer specific
+  .menu-item {
+    &.menu-item-has-children {
+      position: relative;
+      padding-right: 1.5rem;
+
+      @include breakpoint('md') {
+        padding-right: 0;
+      }
+
+      .toggle-button {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 18px; // width of default icon, adjust as needed
+        padding: .25rem 0;
+        border: 0;
+        border-radius: 0;
+        background-color: transparent;
+        color: var(--color-primary);
+      }
+
+      .sub-menu {
+        display: none;
+        padding: .25rem 0;
+        margin: 0;
+        list-style: none;
+        width: $submenu_width_offset;
+        background-color: #ffffff;
+        position: absolute;
+
+        @include breakpoint('md') {
+          top: 0 !important;
+        }
+
+        &.show {
+          display: block;
+        }
+
+        li {
+          &.menu-item-has-children {
+            align-items: flex-start;
+
+            .toggle-button {
+              top: .2rem; 
+              right: .75rem;
+              
+              @include breakpoint('md') {
+                right: 0;
+              }
+
+            }
+            
+          }
+
+          a {
+            padding: .25rem 1rem;
+            display: inline-block;
+            white-space: wrap;
+            width: 100%;
+          }
+
+          .sub-menu {
+            top: -.25rem !important;
+            @include breakpoint('md') {top: 0 !important;}
+          }
+
+        }
+
+        @include breakpoint('md') {
+          padding: 0;
+          position: relative;
+          li a {padding: 0;}
+        }
+
+      }
+
+    }
+  }
+}
+
+
+// Isolated Styles 
+
+// Top Level
+.site-header {
+  ul.menu {
+    display: flex;
+    align-items: center;
+    position: relative;
+    z-index: 100;
+
+    > li.menu-item {
+      margin: 0 1rem;
+      padding-top: .5rem;
+      padding-bottom: .5rem;
+
+      > a {}
+
+      &.menu-item-has-children {
+        > .toggle-button {top: .4rem;}
+
+        &.open,
+        &:hover {
+          > .toggle-button {transform: rotate(180deg);}
+          > .sub-menu {display: block;}
+        } 
+
+        &:hover {
+          @include breakpoint('md') { 
+            > .sub-menu {display: none;}
+          }
+        }
+
+        // 2nd Level
+        > ul.sub-menu {
+
+          > li.menu-item {
+
+            > a {}
+
+            &.menu-item-has-children {
+
+              > .toggle-button {}
+
+              &.open,
+              &:hover {
+                > .toggle-button {transform: rotate(-90deg);}
+                > .sub-menu {display: block;}
+              }
+              
+              &:hover {
+                @include breakpoint('md') { 
+                  > .sub-menu {display: none;}
+                }
+              } 
+
+              // 3rd Level
+              > ul.sub-menu {
+                left: $submenu_width_offset;
+
+                > li.menu-item {
+                  > a {}
+                }
+                
+              }
+
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// CTA Menu Button Style
+._cta-button {
+  margin-right: 0 !important;
+  a {
+      border-color: var(--color-primary);
+      background-color: var(--color-primary);
+      margin: 0 !important;
+      @include button_default;
+      @include breakpoint('md') {margin-bottom: var(--container-gutter);}
+      &:hover, &:focus {}
+      &:active {}
+  } 
+}
+
+// Mobile Offcanvas Menus
+.mobile-offcanvas {
+
+  ul.menu {
+    margin-top: var(--container-gutter);
+    flex-direction: column;
+
+    > li.menu-item {
+      margin: 0;
+      &.menu-item-has-children {
+        &.open {
+          > .toggle-button {transform: rotate(180deg);}
+        } 
+
+        // 2nd Level
+        > ul.sub-menu > li.menu-item.menu-item-has-children.open .toggle-button {transform: rotate(180deg);}
+      }
+    }
+
+    .toggle-button {margin-left: auto;}
+
+    li.menu-item {
+
+      > .sub-menu {
+        width: 100%;
+      }
+
+    }
+  }
+
+  #cta-header-menu {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+  
+}

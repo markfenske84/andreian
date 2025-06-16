@@ -1,0 +1,1 @@
+console.log('WordPress Administration JS running..');

@@ -1,0 +1,22 @@
+{
+    "key": "ui_options_page_65c303a15801c",
+    "title": "Social Links",
+    "active": true,
+    "menu_order": 0,
+    "page_title": "Social Links",
+    "menu_slug": "social-links",
+    "parent_slug": "none",
+    "advanced_configuration": 1,
+    "icon_url": "dashicons-networking",
+    "menu_title": "",
+    "position": 30,
+    "redirect": 0,
+    "description": "Social link settings for the sites Social Links block",
+    "update_button": "Update",
+    "updated_message": "Options Updated",
+    "capability": "edit_posts",
+    "data_storage": "options",
+    "post_id": "",
+    "autoload": 0,
+    "modified": 1710184575
+}

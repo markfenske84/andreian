@@ -1,0 +1,120 @@
+._archive {
+  display: flex;
+  flex-direction: var(--blog-sidebar-pos);
+  gap: var(--container-gutter);
+  padding: var(--container-gutter) 0;
+
+  @include breakpoint('lg') {
+    flex-direction: column;
+    height: unset;
+  }
+
+  ._posts {
+    flex: 1;
+
+    ._inner {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--container-gutter);
+      // on small screens change to one column
+      @include breakpoint('lg') {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    .post {
+      .article-image {
+        a {
+          display: block;
+
+          img {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+          }
+
+        }
+
+      }
+      .article-content {
+        padding: var(--container-gutter) 0;
+        .entry-header {
+          .title {margin-bottom: calc(var(--container-gutter) * .5);}
+        }
+        .entry-meta {
+          margin-bottom: var(--container-gutter);
+          small span {
+            margin-right: calc(var(--container-gutter) * .5);
+            border-right: 1px solid var(--color-primary);
+            padding-right: calc(var(--container-gutter) * .5);
+            line-height: 1;
+            &:last-child {
+              border-right: none;
+              padding-right: 0;
+            }
+          }
+        }
+      }
+    }
+
+    ._pagination {
+      padding: var(--container-gutter) 0;
+      text-align: center;
+      ul.page-numbers {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        gap: calc(var(--container-gutter) * .5);
+        li {
+          display: inline-block;
+          // Style the individual page links / numbers to look like buttons
+          a,
+          span {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 2.5rem;
+            padding: .5em .875em;
+            font-size: 1rem;
+            line-height: 1;
+            border: 1px solid var(--color-border, currentColor);
+            border-radius: .25rem;
+            background-color: var(--color-background, transparent);
+            color: currentColor;
+            text-decoration: none;
+            transition: background-color .2s ease, color .2s ease, border-color .2s ease;
+          }
+
+          // Hover & focus states for page links
+          a:hover,
+          a:focus {
+            background-color: var(--color-primary);
+            color: #fff;
+            border-color: var(--color-primary);
+          }
+
+          // Current / active page indicator
+          span.current,
+          a.current {
+            background-color: var(--color-primary);
+            color: #fff;
+            border-color: var(--color-primary);
+            cursor: default;
+          }
+        }
+        // Remove default underline for all page links outside the li scope (extra safety)
+        a.page-numbers {
+          text-decoration: none;
+        }
+      }
+      .prev, .next {}
+      .prev {}
+      .next {}
+    }
+  }
+
+}
+ 

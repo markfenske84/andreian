@@ -1,0 +1,173 @@
+{
+    "key": "group_65b48d5db8122",
+    "title": "Theme Scripts",
+    "fields": [
+        {
+            "key": "field_65d4044f21902",
+            "label": "",
+            "name": "",
+            "aria-label": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "These scripts will be used globally throughout the site in their respective positions.<br><br>Opening and closing script tags are <strong><em>not<\/em><\/strong> hardcoded for these fields, so these tags will need to be included for any code snippets, where applicable.",
+            "new_lines": "wpautop",
+            "esc_html": 0
+        },
+        {
+            "key": "field_65b48db834503",
+            "label": "Header",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_5fc95c23d02d9",
+            "label": "Header Scripts",
+            "name": "header_scripts",
+            "aria-label": "",
+            "type": "acfe_code_editor",
+            "instructions": "These scripts will be printed in the <strong>head<\/strong> element.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "mode": "javascript",
+            "lines": 1,
+            "indent_unit": 4,
+            "maxlength": "",
+            "rows": 20,
+            "max_rows": "",
+            "return_format": []
+        },
+        {
+            "key": "field_65b48dd134505",
+            "label": "Footer",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_5fc95c8ad02db",
+            "label": "Footer Scripts",
+            "name": "footer_scripts",
+            "aria-label": "",
+            "type": "acfe_code_editor",
+            "instructions": "These scripts will be printed at the bottom the <strong>footer<\/strong> element.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "mode": "javascript",
+            "lines": 1,
+            "indent_unit": 0,
+            "maxlength": "",
+            "rows": 20,
+            "max_rows": "",
+            "return_format": []
+        },
+        {
+            "key": "field_65b48dcc34504",
+            "label": "Body",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_5fc95c72d02da",
+            "label": "Body Scripts",
+            "name": "body_scripts",
+            "aria-label": "",
+            "type": "acfe_code_editor",
+            "instructions": "These scripts will be printed at the bottom the <strong>body<\/strong> element.  <em>This is the bottom most position a script can be injected<\/em>",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "mode": "javascript",
+            "lines": 1,
+            "indent_unit": 4,
+            "maxlength": "",
+            "rows": 20,
+            "max_rows": "",
+            "return_format": []
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "theme-scripts"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "acf_after_title",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "These scripts will be used globally throughout the site in their respect positions.  Note that opening and closing script tags are <strong><em>not<\/em><\/strong> hardcoded for these fields, the opening and closing script tag will need to be included for any code snippets where applicable.",
+    "show_in_rest": 0,
+    "acfe_display_title": "",
+    "acfe_autosync": [
+        "json"
+    ],
+    "acfe_meta": "",
+    "acfe_note": "",
+    "acfe_form": 0,
+    "modified": 1708393723
+}

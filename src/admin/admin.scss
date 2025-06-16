@@ -1,0 +1,51 @@
+#adminmenu a.company-logo{
+    display: block;
+    // background: url(../../assets/images/logo.png) no-repeat center center;
+}
+
+#adminmenu {}
+
+body.login {
+    background: rgb(22,34,42);
+    background: linear-gradient(0deg, rgba(22,34,42,1) 0%, rgb(28, 28, 28) 100%);
+}
+
+body.login h1 a {
+    
+}
+
+body.login form {
+
+}
+
+.login.wp-core-ui .button-primary {
+
+}
+
+.login.wp-core-ui .button-primary.focus, .login.wp-core-ui .button-primary.hover, .login.wp-core-ui .button-primary:focus, .login.wp-core-ui .button-primary:hover {
+
+}
+
+body.login #login_error, body.login .message {
+
+}
+
+body.login #backtoblog a:hover, body.login #nav a:hover, body.login h1 a:hover, body.login #backtoblog a:focus, body.login #nav a:focus, body.login h1 a:focus {
+}
+
+body.login label {
+}
+body.login form .input {
+
+}
+
+body.login #wp-auth-check {
+}
+
+#login {
+    padding: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}

@@ -1,0 +1,41 @@
+@charset 'UTF-8';
+
+// 1. Configuration and helpers
+@import
+  'abstracts/variables',
+  'abstracts/functions',
+  'abstracts/mixins';
+
+// 2. Vendors
+@import
+  'vendors/wordpress',
+  'vendors/gravity-forms',
+  'vendors/normalize';
+
+// 3. Base stuff
+@import
+  'base/animations',
+  'base/elements',
+  'base/typography', 
+  'base/utilities';
+
+// 4. Layout-related sections
+@import
+  'layout/header',
+  'layout/footer',
+  'layout/nav',
+  'layout/sidebar';
+
+// 5. Components 
+@import
+  'components/accessibility',
+  'components/announcement-bar',
+  'components/masthead',
+  'components/svg';
+
+// 6. Page-specific styles
+@import
+  'pages/404',
+  'pages/front-page',
+  'pages/index',
+  'pages/singular'; 

@@ -1,0 +1,28 @@
+.site-footer {
+  background-color: #fbfbfb;
+  ._inner {
+    padding-top: var(--container-gutter);
+    padding-bottom: var(--container-gutter);
+    @include breakpoint('lg') {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+  }
+  .footer-col {
+    padding-top: var(--container-gutter);
+    padding-bottom: var(--container-gutter);
+    &.-logo {
+      .site-logo {
+      }
+    }
+    &.-links {}
+    &.-contact {}
+  }
+}
+
+.footer-bottom {
+  padding-top: .5rem;
+  padding-bottom: .5rem;
+  font-size: 80%;
+}

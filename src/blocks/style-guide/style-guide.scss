@@ -1,0 +1,20 @@
+.style-guide {
+	padding: 2rem 0;
+	._flex {
+		@include breakpoint('md') {flex-direction: column;}
+	}
+}
+
+.color-swatches {
+	display: flex;
+	flex-wrap: wrap;
+	.swatch {
+		width: 200px;
+		height: 200px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: #fff;
+		margin: 0 1rem 1rem 0;
+	}
+}

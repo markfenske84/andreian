@@ -1,0 +1,27 @@
+# Set the variables as Bitbucket env vars
+# Go to the repo settings > Pipelines > Deployments > Variables
+
+image: andthensome/docker-node-rsync
+
+pipelines:
+  branches:
+    master:
+      - step:
+          name: Production deployment
+          deployment: production # This selects the production variables
+          caches:
+            - node
+          script:
+            - npm install
+            - npm run-script compile
+            - if [[ -n "$USER" && -n "$HOST" && -n "$FOLDER" ]]; then rsync -az --stats -e "ssh -p $PORT" --exclude='.git' --exclude='node_modules' --exclude='src/admin' --exclude='src/js' --exclude='src/scss' --owner --group --chown=$USER:$USER . $USER@$HOST:$FOLDER; fi
+    staging:
+      - step:
+          name: Staging deployment
+          deployment: staging # This selects the development variables
+          caches:
+            - node
+          script:
+            - npm install
+            - npm run-script compile
+            - if [[ -n "$USER" && -n "$HOST" && -n "$FOLDER" ]]; then rsync -az --stats -e "ssh -p $PORT" --exclude='.git' --exclude='node_modules' --exclude='src/admin' --exclude='src/js' --exclude='src/scss' --owner --group --chown=$USER:$USER . $USER@$HOST:$FOLDER; fi

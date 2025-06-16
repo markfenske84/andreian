@@ -1,0 +1,47 @@
+.accordions {
+    .accordion {
+        ._summary {
+            position: relative;
+            display: flex;
+            padding: var(--container-gutter);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            &::after {
+                content: 'expand +';
+                position: relative;
+                display: inline-block;
+                margin-left: auto;
+                padding-left: var(--container-gutter);
+                width: 100%;
+                max-width: 91px; // adjust this to the width of the ::after content
+                text-align: right;
+                @include breakpoint('lg') {
+                    content: '+';
+                }
+            }
+        }
+        ._inner {
+            padding: var(--container-gutter);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-top: 0;
+            background-color: white;
+        }
+
+         &[open] {
+            ._summary {
+                border-bottom: 0;
+                background-color: white;
+                &::after {
+                    content: 'collapse -';
+                    @include breakpoint('lg') {
+                        content: '-'; 
+                    }
+                }
+            }
+            ._inner {}
+        }
+
+        &:hover, &:focus, &[open] {
+            ._summary {}
+        }
+    }
+}

@@ -1,0 +1,38 @@
+/*-------------------------------------
+Gravity Form CSS Scaffolding
+-------------------------------------*/
+
+.gform_wrapper {
+    
+    form {
+        .gform_heading {
+            .gform_title {}
+            .gform_description {}
+        }
+        .gform_body {
+            .gform_fields {
+                .gfield {
+                    .gfield_label {
+                        .gfield_required {}
+                    }
+                    .ginput_container {
+                        input, textarea, select {}
+                        input {}
+                        textarea {}
+                        select {}
+                    }
+                }
+            }
+        }
+    }
+
+    .gform_footer {
+        .gform_button {
+            &:hover, &:focus, &:active {}
+            &:hover, &:focus {}
+            &:active {}
+        }
+    }
+    // Add unique mofifiers for specific forms below here by targetting their unique ID...
+    // &#gform_wrapper_1 {}
+}

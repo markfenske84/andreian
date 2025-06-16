@@ -1,0 +1,10 @@
+{
+	"browserSyncOptions": {
+		"proxy": "starter-theme.local/",
+		"notify": false,
+		"files": ["./dist/css/*.min.css", "./dist/js/*.min.js", "./**/*.php"]
+	},
+	"paths": {
+		"src": "./src"
+	}
+}

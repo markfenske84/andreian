@@ -1,0 +1,16 @@
+.logo-carousel-section {
+    .swiper-slide, .logo {
+        height: auto;
+        padding: var(--container-gutter) 2vw;
+        @include breakpoint('md') {
+            padding: var(--container-gutter);
+        }
+        img {
+            width: 100%;
+            max-width: 200px;
+            height: 50%;
+            object-fit: contain;
+            &.grayscale {filter: grayscale(100%);}
+        }
+    }
+}

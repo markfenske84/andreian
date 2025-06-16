@@ -1,0 +1,114 @@
+// body element
+body.mobile-offcanvas-open {
+  &::before {
+    opacity: 1;
+    pointer-events: all;
+  }
+}
+
+.site-header {
+  position: relative; // fallback
+  z-index: 2;
+  &.-position-relative {position: relative;}
+  &.-position-absolute {position: absolute;}
+  &.-position-fixed {position: fixed;}
+  &.-position-absolute,
+  &.-position-fixed {
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 19;
+  }
+  
+  > ._inner {
+    padding-top: var(--container-gutter);
+    padding-bottom: var(--container-gutter);
+  }
+}
+
+
+.site-logo {
+  display: inline-block;
+  margin-right: var(--container-gutter);
+}
+
+.header-col {
+  &.-logo {margin-right: auto;}
+  &.-desktop-navigation {
+    // menu styles global
+    .menu {}
+    // specific menu styles
+    // main menu
+    .menu-main_menu-container {
+    }
+    #main-header-menu {
+    }
+    // cta menu
+    #cta-header-menu {
+    }
+  }
+  &.-mobile-navigation {}
+}
+
+
+// Mobile Styles
+
+// Open and Close Offcanvas Toggles
+.mobile-offcanvas-toggle {
+  border: 0;
+  border-radius: 0;
+  background-color: transparent;
+  padding: 0;
+  position: relative;
+  display: block;
+  .line-bar {
+    margin: .5rem 0;
+    display: block;
+    width: 36px;
+    height: 3px;
+    border-radius: 10px;
+    background-color: var(--color-text);
+  }
+
+  // Close
+  &.-close {
+    margin-left: auto;
+    transform: scale(.6) translateX(10px);
+    .line-bar {
+      &:nth-child(1) {
+        transform: rotate(45deg) translate(0px, 0px);
+      }
+      &:nth-child(2) {
+        transform: rotate(-45deg) translate(7px, -8px);
+      }
+    }
+  }
+}
+
+// Offcanvas Menu
+.mobile-offcanvas {
+  position: fixed;
+  z-index: 21;
+  top: 0;
+  bottom: 0;
+  right: -400px;
+  width: 100%;
+  max-width: 400px;
+  height: 100%;
+  background-color: #ffffff;
+  padding: var(--container-gutter);
+  transition: right .3s ease-in-out;
+  &.open {
+    right: 0;
+  }
+  .site-logo {
+    margin: var(--container-gutter) auto;
+  }
+}
+
+.logged-in .mobile-offcanvas {
+  top: 32px;
+  @media screen and (max-width: 782px) {
+    top: 46px;
+  }
+}
