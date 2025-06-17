@@ -34,3 +34,27 @@ foreach ($layout_option as $option_name => $option_label) {
 
     $wp_customize->add_control($option_name, $control_args);
 }
+
+/**
+ * Mobile Menu Layout (dropdown vs slide-in panels)
+ */
+
+// Register the setting with safe default.
+$wp_customize->add_setting( 'mobile_menu_layout', array(
+    'default'           => 'dropdown',
+    'sanitize_callback' => function ( $value ) {
+        // Only allow the two expected values.
+        return in_array( $value, array( 'dropdown', 'panel' ), true ) ? $value : 'dropdown';
+    },
+) );
+
+// Add the control to choose layout.
+$wp_customize->add_control( 'mobile_menu_layout', array(
+    'label'   => __( 'Mobile Menu Layout', 'krypton' ),
+    'section' => 'layout_settings_section',
+    'type'    => 'select',
+    'choices' => array(
+        'dropdown' => __( 'Expansion Dropdowns', 'krypton' ),
+        'panel'    => __( 'Slide-in Panels', 'krypton' ),
+    ),
+) );

@@ -180,7 +180,11 @@ $submenu_width_offset: 200px;
 }
 
 // Mobile Offcanvas Menus
-.mobile-offcanvas {
+// -------------------------------------------------
+// Off-canvas menu – default dropdown layout
+// -------------------------------------------------
+
+body:not(.mobile-menu-layout-panel) .mobile-offcanvas {
 
   ul.menu {
     margin-top: var(--container-gutter);
@@ -189,6 +193,74 @@ $submenu_width_offset: 200px;
     > li.menu-item {
       margin: 0;
       &.menu-item-has-children {
+        display: block; // revert to block so the arrow stays absolute
+        align-items: flex-start;
+
+        > a {
+          flex: none;
+          width: 100%;
+        }
+
+        > .toggle-button {
+          position: absolute; // keep arrow overlaying link
+          margin-left: 0;
+        }
+
+        &.open {
+          > .toggle-button {
+            transform: rotate(180deg); // arrow up when expanded
+          }
+        }
+
+        // Make any dropdown submenu fill the panel width
+        > .sub-menu {
+          width: 100%;
+          position: relative; // stack beneath parent link
+          left: 0;
+        }
+      }
+    }
+
+    .toggle-button {margin-left: 0;} // no automatic push right
+  }
+
+  #cta-header-menu {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  // Flip arrow icon for ALL levels when menu item is open
+  .menu-item-has-children.open > .toggle-button {
+    transform: rotate(180deg);
+  }
+}
+
+// -------------------------------------------------
+// Off-canvas menu – panel layout (right-aligned arrows)
+// -------------------------------------------------
+
+.mobile-menu-layout-panel .mobile-offcanvas {
+ 
+  ul.menu {
+    margin-top: var(--container-gutter);
+    flex-direction: column;
+
+    > li.menu-item {
+      margin: 0;
+      &.menu-item-has-children {
+        display: flex;
+        align-items: center;
+
+        > a {
+          flex: 1 1 auto;
+          width: auto;
+        }
+
+        > .toggle-button {
+          position: static;
+          margin-left: auto;
+        }
+
         &.open {
           > .toggle-button {transform: rotate(180deg);}
         } 
@@ -213,5 +285,114 @@ $submenu_width_offset: 200px;
     display: flex;
     flex-direction: column-reverse;
   }
-  
+}
+
+// Slide-in Panel mode ////////////////////////////////////////////////////////
+
+.mobile-menu-layout-panel {
+  .mobile-slide-panel {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    max-width: 400px; // same width as off-canvas
+    background-color: #fff;
+    transform: translateX(100%);
+    transition: transform .3s ease-in-out;
+    z-index: 22; // above off-canvas
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+
+    &.open {
+      transform: translateX(0);
+    }
+
+    &__header {
+      display: flex;
+      align-items: center;
+      padding: var(--container-gutter);
+      border-bottom: 1px solid #e5e5e5;
+    }
+
+    &__back {
+      border: 0;
+      background: transparent;
+      margin-right: var(--container-gutter);
+      font-size: 1.25rem;
+      color: var(--color-primary);
+      display: flex;
+      align-items: center;
+
+      .text {
+        font-size: 1rem;
+        margin-left: .25rem;
+      }
+    }
+
+    &__title {
+      font-weight: 600;
+      font-size: 1rem;
+      margin-left: auto; // push to right
+    }
+
+    // Reset list styles for any ul inside panel (menu or sub-menu)
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: var(--container-gutter);
+      .sub-menu {display: none;}
+
+      /* Ensure right-aligned arrows for submenus inside panels */
+      li.menu-item {
+        &.menu-item-has-children {
+          display: flex;
+          align-items: center;
+
+          > a {
+            flex: 1 1 auto;
+            width: auto;
+          }
+
+          > .toggle-button {
+            position: static;
+            margin-left: auto;
+          }
+        }
+      }
+    }
+
+    ul.menu {
+      flex: 1 1 auto;
+      padding: var(--container-gutter) 0;
+      display: flex;
+      flex-direction: column;
+
+      li.menu-item {
+        &.menu-item-has-children {
+          display: flex;
+          align-items: center;
+
+          > a {
+            flex: 1 1 auto;
+            width: auto;
+          }
+
+          > .toggle-button {
+            position: static;
+            margin-left: auto;
+          }
+        }
+        margin: 0;
+        padding: 0;
+        & > a {
+          padding: .75rem var(--container-gutter);
+          display: block;
+          width: 100%;
+          border-bottom: 1px solid #f0f0f0;
+        }
+      }
+    }
+  }
 }

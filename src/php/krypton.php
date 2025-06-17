@@ -82,7 +82,8 @@ add_action('enqueue_block_editor_assets', 'enqueue_gutenberg_styles');
  */
 function krypton_localize() {
   wp_localize_script( 'theme', 'krypton_localize', array(
-    'ajaxurl' => site_url() . '/wp-admin/admin-ajax.php', // WordPress AJAX
+    'ajaxurl'            => site_url() . '/wp-admin/admin-ajax.php', // WordPress AJAX
+    'mobile_menu_layout' => get_theme_mod( 'mobile_menu_layout', 'dropdown' ),
   ));
 }
 
@@ -113,3 +114,14 @@ include_once 'functions/quick-featured-images.php';
 include_once 'functions/add-blog-slug.php';
 include_once 'functions/slugify.php';
 include_once 'functions/svgs.php';
+
+/**
+ * Append a body class based on the Mobile Menu Layout selected in the Customizer.
+ * This makes it easy to scope CSS/JS behavior for each layout option.
+ */
+function krypton_mobile_menu_layout_body_class( $classes ) {
+  $layout = get_theme_mod( 'mobile_menu_layout', 'dropdown' ); // 'dropdown' or 'panel'
+  $classes[] = 'mobile-menu-layout-' . sanitize_html_class( $layout );
+  return $classes;
+}
+add_filter( 'body_class', 'krypton_mobile_menu_layout_body_class' );
