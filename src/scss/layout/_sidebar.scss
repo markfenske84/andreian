@@ -1,6 +1,6 @@
 ._sidebar {
   width: 100%;
-  max-width: calc(28vw - 2rem);
+  max-width: calc(33.3% - var(--container-gutter));
   background-color: white;
   position: sticky;
   top: -1px;
