@@ -21,7 +21,7 @@ html {
   
   // Shiv for logged in users who see the admin bar, uncomment for fixed or absolute positioned headers
   .logged-in {
-    .site-header, .mobile-offcanvas {
+    .site-header {
       // top: 32px; // absolute / fixed
       @media (max-width: 782px) {
         padding-top: 46px; // relative / static
