@@ -38,6 +38,9 @@
             <button 
                 class="_tile" 
                 data-img-url="<?= $img_url; ?>"
+                data-img-alt="<?= $img_alt ?? 'Image'; ?>"
+                data-img-caption="<?= $image['caption']; ?>"
+                data-img-description="<?= $image['description']; ?>"
                 role="button" aria-label="<?= $img_alt ?? 'Image'; ?>">
 
                 <img 
@@ -67,11 +70,17 @@
 
     <div class="_inner" role="document">
 
+        <button class="_prev" aria-label="Previous image"></button>
+
         <img 
             src="" 
             alt="" 
             role="img" 
             aria-label="Displayed image">
+
+        <button class="_next" aria-label="Next image"></button>
+
+        <p class="_caption" aria-live="polite"></p>
 
     </div>
 

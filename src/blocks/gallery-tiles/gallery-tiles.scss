@@ -71,12 +71,44 @@
         width: 90%;
         height: 90%;
         padding: var(--container-gutter);
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
         img {
             display: block;
             object-fit: contain;
-            width: 100%;
-            height: 100%;
+            max-width: 100%;
+            max-height: 100%;
         }
+        ._caption {
+            margin-top: 0.75rem;
+            font-size: 0.875rem;
+            color: white;
+            text-align: center;
+        }
+        ._prev,
+        ._next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            line-height: 1;
+            z-index: 5;
+        }
+        ._prev {left: var(--container-gutter);}
+        ._next {right: var(--container-gutter);}
+        ._prev::before {content: '\2039';}
+        ._next::before {content: '\203A';}
     }
 }
 

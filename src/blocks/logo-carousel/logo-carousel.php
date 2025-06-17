@@ -38,6 +38,10 @@
 
                 <? foreach($logos as $logo) { ?>
 
+                    <? // Determine if description contains a valid URL to use as a link
+                       $logo_link = (!empty($logo['description']) && filter_var($logo['description'], FILTER_VALIDATE_URL)) ? $logo['description'] : false;
+                    ?>
+
                     <div 
                         class="
                             swiper-slide 
@@ -46,6 +50,10 @@
                             -align-center" 
                         data-swiper-autoplay="<?= $slide_speed; ?>">
 
+                        <? if($logo_link) { ?>
+                            <a href="<?= esc_url($logo_link); ?>" target="_blank" rel="noopener">
+                        <? } ?>
+
                         <img 
                             <? if($grayscale_logos == 'true') { ?>
                             class="grayscale"
@@ -53,6 +61,10 @@
                             src="<?= $logo['url']; ?>" 
                             alt="<?= $logo['alt']; ?>" 
                             loading="lazy">
+
+                        <? if($logo_link) { ?>
+                            </a>
+                        <? } ?>
 
                     </div>
 
@@ -74,7 +86,14 @@
 
             <? foreach($logos as $logo) { ?>
 
+                <? // Determine if description contains a valid URL to use as a link
+                   $logo_link = (!empty($logo['description']) && filter_var($logo['description'], FILTER_VALIDATE_URL)) ? $logo['description'] : false;
+                ?>
+
                 <div class="logo">
+                    <? if($logo_link) { ?>
+                        <a href="<?= esc_url($logo_link); ?>" target="_blank" rel="noopener">
+                    <? } ?>
                     <img 
                         <? if($grayscale_logos == 'true') { ?>
                         class="grayscale"
@@ -82,6 +101,9 @@
                         src="<?= $logo['url']; ?>" 
                         alt="<?= $logo['alt']; ?>" 
                         loading="lazy">
+                    <? if($logo_link) { ?>
+                        </a>
+                    <? } ?>
                 </div>
 
             <? } ?>
