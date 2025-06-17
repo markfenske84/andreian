@@ -61,16 +61,22 @@
     ._pagination {
       padding: var(--container-gutter) 0;
       text-align: center;
+      // WordPress paginate_links() is forced to `type: list`, so we only need
+      // to style the unified <ul class="page-numbers">…<li>…</li></ul> output.
+      // ------------------------------------------------------------------
       ul.page-numbers {
-        padding: 0;
         margin: 0;
+        padding: 0;
         list-style: none;
+
         display: flex;
         justify-content: center;
         gap: calc(var(--container-gutter) * .5);
+
         li {
           display: inline-block;
-          // Style the individual page links / numbers to look like buttons
+
+          // --- Link / number styles --------------------------------------
           a,
           span {
             display: inline-flex;
@@ -88,7 +94,7 @@
             transition: background-color .2s ease, color .2s ease, border-color .2s ease;
           }
 
-          // Hover & focus states for page links
+          // hover / focus
           a:hover,
           a:focus {
             background-color: var(--color-primary);
@@ -96,7 +102,8 @@
             border-color: var(--color-primary);
           }
 
-          // Current / active page indicator
+          // current page
+          &.current span,
           span.current,
           a.current {
             background-color: var(--color-primary);
@@ -105,14 +112,12 @@
             cursor: default;
           }
         }
-        // Remove default underline for all page links outside the li scope (extra safety)
-        a.page-numbers {
-          text-decoration: none;
-        }
       }
-      .prev, .next {}
-      .prev {}
-      .next {}
+
+      // Remove default underline outside of the scoped li (extra safety)
+      .page-numbers {
+        text-decoration: none;
+      }
     }
   }
 

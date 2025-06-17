@@ -18,8 +18,8 @@ get_template_part('src/components/inner-masthead');
             $search_query = get_search_query();
             $category = get_query_var('category_name');
 
-            // Set up the search query
-            $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+            // Figure out current page number (works for /page/2/ as well as ?paged=2)
+            $paged = max( 1, get_query_var('paged'), get_query_var('page') );
             $args = array(
                 's' => $search_query,
                 'post_type' => 'post',
@@ -55,21 +55,27 @@ get_template_part('src/components/inner-masthead');
                 <?php
                 global $wp_rewrite;
                 
-                $pagination = array(
-                    'base' => @add_query_arg('paged','%#%'),
-                    'format' => '',
-                    'total' => $query->max_num_pages,
-                    'current' => $paged,
-                    'prev_text' => __('<i class="fa-solid fa-angles-left"></i>', 'arabesque'),
-                    'next_text' => __('<i class="fa-solid fa-angles-right"></i>', 'arabesque'),
-                    'type' => 'list',
-                    'end_size' => 3,
-                    'mid_size' => 3
-                );
-                
-                if($wp_rewrite->using_permalinks()) {
-                    $pagination['base'] = user_trailingslashit(trailingslashit(remove_query_arg('s', get_pagenum_link(1))) . 'page/%#%/', 'paged');
+                $base = remove_query_arg( array( 's', 'paged' ), get_pagenum_link( 1 ) );
+
+                if ( $wp_rewrite->using_permalinks() ) {
+                    $base = trailingslashit( $base ) . 'page/%#%/';
+                    $base = user_trailingslashit( $base, 'paged' );
+                } else {
+                    $base = add_query_arg( 'paged', '%#%', $base );
                 }
+
+                $pagination = array(
+                    'base'       => $base,
+                    'format'     => '',
+                    'total'      => $query->max_num_pages,
+                    'current'    => max( 1, $paged ),
+                    'prev_text'  => __('<i class="fa-solid fa-angles-left"></i>', 'arabesque'),
+                    'next_text'  => __('<i class="fa-solid fa-angles-right"></i>', 'arabesque'),
+                    'type'       => 'list',
+                    'end_size'   => 3,
+                    'mid_size'   => 3,
+                    'add_args'   => array( 's' => $search_query ), // Add search query to pagination links
+                );
                 
                 echo paginate_links($pagination);
                 ?>

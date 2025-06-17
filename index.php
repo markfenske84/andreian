@@ -46,16 +46,31 @@ get_template_part('src/components/inner-masthead');
 
 		</div>
 
-		<? 
-		// Pagination
-		echo '<div class="_pagination">';
-		echo paginate_links(array(
-			'total'     => $query->max_num_pages,
-			'current'   => max(1, $paged),
-			'prev_text' => __('<i class="fa-solid fa-angles-left"></i>', 'krypton'),
-			'next_text' => __('<i class="fa-solid fa-angles-right"></i>', 'krypton'),
-		));
-		echo '</div>'; ?>
+		<? if ($query->have_posts()) : ?>
+			<div class="_pagination">
+				<?php
+				global $wp_rewrite;
+				
+				$pagination = array(
+					'base'       => @add_query_arg('paged','%#%'),
+					'format'     => '',
+					'total'      => $query->max_num_pages,
+					'current'    => $paged,
+					'prev_text'  => __('<i class="fa-solid fa-angles-left"></i>', 'arabesque'),
+					'next_text'  => __('<i class="fa-solid fa-angles-right"></i>', 'arabesque'),
+					'type'       => 'list',
+					'end_size'   => 3,
+					'mid_size'   => 3
+				);
+				
+				if($wp_rewrite->using_permalinks()) {
+					$pagination['base'] = user_trailingslashit(trailingslashit(remove_query_arg('s', get_pagenum_link(1))) . 'page/%#%/', 'paged');
+				}
+				
+				echo paginate_links($pagination);
+				?>
+			</div>
+		<? endif; ?>
 		
 
     </div>

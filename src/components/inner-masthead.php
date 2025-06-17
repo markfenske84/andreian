@@ -12,10 +12,15 @@ if ( ! is_home() ) {
 		$masthead_toggle    = false;
 		$custom_page_title  = '';
 	}
+
+	// Ensure single blog posts always show a masthead with the post title even if no ACF field is set.
+	if ( is_single() && get_post_type() === 'post' ) {
+		$masthead_toggle = true;
+	}
 }
 
 // Early output masthead for archive pages (categories, tags, authors, dates, custom taxonomies, etc.)
-if ( is_archive() ) {
+if ( is_archive() && ! is_home() ) {
 	echo '<section class="masthead _container -max-width-100">';
 	echo '<div class="-inner">';
 	echo '<h1>' . get_the_archive_title() . '</h1>';

@@ -5,7 +5,7 @@
  */
 
 get_header();
-get_template_part('src/components/inner-masthead') 
+get_template_part('src/components/inner-masthead');
 ?>
 
 <div id="singular-template" class="_container">

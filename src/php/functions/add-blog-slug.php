@@ -45,6 +45,11 @@ add_filter('rewrite_rules_array', 'add_blog_rewrite_rules');
 
 // Fix pagination links to use /blog/ prefix for main blog only
 function fix_pagination_base($link) {
+    // Don't modify search pagination links
+    if (strpos($link, '?s=') !== false) {
+        return $link;
+    }
+    
     // Only fix non-category pagination links
     if (strpos($link, '/page/') !== false && 
         strpos($link, '/blog/') === false && 
@@ -58,6 +63,11 @@ add_filter('paginate_links', 'fix_pagination_base');
 // Set default blog query
 function set_blog_query($query) {
     if (!is_admin() && $query->is_main_query()) {
+        // Don't modify search queries
+        if ($query->is_search()) {
+            return $query;
+        }
+        
         // Only modify the main /blog/ URL - include paged URLs too
         if (isset($_SERVER['REQUEST_URI'])) {
             // Main blog pages
