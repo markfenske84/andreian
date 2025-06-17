@@ -111,6 +111,14 @@ document.addEventListener("DOMContentLoaded", function() {
         }, { once: true });
     }
 
+    // Utility: close every open slide-in panel (used when the whole off-canvas is being dismissed)
+    function closeAllPanels() {
+        document.querySelectorAll('#mobile-offcanvas .mobile-slide-panel').forEach(panel => {
+            // If a transition is preferred, use closePanel helper; otherwise remove directly
+            closePanel(panel);
+        });
+    }
+
     function initNestedPanel(container) {
         const nestedMenuItems = container.querySelectorAll('.menu-item-has-children');
         nestedMenuItems.forEach(item => {
@@ -135,6 +143,11 @@ document.addEventListener("DOMContentLoaded", function() {
             const mobileOffcanvas = document.querySelector('#mobile-offcanvas');
             mobileOffcanvas.classList.toggle('open');
             document.body.classList.toggle('mobile-offcanvas-open');
+
+            // If the toggle action just closed the off-canvas, also make sure any slide-in panels are closed
+            if (!mobileOffcanvas.classList.contains('open')) {
+                closeAllPanels();
+            }
         });
     });
     // if clicking outside of the mobile offcanvas, close it
@@ -143,6 +156,9 @@ document.addEventListener("DOMContentLoaded", function() {
         if (event.target.closest('.mobile-offcanvas-toggle') === null && event.target.closest('#mobile-offcanvas') === null) {
             mobileOffcanvas.classList.remove('open');
             document.body.classList.remove('mobile-offcanvas-open');
+
+            // Also close any open slide-in panels when the off-canvas is dismissed by outside click
+            closeAllPanels();
         }
     });
 
