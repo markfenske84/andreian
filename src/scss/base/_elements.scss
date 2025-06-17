@@ -28,6 +28,9 @@ html {
         // top: 46px; // absolute / fixed
       }
     }
+    .mobile-slide-panel__header {
+      @media (max-width: 782px) {margin-top: 46px;}
+    }
   }
   
 }
