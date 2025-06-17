@@ -398,6 +398,12 @@ body:not(.mobile-menu-layout-panel) .mobile-offcanvas {
         }
       }
     }
+
+    // Ensure toggle buttons adopt theme color (iOS default is blue)
+    .toggle-button {
+      color: var(--color-primary);
+      -webkit-appearance: none; // override iOS default link style
+    }
   }
 }
 
