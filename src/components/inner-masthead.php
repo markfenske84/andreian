@@ -44,7 +44,12 @@ if ( is_search() ) {
 <?php } elseif ( is_page() || ( is_single() && get_post_type() === 'post' ) ) { ?>
 
 	<?php
-	$post_id           = get_the_ID();
+	$post_id = get_the_ID();
+
+	if ( chw_is_masthead_disabled( $post_id ) ) {
+		return;
+	}
+
 	$custom_page_title = chw_get_custom_page_title( $post_id );
 	$background        = chw_get_masthead_background( $post_id );
 	$globals           = chw_get_masthead_globals();

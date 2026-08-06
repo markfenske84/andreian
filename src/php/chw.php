@@ -229,7 +229,9 @@ function chw_preload_critical_assets() {
 		$blog_image = get_theme_mod( 'blog_masthead_image' );
 		$image_url  = $blog_image ? $blog_image : THEME_IMAGES . '/masthead-default.webp';
 	} elseif ( is_page() || ( is_single() && 'post' === get_post_type() ) ) {
-		$image_url = chw_get_masthead_background( get_the_ID() );
+		if ( ! chw_is_masthead_disabled( get_the_ID() ) ) {
+			$image_url = chw_get_masthead_background( get_the_ID() );
+		}
 	}
 
 	if ( $image_url ) {

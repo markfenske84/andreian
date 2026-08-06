@@ -292,6 +292,10 @@
 			return null;
 		}
 
+		if ( data.postType === 'page' && data.meta.masthead_disabled ) {
+			return createPortal( null, target );
+		}
+
 		return createPortal(
 			buildMasthead( data.meta, data.bg, data.title ),
 			target

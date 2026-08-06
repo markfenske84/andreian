@@ -291,6 +291,16 @@ function chw_register_masthead_meta() {
 			'sanitize_callback' => 'sanitize_text_field',
 			'auth_callback'     => $auth,
 		) );
+
+		if ( 'page' === $post_type ) {
+			register_post_meta( $post_type, 'masthead_disabled', array(
+				'type'              => 'boolean',
+				'single'            => true,
+				'show_in_rest'      => true,
+				'default'           => false,
+				'auth_callback'     => $auth,
+			) );
+		}
 	}
 }
 add_action( 'init', 'chw_register_masthead_meta' );
@@ -423,6 +433,24 @@ function chw_get_custom_page_title( $post_id = null ) {
 	}
 
 	return $custom_page_title;
+}
+
+/**
+ * Whether the masthead is disabled for a page.
+ *
+ * @param int|null $post_id Post ID.
+ * @return bool
+ */
+function chw_is_masthead_disabled( $post_id = null ) {
+	if ( ! $post_id ) {
+		$post_id = get_the_ID();
+	}
+
+	if ( ! $post_id || 'page' !== get_post_type( $post_id ) ) {
+		return false;
+	}
+
+	return (bool) get_post_meta( $post_id, 'masthead_disabled', true );
 }
 
 /**

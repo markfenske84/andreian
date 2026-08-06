@@ -426,7 +426,23 @@
 				onChange: function ( value ) {
 					setMeta( 'masthead_show_award_seal', value );
 				},
-			} )
+			} ),
+
+			postType === 'page'
+				? el(
+						Fragment,
+						null,
+						sectionHeading( __( 'Visibility', 'chw' ) ),
+						el( ToggleControl, {
+							label: __( 'Disable masthead', 'chw' ),
+							help: __( 'Hides the masthead on this page. Off by default for new pages.', 'chw' ),
+							checked: !! meta.masthead_disabled,
+							onChange: function ( value ) {
+								setMeta( 'masthead_disabled', value );
+							},
+						} )
+				  )
+				: null
 		);
 	};
 
