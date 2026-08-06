@@ -1,7 +1,7 @@
-<?
+<?php
 // add section for Announcement Bar
 $wp_customize->add_section('announcement_bar_section', array(
-    'title'    => __('Announcement Bar', 'krypton'),
+    'title'    => __('Announcement Bar', 'chw'),
     'priority' => 33, // Adjust priority as needed
 ));
 
@@ -12,33 +12,35 @@ $wp_customize->add_setting('announcement_bar_text', array(
 ));
 
 $wp_customize->add_control('announcement_bar_text', array(
-    'label'    => __('Announcement Bar Text', 'krypton'),
+    'label'    => __('Announcement Bar Text', 'chw'),
     'section'  => 'announcement_bar_section',
     'settings' => 'announcement_bar_text',
-    'description' => __('Enter the text for the announcement bar.', 'krypton'),
+    'description' => __('Enter the text for the announcement bar.', 'chw'),
     'type'     => 'textarea',
 ));
 
 // add colorpicker for announcement bar background color
 $wp_customize->add_setting('announcement_bar_background_color', array(
-    'default' => '#3498db',
+    'default'           => '#333333',
     'sanitize_callback' => 'sanitize_hex_color',
+    'transport'         => 'postMessage',
 ));
 
 $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'announcement_bar_background_color', array(
-    'label'    => __('Background Color', 'krypton'),
+    'label'    => __('Background Color', 'chw'),
     'section'  => 'announcement_bar_section',
     'settings' => 'announcement_bar_background_color',
 )));
 
 // add colorpicker for announcement bar text color
 $wp_customize->add_setting('announcement_bar_text_color', array(
-    'default' => '#ffffff',
+    'default'           => '#ffffff',
     'sanitize_callback' => 'sanitize_hex_color',
+    'transport'         => 'postMessage',
 ));
 
 $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'announcement_bar_text_color', array(
-    'label'    => __('Text Color', 'krypton'),
+    'label'    => __('Text Color', 'chw'),
     'section'  => 'announcement_bar_section',
     'settings' => 'announcement_bar_text_color',
 )));
@@ -67,18 +69,18 @@ $wp_customize->add_setting('announcement_bar_dismissal_reset', array(
 ));
 
 $wp_customize->add_control('announcement_bar_dismissal_reset', array(
-    'label'       => __('Dismissal Length', 'krypton'),
-    'description' => __('The amount of time the bar will be dismissed when the user closes it.', 'krypton'),
+    'label'       => __('Dismissal Length', 'chw'),
+    'description' => __('The amount of time the bar will be dismissed when the user closes it.', 'chw'),
     'section'     => 'announcement_bar_section',
     'settings'    => 'announcement_bar_dismissal_reset',
     'type'        => 'select',
     'choices'     => array(
-        // '1 minute'   => __('1 Minute [TESTING]', 'krypton'),
-        '1 hour'   => __('1 Hour', 'krypton'),
-        '1 day'    => __('1 Day', 'krypton'),
-        '1 week'   => __('1 Week', 'krypton'),
-        '1 month'  => __('1 Month', 'krypton'),
-        '1 year'   => __('1 Year', 'krypton'),
-        'forever'  => __('Forever', 'krypton'),
+        // '1 minute'   => __('1 Minute [TESTING]', 'chw'),
+        '1 hour'   => __('1 Hour', 'chw'),
+        '1 day'    => __('1 Day', 'chw'),
+        '1 week'   => __('1 Week', 'chw'),
+        '1 month'  => __('1 Month', 'chw'),
+        '1 year'   => __('1 Year', 'chw'),
+        'forever'  => __('Forever', 'chw'),
     ),
 ));

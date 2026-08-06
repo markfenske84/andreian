@@ -1,0 +1,169 @@
+// Shared patterns for section-style Gutenberg blocks (plans, steps, highlight-cards, etc.).
+
+$chw-card-border: color-mix(in oklab, #{$color-tertiary} 12%, white);
+
+@mixin chw-section-spacing {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+    @include breakpoint('md') {
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+    }
+}
+
+@mixin chw-section-heading {
+    margin: 1rem 0 0;
+    line-height: 1.2;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    font-size: clamp(1.75rem, 1.2rem + 2vw, 2.75rem);
+
+    .accent {
+        color: $color-primary;
+    }
+}
+
+@mixin chw-section-intro {
+    margin: 0.75rem 0 0;
+    line-height: 1.5;
+}
+
+@mixin chw-section-legal {
+    max-width: 50rem;
+    margin: 2rem auto 0;
+    font-size: 0.75rem;
+    line-height: 1.5;
+
+    a {
+        color: inherit;
+        text-decoration: underline;
+    }
+}
+
+@mixin chw-section-cta-buttons {
+    flex-wrap: wrap;
+    gap: 1rem;
+
+    ._button {
+        margin: 0;
+    }
+
+    @include breakpoint('md') {
+        margin-top: 2.5rem;
+    }
+}
+
+@mixin chw-grid-3-col($item-min: 22rem) {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    align-items: start;
+    gap: 1.5rem;
+
+    &[data-count='1'] {
+        grid-template-columns: minmax(0, $item-min);
+        justify-content: center;
+    }
+
+    &[data-count='2'] {
+        grid-template-columns: repeat(2, minmax(0, $item-min));
+        justify-content: center;
+    }
+
+    @include breakpoint('md') {
+        grid-template-columns: 100% !important;
+        gap: 1.5rem;
+    }
+}
+
+@mixin chw-card-surface {
+    background-color: #ffffff;
+    border-radius: 1rem;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05), inset 0 0 0 1px #{$chw-card-border};
+}
+
+@mixin chw-editor-add-button {
+    background-color: #ffffff;
+    color: $color-text;
+    border: 1px solid color-mix(in oklab, #{$color-tertiary} 18%, white);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+
+    &:hover:not(:disabled),
+    &:focus:not(:disabled) {
+        background-color: #ffffff;
+        color: $color-text;
+        border-color: color-mix(in oklab, #{$color-tertiary} 32%, white);
+    }
+}
+
+@mixin chw-section-editor-add {
+    display: flex;
+    justify-content: center;
+    margin: 1.5rem 0 0;
+
+    .components-button {
+        @include chw-editor-add-button;
+    }
+}
+
+@mixin chw-section-editor-actions {
+    display: flex;
+    justify-content: center;
+    gap: 0.125rem;
+    margin-top: 0.5rem;
+}
+
+@mixin chw-inline-svg-icon($size: 1.5rem) {
+    @include chw-svg-current-color;
+
+    svg {
+        width: $size;
+        height: $size;
+        object-fit: contain;
+    }
+}
+
+// Horizontal swipe row for mobile card carousels (stats-testimonials, awards, etc.).
+$chw-mobile-scroll-peek: min(20rem, 88%);
+
+@mixin chw-mobile-horizontal-scroll-track {
+    @include breakpoint('md') {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: stretch;
+        margin-inline-end: calc(-1 * var(--container-gutter));
+        overflow-x: auto;
+        overflow-y: hidden;
+        scroll-snap-type: x mandatory;
+        scroll-padding-inline-end: var(--container-gutter);
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+
+        &::after {
+            content: '';
+            flex: 0 0 var(--container-gutter);
+            scroll-snap-align: none;
+        }
+
+        &[data-count='1'] {
+            display: block;
+            margin-inline-end: 0;
+            overflow: visible;
+
+            &::after {
+                content: none;
+            }
+        }
+    }
+}
+
+@mixin chw-mobile-horizontal-scroll-item {
+    @include breakpoint('md') {
+        flex: 0 0 $chw-mobile-scroll-peek;
+        scroll-snap-align: start;
+        scroll-snap-stop: always;
+    }
+}

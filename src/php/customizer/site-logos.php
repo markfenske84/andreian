@@ -1,4 +1,4 @@
-<? 
+<?php 
 // Logo
 $wp_customize->add_setting('custom_logo', array(
     'default'           => '',
@@ -6,7 +6,7 @@ $wp_customize->add_setting('custom_logo', array(
 ));
 
 $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'custom_logo', array(
-    'label'    => __('Main Logo', 'krypton'),
+    'label'    => __('Main Logo', 'chw'),
     'section'  => 'title_tagline',
     'settings' => 'custom_logo',
 )));
@@ -19,7 +19,7 @@ $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'custom
 // ));
 
 // $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'home_logo', array(
-//     'label'    => __('Home Logo', 'krypton'),
+//     'label'    => __('Home Logo', 'chw'),
 //     'section'  => 'title_tagline',
 //     'settings' => 'home_logo',
 // )));

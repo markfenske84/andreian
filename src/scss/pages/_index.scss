@@ -1,66 +1,98 @@
 ._archive {
   display: flex;
   flex-direction: var(--blog-sidebar-pos);
-  gap: var(--container-gutter);
-  padding: var(--container-gutter) 0;
+  align-items: flex-start;
+  gap: $archive-sidebar-gap;
+  padding: calc(var(--container-gutter) * 2.5) 0;
 
   @include breakpoint('lg') {
     flex-direction: column;
+    gap: var(--container-gutter);
     height: unset;
+    align-items: stretch;
   }
 
   ._posts {
     flex: 1;
+    min-width: 0;
+    max-width: 100%;
+
+    @include breakpoint('lg') {
+      width: 100%;
+    }
 
     ._inner {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: var(--container-gutter);
-      // on small screens change to one column
-      @include breakpoint('lg') {
-        grid-template-columns: 1fr;
-      }
+      display: flex;
+      flex-direction: column;
     }
     
-    .post {
+    // Archive listing cards only — single posts also carry `.post` but use block layout.
+    .post:has(.article-image) {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--container-gutter);
+      padding-bottom: calc(var(--container-gutter) * 2.5);
+      margin-bottom: calc(var(--container-gutter) * 2.5);
+      border-bottom: 1px solid color-mix(in oklab, #{$color-tertiary} 18%, white);
+
+      &:last-child {
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: none;
+      }
+
+      @include breakpoint('lg') {
+        flex-direction: column;
+      }
+
       .article-image {
+        flex: 0 0 280px;
+        max-width: 280px;
+
+        @include breakpoint('lg') {
+          flex: none;
+          max-width: 100%;
+          width: 100%;
+        }
+
         a {
           display: block;
 
           img {
             width: 100%;
             height: auto;
-            aspect-ratio: 16/9;
+            aspect-ratio: 4 / 3;
             object-fit: cover;
+            border-radius: $image-rounded-border-radius;
           }
 
         }
 
       }
       .article-content {
-        padding: var(--container-gutter) 0;
+        flex: 1 1 auto;
+        padding: 0;
         .entry-header {
-          .title {margin-bottom: calc(var(--container-gutter) * .5);}
-        }
-        .entry-meta {
-          margin-bottom: var(--container-gutter);
-          small span {
-            margin-right: calc(var(--container-gutter) * .5);
-            border-right: 1px solid var(--color-primary);
-            padding-right: calc(var(--container-gutter) * .5);
-            line-height: 1;
-            &:last-child {
-              border-right: none;
-              padding-right: 0;
+          .title {
+            margin-bottom: calc(var(--container-gutter) * .5);
+
+            a {
+              color: $color-secondary;
             }
           }
+        }
+        .entry-content {
+          margin-bottom: calc(var(--container-gutter) * .75);
+        }
+        ._button {
+          margin-bottom: 0;
         }
       }
     }
 
     ._pagination {
       padding: var(--container-gutter) 0;
-      text-align: center;
+      text-align: left;
       // WordPress paginate_links() is forced to `type: list`, so we only need
       // to style the unified <ul class="page-numbers">…<li>…</li></ul> output.
       // ------------------------------------------------------------------
@@ -70,7 +102,7 @@
         list-style: none;
 
         display: flex;
-        justify-content: center;
+        justify-content: flex-start;
         gap: calc(var(--container-gutter) * .5);
 
         li {
@@ -97,18 +129,18 @@
           // hover / focus
           a:hover,
           a:focus {
-            background-color: var(--color-primary);
+            background-color: $color-primary;
             color: #fff;
-            border-color: var(--color-primary);
+            border-color: $color-primary;
           }
 
           // current page
           &.current span,
           span.current,
           a.current {
-            background-color: var(--color-primary);
+            background-color: $color-primary;
             color: #fff;
-            border-color: var(--color-primary);
+            border-color: $color-primary;
             cursor: default;
           }
         }

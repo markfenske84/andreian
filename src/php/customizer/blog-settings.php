@@ -1,7 +1,7 @@
-<? 
+<?php 
 // add blog settings section
 $wp_customize->add_section('blog_settings_section', array(
-    'title'    => __('Blog Settings', 'krypton'),
+    'title'    => __('Blog Settings', 'chw'),
     'priority' => 32, // Adjust priority as needed
 ));
 
@@ -11,7 +11,7 @@ $wp_customize->add_setting('blog_masthead_image', array(
     'sanitize_callback' => 'esc_url_raw',
 ));
 $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'blog_masthead_image', array(
-    'label'    => __('Blog Masthead Image', 'krypton'),
+    'label'    => __('Blog Masthead Image', 'chw'),
     'section'  => 'blog_settings_section',
     'settings' => 'blog_masthead_image',
 )));   
@@ -23,10 +23,10 @@ $wp_customize->add_setting('blog_masthead_heading', array(
 ));
 
 $wp_customize->add_control('blog_masthead_heading', array(
-    'label'    => __('Blog Masthead Heading', 'krypton'),
+    'label'    => __('Blog Masthead Heading', 'chw'),
     'section'  => 'blog_settings_section',
     'settings' => 'blog_masthead_heading',
-    'description' => __('Enter the text to display as the heading on the blog masthead.', 'krypton'),
+    'description' => __('Enter the text to display as the heading on the blog masthead.', 'chw'),
     'type'     => 'text',
 ));
 
@@ -37,10 +37,10 @@ $wp_customize->add_setting('blog_default_featured_image', array(
 ));
 
 $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'blog_default_featured_image', array(
-    'label'    => __('Default Featured Image', 'krypton'),
+    'label'    => __('Default Featured Image', 'chw'),
     'section'  => 'blog_settings_section',
     'settings' => 'blog_default_featured_image',
-    'description' => __('Image that will be used when a standard post does not have its own Featured Image.', 'krypton'),
+    'description' => __('Image that will be used when a standard post does not have its own Featured Image.', 'chw'),
 )));
 
 // add setting for blog sidebar positioning, this should be a dropdown select with left default
@@ -49,10 +49,10 @@ $wp_customize->add_setting('blog_sidebar_position', array(
 ));
 
 $wp_customize->add_control('blog_sidebar_position', array(
-    'label'    => __('Blog Sidebar Position', 'krypton'),
+    'label'    => __('Blog Sidebar Position', 'chw'),
     'section'  => 'blog_settings_section',
     'settings' => 'blog_sidebar_position',
-    'description' => __('Select the position of the sidebar on the blog page.  Sidebar will only display if there are Widgets set on the sidebar', 'krypton'),
+    'description' => __('Select the position of the sidebar on the blog page.  Sidebar will only display if there are Widgets set on the sidebar', 'chw'),
     'type'     => 'select',
     'choices'  => array(
         'row-reverse' => 'Left',

@@ -1,0 +1,227 @@
+.steps-section {
+    position: relative;
+    background-color: #ffffff;
+
+    $badge-size: 6.5rem;
+    $badge-ring: color-mix(in oklab, #{$color-tertiary} 12%, white);
+    $connector-color: color-mix(in oklab, #{$color-tertiary} 30%, white);
+
+    ._container {
+        @include chw-section-spacing;
+    }
+
+    &__header {
+        max-width: 48rem;
+        margin: 0 auto;
+    }
+
+    &__heading {
+        @include chw-section-heading;
+
+        .accent,
+        .has-primary-color {
+            color: $color-primary;
+        }
+
+        .has-secondary-color {
+            color: $color-secondary;
+        }
+
+        .has-tertiary-color {
+            color: $color-tertiary;
+        }
+
+        .has-quaternary-color {
+            color: $color-quaternary;
+        }
+
+        .has-text-color {
+            color: $color-text;
+        }
+
+        .has-muted-color {
+            color: color-mix(in oklab, #{$color-tertiary} 72%, white);
+        }
+
+        .has-white-color {
+            color: #ffffff;
+        }
+
+        .has-black-color {
+            color: #000000;
+        }
+    }
+
+    &__intro {
+        @include chw-section-intro;
+    }
+
+    &__steps {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1.5rem;
+        margin-top: 3rem;
+        margin-bottom: 3rem;
+
+        &[data-count='1'] {
+            grid-template-columns: minmax(0, 18rem);
+            justify-content: center;
+        }
+
+        &[data-count='2'] {
+            grid-template-columns: repeat(2, minmax(0, 18rem));
+            justify-content: center;
+        }
+
+        &[data-count='3'] {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        @include breakpoint('md') {
+            grid-template-columns: 100% !important;
+            justify-content: stretch;
+            gap: 2.5rem;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+    }
+
+    &__step {
+        position: relative;
+
+        &:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            top: calc(#{$badge-size} / 2);
+            left: 50%;
+            width: 100%;
+            border-top: 2px dashed #{$connector-color};
+            transform: translateY(-50%);
+            z-index: 0;
+        }
+
+        &:not(:last-child)::before {
+            content: '';
+            position: absolute;
+            top: calc(#{$badge-size} / 2);
+            left: 100%;
+            width: 0.5rem;
+            height: 0.5rem;
+            border-radius: 999px;
+            background-color: $color-primary;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+        }
+
+        @include breakpoint('md') {
+            &:not(:last-child)::after,
+            &:not(:last-child)::before {
+                display: none;
+            }
+        }
+    }
+
+    &__badge {
+        position: relative;
+        z-index: 2;
+        width: $badge-size;
+        height: $badge-size;
+        margin: 0 auto;
+        border-radius: 999px;
+        background-color: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1), inset 0 0 0 1px #{$badge-ring};
+
+        @include breakpoint('md') {
+            width: calc(#{$badge-size} - 2px);
+            height: calc(#{$badge-size} - 2px);
+        }
+    }
+
+    &__icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 4.5rem;
+        height: 4.5rem;
+        background-color: $color-secondary;
+        border-radius: 50%;
+        color: #ffffff;
+
+        @include chw-inline-svg-icon(2rem);
+
+        @include breakpoint('md') {
+            width: calc(4.5rem - 2px);
+            height: calc(4.5rem - 2px);
+
+            svg {
+                width: calc(2rem - 2px);
+                height: calc(2rem - 2px);
+            }
+        }
+    }
+
+    &__number {
+        position: absolute;
+        top: -0.25rem;
+        right: -0.25rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 2.5rem;
+        height: 2.5rem;
+        padding: 0 0.25rem;
+        border-radius: 999px;
+        border: 4px solid #ffffff;
+        background-color: $color-primary;
+        color: #ffffff;
+        font-size: 1.15rem;
+        font-weight: 500;
+        line-height: 0;
+        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
+
+        @include breakpoint('md') {
+            min-width: calc(2.5rem - 2px);
+            height: calc(2.5rem - 2px);
+            font-size: calc(1.15rem - 2px);
+        }
+    }
+
+    &__step-title {
+        margin: 1rem 0 0;
+        font-size: 1.25rem;
+        font-weight: 700;
+        line-height: 1.25;
+    }
+
+    &__step-text {
+        margin: 0.5rem 0 0;
+        line-height: 1.5;
+        max-width: 22rem;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    &__buttons {
+        @include chw-section-cta-buttons;
+    }
+
+    &__legal {
+        @include chw-section-legal;
+    }
+
+    .steps-section__add {
+        @include chw-section-editor-add;
+    }
+
+    .steps-section__step-actions {
+        @include chw-section-editor-actions;
+    }
+
+    .steps-section__icon-input {
+        display: block;
+        margin-top: 0.5rem;
+    }
+}

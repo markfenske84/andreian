@@ -1,5 +1,13 @@
 ._grid {
 	display: grid;
+
+	&.-col4 {
+		@include grid_columns(4);
+	}
+
+	&.-col5 {
+		@include grid_columns(5);
+	}
 }
 
 ._flex {
@@ -175,6 +183,36 @@
 	}
 }
 
+._margin {
+	&.-auto {
+		margin: auto;
+	}
+	&.-top-auto {
+		margin-top: auto;
+	}
+	&.-right-auto {
+		margin-right: auto;
+	}
+	&.-bottom-auto {
+		margin-bottom: auto;
+	}
+	&.-left-auto {
+		margin-left: auto;
+	}
+	&.-top-0 {
+		margin-top: 0;
+	}
+	&.-right-0 {
+		margin-right: 0;
+	}
+	&.-bottom-0 {
+		margin-bottom: 0 !important;
+	}
+	&.-left-0 {
+		margin-left: 0;
+	}
+}
+
 ._text {
 	&.-align-center {
 		text-align: center;
@@ -194,24 +232,75 @@
 	&.-transform-capitalize {
 		text-transform: capitalize;
 	}
+
+	// color modifiers (mirror ._bg)
+	&.-primary {
+		color: $color-primary;
+	}
+	&.-secondary {
+		color: $color-secondary;
+	}
+	&.-tertiary {
+		color: $color-tertiary;
+	}
+	&.-quaternary {
+		color: $color-quaternary;
+	}
+	&.-text {
+		color: $color-text;
+	}
+	&.-white {
+		color: #ffffff;
+	}
+	&.-muted {
+		color: color-mix(in oklab, #{$color-tertiary} 72%, white);
+	}
+}
+
+// Font-size scale utility (general purpose, reusable beyond headings/p)
+._text-size {
+	&.-xxl {
+		font-size: 1.875rem;
+		@include breakpoint('md') {
+			font-size: 1.5rem;
+		}
+	}
+	&.-xl {
+		font-size: 1.25rem;
+	}
+	&.-lg {
+		font-size: 1.125rem;
+	}
+	&.-base {
+		font-size: 1rem;
+	}
+	&.-sm {
+		font-size: 0.875rem;
+	}
+	&.-xs {
+		font-size: 0.75rem;
+	}
+	&.-xxs {
+		font-size: 0.625rem;
+	}
 }
 
 ._bg {
 	background-color: #ededed;
 	&.-primary {
-		background-color: var(--color-primary);
+		background-color: $color-primary;
 	}
 	&.-secondary {
-		background-color: var(--color-secondary);
+		background-color: $color-secondary;
 	}
 	&.-tertiary {
-		background-color: var(--color-tertiary);
+		background-color: $color-tertiary;
 	}
 	&.-quaternary {
-		background-color: var(--color-quaternary);
+		background-color: $color-quaternary;
 	}
 	&.-text {
-		background-color: var(--color-text);
+		background-color: $color-text;
 	}
 	&.-white {
 		background-color: #ffffff;
@@ -237,67 +326,156 @@
 }
 
 // button element
+$button-icon-phone: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384'/%3E%3C/svg%3E");
+$button-icon-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14'/%3E%3Cpath d='m12 5 7 7-7 7'/%3E%3C/svg%3E");
+$button-icon-download: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 15V3'/%3E%3Cpath d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4'/%3E%3Cpath d='m7 10 5 5 5-5'/%3E%3C/svg%3E");
+$button-icon-login: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 379 511.54'%3E%3Cpath fill-rule='nonzero' d='M107.83 0h194.21c21.17 0 40.41 8.68 54.34 22.61C370.33 36.56 379 55.82 379 76.96v357.62c0 21.06-8.69 40.29-22.63 54.26l-.1.1c-13.97 13.93-33.19 22.6-54.23 22.6H107.83c-21.15 0-40.41-8.67-54.36-22.62-13.93-13.93-22.61-33.17-22.61-54.34V360.6h37.55v73.98c0 10.81 4.45 20.67 11.59 27.81 7.15 7.15 17.02 11.6 27.83 11.6h194.21c10.83 0 20.7-4.43 27.8-11.54 7.18-7.17 11.61-17.04 11.61-27.87V76.96c0-10.8-4.45-20.67-11.6-27.82-7.13-7.14-17-11.59-27.81-11.59H107.83c-10.84 0-20.7 4.44-27.84 11.58-7.14 7.13-11.58 17-11.58 27.83v73.96H30.86V76.96c0-21.17 8.66-40.42 22.6-54.36C67.4 8.66 86.65 0 107.83 0zm59.06 161.72 97.02 91.6-101.77 96.42-25.8-27.12 50.94-48.28L0 274.66v-37.39l192.03-.33-50.8-47.96 25.66-27.26z'/%3E%3C/svg%3E");
+$button-padding-x: 1.5rem;
+$button-icon-size: 1rem;
+$button-icon-gap: 0.5rem;
+
+
+.-login a {
+	@include button_default;
+	position: relative;
+	border-color: $color-secondary;
+	background-color: transparent;
+	color: $color-secondary;
+	margin: 0;
+	padding-left: calc(#{$button-padding-x} + #{$button-icon-size} + #{$button-icon-gap});
+
+	&::before {
+		@include button_icon($button-icon-login);
+		left: $button-padding-x;
+	}
+
+	&:hover, &:focus, &:active {
+		color: $color-secondary;
+		border-color: $color-secondary;
+		filter: brightness(1.1);
+		text-decoration: none;
+	}
+}
+
 ._button {
 	@include button_default;
 	&:last-child {margin-right: 0;}
+
+	&.-phone {
+		position: relative;
+		padding-left: calc(#{$button-padding-x} + #{$button-icon-size} + #{$button-icon-gap});
+
+		&::before {
+			@include button_icon($button-icon-phone);
+			left: $button-padding-x;
+		}
+	}
+
+	&.-arrow {
+		position: relative;
+		padding-right: calc(#{$button-padding-x} + #{$button-icon-size} + #{$button-icon-gap});
+
+		&::after {
+			@include button_icon($button-icon-arrow);
+			right: $button-padding-x;
+		}
+	}
+
+	&.-download {
+		position: relative;
+		padding-left: calc(#{$button-padding-x} + #{$button-icon-size} + #{$button-icon-gap});
+
+		&::before {
+			@include button_icon($button-icon-download);
+			left: $button-padding-x;
+		}
+	}
+
 	// modifiers
 	&.-primary {
-		border-color: var(--color-primary);
-		background-color: var(--color-primary);
-		&:hover, &:focus, &:active {}
-		&:hover, &:focus {}
+		border-color: $color-primary;
+		background-color: $color-primary;
+		&:hover, &:focus {
+			filter: brightness(1.1);
+		}
 		&:active {}
 	}
 	&.-secondary {
-		border-color: var(--color-secondary);
-		background-color: var(--color-secondary);
-		&:hover, &:focus, &:active {}
-		&:hover, &:focus {}
+		border-color: $color-secondary;
+		background-color: $color-secondary;
+		&:hover, &:focus {
+			filter: brightness(1.1);
+		}
 		&:active {}
 	}
 	&.-tertiary {
-		border-color: var(--color-tertiary);
-		background-color: var(--color-tertiary);
-		&:hover, &:focus, &:active {}
-		&:hover, &:focus {}
+		border-color: $color-tertiary;
+		background-color: $color-tertiary;
+		&:hover, &:focus {
+			filter: brightness(1.1);
+		}
 		&:active {}
 	}
 	&.-quaternary {
-		border-color: var(--color-quaternary);
-		background-color: var(--color-quaternary);
-		&:hover, &:focus, &:active {}
-		&:hover, &:focus {}
+		border-color: $color-quaternary;
+		background-color: $color-quaternary;
+		color: $color-text;
+		&:hover, &:focus {
+			filter: brightness(0.9);
+		}
 		&:active {}
 	}
 	&.-outline {
-		background-color: transparent;
+		background-color: rgba(255, 255, 255, 0.1);
+		backdrop-filter: blur(30px);
+		-webkit-backdrop-filter: blur(30px);
+		border-color: rgba(255, 255, 255, 0.5);
+		&:hover, &:focus, &:active {
+			filter: brightness(1.1);
+			background-color: rgba(255, 255, 255, 0.25);
+		}
+		&:hover, &:focus {
+			border-color: rgba(255, 255, 255, 0.75);
+		}
+		&:active {}
 		&.-primary {
-			color: var(--color-primary);
+			color: $color-primary;
 			&:hover, &:focus, &:active {}
 			&:hover, &:focus {}
 			&:active {}
 		}
 		&.-secondary {
-			color: var(--color-secondary);
+			color: $color-secondary;
 			&:hover, &:focus, &:active {}
 			&:hover, &:focus {}
 			&:active {}
 		}
 		&.-tertiary {
-			color: var(--color-tertiary);
+			color: $color-tertiary;
 			&:hover, &:focus, &:active {}
 			&:hover, &:focus {}
 			&:active {}
 		}
 		&.-quaternary {
-			color: var(--color-quaternary);
+			color: $color-quaternary;
 			&:hover, &:focus, &:active {}
 			&:hover, &:focus {}
 			&:active {}
 		}
 		&.-white {
-			border-color: #ffffff;
-			&:hover, &:focus, &:active {}
+			color: #ffffff;
+			&:hover, &:focus, &:active {
+				filter: brightness(1.1);
+			}
+			&:hover, &:focus {}
+			&:active {}
+		}
+		&.-text {
+			color: $color-text;
+			border-color: #adb1b5;
+			&:hover, &:focus, &:active {
+				border-color: $color-tertiary;
+			}
 			&:hover, &:focus {}
 			&:active {}
 		}

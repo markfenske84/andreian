@@ -1,0 +1,216 @@
+.cta-highlights {
+	@include chw-section-spacing;
+	&__box {
+		position: relative;
+		overflow: hidden;
+		display: grid;
+		grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+		align-items: start;
+		gap: 2.5rem;
+		padding: 2.5rem;
+		border-radius: 1.5rem;
+		color: #ffffff;
+		background-color: $brand-blue;
+		background-image:
+			radial-gradient(circle at 88% 12%, color-mix(in oklab, #{$brand-orange} 28%, transparent), transparent 42%);
+		box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.45);
+
+		@include breakpoint('lg') {
+			grid-template-columns: 1fr;
+			gap: 2rem;
+		}
+
+		@include breakpoint('md') {
+			gap: calc(var(--container-gutter) * 2);
+			padding-top: calc(var(--container-gutter) * 2);
+			padding-bottom: calc(var(--container-gutter) * 2);
+			padding-inline: var(--container-gutter);
+		}
+	}
+
+	&__main {
+		position: relative;
+		z-index: 1;
+		min-width: 0;
+	}
+
+	&__badge {
+		margin-bottom: 1.25rem;
+		background-color: $brand-orange;
+		border: none;
+		box-shadow: none;
+		color: #ffffff;
+	}
+
+	&__heading {
+		margin: 0;
+		color: #ffffff;
+		line-height: 1.05;
+		letter-spacing: -0.01em;
+
+		.accent,
+		.has-primary-color {
+			color: $brand-orange;
+		}
+
+		.has-secondary-color {
+			color: $color-secondary;
+		}
+
+		.has-tertiary-color {
+			color: $color-tertiary;
+		}
+
+		.has-quaternary-color {
+			color: $color-quaternary;
+		}
+
+		.has-text-color {
+			color: $color-text;
+		}
+
+		.has-muted-color {
+			color: color-mix(in oklab, #{$color-tertiary} 55%, white);
+		}
+
+		.has-white-color {
+			color: #ffffff;
+		}
+
+		.has-black-color {
+			color: #000000;
+		}
+	}
+
+	&__intro {
+		max-width: 34rem;
+		margin: 1.25rem 0 0;
+		font-size: 1.0625rem;
+		line-height: 1.55;
+		color: rgba(255, 255, 255, 0.75);
+	}
+
+	&__buttons {
+		@include chw-section-cta-buttons;
+		justify-content: flex-start;
+		margin-top: 1.75rem;
+	}
+
+	&__subtext {
+		max-width: 36rem;
+		margin: 1.5rem 0 0;
+		line-height: 1.5;
+		color: rgba(255, 255, 255, 0.55);
+	}
+
+	&__legal {
+		@include chw-section-legal;
+		grid-column: 1 / -1;
+		width: 100%;
+		max-width: none;
+		margin: 0;
+		padding-top: 1.5rem;
+		border-top: 1px solid rgba(255, 255, 255, 0.12);
+		color: rgba(255, 255, 255, 0.55);
+
+		p  {
+			max-width: 80%;
+			@include breakpoint('md') {
+				max-width: 100%;
+			}
+		}
+
+		a {
+			color: inherit;
+		}
+	}
+
+	&__info {
+		position: relative;
+		z-index: 1;
+		align-self: center;
+		padding: 2rem;
+		border-radius: 1rem;
+		background-color: rgba(255, 255, 255, 0.06);
+		box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+
+		@include breakpoint('md') {
+			align-self: stretch;
+			padding-block: var(--container-gutter);
+			padding-inline: var(--container-gutter);
+		}
+	}
+
+	&__info-eyebrow {
+		display: block;
+		margin-bottom: 1.25rem;
+		color: $brand-orange;
+		letter-spacing: 0.12em;
+	}
+
+	&__checks {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: grid;
+		gap: 0.875rem;
+	}
+
+	&__check {
+		display: flex;
+		align-items: flex-start;
+		gap: 0.75rem;
+		line-height: 1.4;
+		color: rgba(255, 255, 255, 0.85);
+	}
+
+	&__check-icon {
+		@include chw-inline-svg-icon(0.875rem);
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		flex-shrink: 0;
+		width: 1.5rem;
+		height: 1.5rem;
+		margin-top: 0.05rem;
+		border-radius: 999px;
+		background-color: color-mix(in oklab, #{$brand-orange} 20%, transparent);
+		color: $brand-orange;
+	}
+
+	&__check-text {
+		flex: 1 1 auto;
+		min-width: 0;
+	}
+
+	&__info-text {
+		margin: 1.5rem 0 0;
+		padding-top: 1.5rem;
+		border-top: 1px solid rgba(255, 255, 255, 0.12);
+		font-size: 0.9375rem;
+		color: rgba(255, 255, 255, 0.65);
+
+		a {
+			color: #ffffff;
+			text-decoration: none;
+			font-weight: 600;
+
+			&:hover,
+			&:focus {
+				text-decoration: underline;
+			}
+		}
+	}
+
+	// Editor-only affordances (repeater controls render inline on the canvas).
+	.cta-highlights__check-add {
+		@include chw-section-editor-add;
+		justify-content: flex-start;
+		margin-top: 1rem;
+	}
+
+	.cta-highlights__check-actions {
+		@include chw-section-editor-actions;
+		justify-content: flex-start;
+	}
+}

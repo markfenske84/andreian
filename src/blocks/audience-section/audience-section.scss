@@ -1,0 +1,243 @@
+.audience-section {
+    @include chw-section-spacing;    
+    background-image: radial-gradient(circle at 15% 20%, #f1701e12, #0000 55%), radial-gradient(circle at 85% 80%, #248fcc17, #0000 55%);
+
+    > ._container {
+        max-width: 1248px;
+    }
+
+    &__header {
+        max-width: 40rem;
+        margin: 0;
+    }
+
+    &__heading {
+        @include chw-section-heading;
+    }
+
+    &__intro {
+        @include chw-section-intro;
+    }
+
+    &__cards {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        align-items: stretch;
+        gap: var(--container-gutter);
+        margin-top: calc(var(--container-gutter) * 2);
+
+        @include breakpoint('lg') {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        @include breakpoint('md') {
+            grid-template-columns: 100%;
+            margin-top: calc(var(--container-gutter) * 1.5);
+        }
+    }
+
+    &__card {
+        @include chw-card-surface;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        padding: 1.75rem;
+        color: inherit;
+        text-decoration: none;
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+        &:hover,
+        &:focus-visible {
+            text-decoration: none;
+        }
+
+        @media (hover: hover) {
+            &:hover {
+                transform: translateY(-4px);
+                box-shadow: 0 20px 50px -15px color-mix(in oklab, #{$color-primary} 35%, transparent),
+                    inset 0 0 0 1px color-mix(in oklab, #{$color-primary} 40%, white);
+            }
+        }
+    }
+
+    &__number {
+        position: absolute;
+        top: 1.25rem;
+        right: 1.5rem;
+        font-size: 3rem;
+        font-weight: 700;
+        line-height: 1;
+        letter-spacing: -0.02em;
+        color: color-mix(in oklab, #{$color-tertiary} 70%, white);
+        transition: color 0.3s ease;
+    }
+
+    &__card:hover &__number {
+        color: color-mix(in oklab, #{$color-primary} 30%, white);
+    }
+
+    &__icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 3.5rem;
+        height: 3.5rem;
+        border-radius: 0.75rem;
+        background-image: linear-gradient(
+            135deg,
+            #{$color-primary},
+            color-mix(in oklab, #{$color-primary} 70%, white)
+        );
+        color: #ffffff;
+        box-shadow: 0 10px 20px -8px color-mix(in oklab, #{$color-primary} 45%, transparent);
+        transition: transform 0.3s ease;
+
+        @include chw-inline-svg-icon(1.5rem);
+    }
+
+    &__card:hover &__icon {
+        transform: scale(1.08) rotate(3deg);
+    }
+
+    &__card-title {
+        margin: 1.5rem 0 0;
+        font-size: 1.25rem;
+        font-weight: 700;
+        line-height: 1.3;
+    }
+
+    &__card-text {
+        margin: 0.5rem 0 1rem;
+        font-size: 0.9375rem;
+        line-height: 1.5;
+    }
+
+    &__cta {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-top: auto;
+        padding-top: 1rem;
+        border-top: 1px solid color-mix(in oklab, #{$color-tertiary} 10%, white);
+    }
+
+    &__cta-label {
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: $color-primary;
+    }
+
+    &__cta-arrow {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        width: 2rem;
+        height: 2rem;
+        border-radius: 999px;
+        background-color: color-mix(in oklab, #{$color-tertiary} 6%, white);
+        color: $color-tertiary;
+        transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+
+        svg {
+            width: 1rem;
+            height: 1rem;
+        }
+    }
+
+    &__card:hover &__cta-arrow {
+        background-color: $color-primary;
+        color: #ffffff;
+        transform: translateX(4px);
+    }
+
+    &__legal {
+        @include chw-section-legal;
+    }
+
+    // Editor-only helpers.
+    .audience-section__add {
+        @include chw-section-editor-add;
+    }
+
+    .audience-section__card-actions {
+        @include chw-section-editor-actions;
+    }
+
+    .audience-section__icon-input {
+        display: block;
+        margin-top: 0.5rem;
+    }
+}
+
+// Editor canvas is narrower than the front end; keep cards and add-card controls
+// from overlapping without changing the live layout.
+.editor-styles-wrapper {
+    .audience-section {
+        &__editor-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+            width: 100%;
+        }
+
+        &__cards {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            align-items: start;
+            row-gap: 2rem;
+            margin-bottom: 0;
+
+            @include breakpoint('lg') {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        &__card-cell {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            min-width: 0;
+        }
+
+        &__card {
+            min-width: 0;
+            height: auto;
+            overflow: visible;
+            transform: none;
+            cursor: default;
+
+            &:hover,
+            &:focus-visible {
+                transform: none;
+                box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05),
+                    inset 0 0 0 1px color-mix(in oklab, #{$color-tertiary} 12%, white);
+            }
+        }
+
+        &__card:hover &__icon {
+            transform: none;
+        }
+
+        &__card-actions {
+            margin-top: 0;
+        }
+
+        &__add {
+            display: block;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        &__legal {
+            clear: both;
+            margin-top: 3rem;
+        }
+    }
+}

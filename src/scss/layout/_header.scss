@@ -9,20 +9,31 @@ body.mobile-offcanvas-open {
 .site-header {
   position: relative; // fallback
   z-index: 2;
+  background-color: white;
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
   &.-position-relative {position: relative;}
   &.-position-absolute {position: absolute;}
   &.-position-fixed {position: fixed;}
   &.-position-absolute,
   &.-position-fixed {
+    top: 0;
     left: 0;
     right: 0;
     width: 100%;
     z-index: 19;
+    transition: transform 0.3s ease-in-out;
+
+    &.-scroll-hidden {
+      transform: translateY(-100%);
+    }
   }
   
   > ._inner {
-    padding-top: var(--container-gutter);
-    padding-bottom: var(--container-gutter);
+    padding-top: calc(var(--container-gutter) * .5);
+    padding-bottom: calc(var(--container-gutter) * .5);
   }
 }
 
@@ -33,7 +44,21 @@ body.mobile-offcanvas-open {
 }
 
 .header-col {
-  &.-logo {margin-right: auto;}
+  &.-logo {
+    margin-right: auto;
+    .site-logo {
+      max-width: 150px;
+
+      @include breakpoint('lg') {
+        max-width: 130px;
+      }
+
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+    }
+  }
   &.-desktop-navigation {
     // menu styles global
     .menu {}
@@ -50,6 +75,34 @@ body.mobile-offcanvas-open {
   &.-mobile-navigation {}
 }
 
+.mobile-header-actions {
+  gap: 0.75rem;
+}
+
+.mobile-header-phone {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+  color: $brand-orange;
+  text-decoration: none;
+  background-color: color-mix(in oklab, #{$color-primary} 14%, white);
+  border-radius: 100%;
+
+  &::before {
+    @include button_icon($button-icon-phone);
+    left: 50%;
+    top: 50%;
+    width: 1.25rem;
+    height: 1.25rem;
+    transform: translate(-50%, -50%);
+  }
+
+}
+
 
 // Mobile Styles
 
@@ -61,20 +114,23 @@ body.mobile-offcanvas-open {
   padding: 0;
   position: relative;
   display: block;
+  flex-shrink: 0;
   .line-bar {
     margin: .5rem 0;
     display: block;
     width: 36px;
     height: 3px;
     border-radius: 10px;
-    background-color: var(--color-text);
+    background-color: $color-text;
   }
 
-  // Close
+  // Close (mobile off-canvas panel)
   &.-close {
     margin-left: auto;
     transform: scale(.6) translateX(10px);
     .line-bar {
+      background-color: $brand-blue;
+
       &:nth-child(1) {
         transform: rotate(45deg) translate(0px, 0px);
       }
@@ -85,30 +141,141 @@ body.mobile-offcanvas-open {
   }
 }
 
+.site-header .mobile-offcanvas-toggle:not(.-close) {
+  .line-bar {
+    width: 22px;
+    height: 2px;
+    margin: 0.3rem 0;
+    background-color: $brand-blue;
+  }
+}
+
 // Offcanvas Menu
 .mobile-offcanvas {
   position: fixed;
   z-index: 21;
-  top: 0;
-  bottom: 0;
-  right: -400px;
-  width: 100%;
+  top: var(--container-gutter);
+  right: var(--container-gutter);
+  width: calc(100% - var(--container-gutter) * 2);
   max-width: 400px;
-  height: 100%;
+  max-height: calc(100dvh - var(--container-gutter) * 2);
+  height: auto;
+  display: flex;
+  flex-direction: column;
   background-color: #ffffff;
   padding: var(--container-gutter);
-  transition: right .3s ease-in-out;
+  border-radius: $button-border-radius;
+  overflow: scroll;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  transform: translateX(calc(100% + var(--container-gutter)));
+  transition: transform .3s ease-in-out;
+
   &.open {
-    right: 0;
+    transform: translateX(0);
   }
-  .site-logo {
-    margin: var(--container-gutter) auto;
+
+  &__inner {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    max-height: 100%;
+    overflow: scroll;
+  }
+
+  &__content {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    position: relative;
+  }
+
+  &__header {
+    flex-shrink: 0;
+    margin-bottom: var(--container-gutter);
+  }
+
+  .site-icon {
+    display: inline-flex;
+    flex-shrink: 0;
+
+    img {
+      display: block;
+      width: 2.5rem;
+      height: 2.5rem;
+      object-fit: contain;
+    }
+  }
+
+  .mobile-offcanvas-toggle.-close {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 2rem;
+    height: 2rem;
+    margin-left: 0;
+    transform: none;
+    border-radius: $button-border-radius;
+    background-color: color-mix(in oklab, #{$color-secondary} 12%, white);
+
+    .line-bar {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 12px;
+      height: 2px;
+      margin: 0;
+      background-color: $brand-blue;
+
+      &:nth-child(1) {
+        transform: translate(-50%, -50%) rotate(45deg);
+      }
+
+      &:nth-child(2) {
+        transform: translate(-50%, -50%) rotate(-45deg);
+      }
+    }
+
+    &:hover,
+    &:focus {
+      filter: brightness(0.97);
+    }
   }
 }
 
-.logged-in .mobile-offcanvas {
-  top: 32px;
-  @media screen and (max-width: 782px) {
-    top: 46px;
-  }
+// WordPress admin bar shim for fixed / absolute headers
+html:has(body.admin-bar) {
+	margin-top: 0 !important;
+}
+
+body.admin-bar {
+	--admin-bar-height: 32px;
+
+	@media screen and (max-width: 782px) {
+		--admin-bar-height: 46px;
+	}
+
+	.site-header.-position-fixed,
+	.site-header.-position-absolute {
+		top: var(--admin-bar-height);
+	}
+
+	.mobile-offcanvas {
+		top: calc(var(--admin-bar-height) + var(--container-gutter));
+		max-height: calc(100dvh - var(--admin-bar-height) - var(--container-gutter) * 2);
+	}
+}
+
+body:has(.site-header.-position-fixed:not(.-scroll-hidden)) {
+	padding-top: calc(var(--header-height, 0px) + var(--admin-bar-height, 0px));
+}
+
+body.header-offset-animate:has(.site-header.-position-fixed:not(.-scroll-hidden)) {
+	transition: padding-top 0.3s ease-in-out;
+}
+
+html:has(.site-header.-position-fixed:not(.-scroll-hidden)) {
+	scroll-padding-top: calc(var(--header-height, 0px) + var(--admin-bar-height, 0px));
 }

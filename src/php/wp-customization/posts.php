@@ -1,11 +1,11 @@
-<? 
+<?php 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
  * Returns a string with anchor linked categories.
  * @return string The categories.
  */
-function krypton_post_categories() {
+function chw_post_categories() {
     global $post;
     $cats = get_the_category();
     $cat_array = array();
@@ -26,7 +26,7 @@ function krypton_post_categories() {
  * @param int $limit The character limit desired for the excerpt.
  * @return string The post's excerpt.
  */
-function krypton_excerpt($limit = 150) {
+function chw_excerpt($limit = 150) {
     global $post;
     $excerpt = get_the_excerpt($post);
 
@@ -117,16 +117,20 @@ function get_posts_page() {
 }
 
 // Adds a fallback featured image when a post does not have one set.
-function krypton_default_featured_image_html($html, $post_id, $post_thumbnail_id, $size, $attr) {
+function chw_default_featured_image_html($html, $post_id, $post_thumbnail_id, $size, $attr) {
   // If the post already has a featured image, keep it.
   if (!empty($html)) {
     return $html;
   }
 
-  // Fetch URL saved in Customizer.
+  if ('post' !== get_post_type($post_id)) {
+    return $html;
+  }
+
+  // Customizer override, then the same default used by post mastheads.
   $default_url = get_theme_mod('blog_default_featured_image');
   if (!$default_url) {
-    return $html; // No default defined.
+    $default_url = THEME_IMAGES . '/masthead-default.webp';
   }
 
   // Build attributes string.
@@ -142,6 +146,6 @@ function krypton_default_featured_image_html($html, $post_id, $post_thumbnail_id
     $attr_string .= ' alt="' . esc_attr(get_the_title($post_id)) . '"';
   }
 
-  return '<img src="' . esc_url($default_url) . '"' . $attr_string . ' />';
+  return '<img src="' . esc_url($default_url) . '"' . $attr_string . ' loading="lazy" decoding="async" />';
 }
-add_filter('post_thumbnail_html', 'krypton_default_featured_image_html', 10, 5);
+add_filter('post_thumbnail_html', 'chw_default_featured_image_html', 10, 5);

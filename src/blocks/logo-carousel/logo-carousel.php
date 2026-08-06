@@ -1,6 +1,6 @@
 </section>
 
-<? // To add or modify swiper setting options, refer to the following link: https://swiperjs.com/swiper-api
+<?php // To add or modify swiper setting options, refer to the following link: https://swiperjs.com/swiper-api
 
     // Define mapping for boolean values
     $boolean_mapping = array(
@@ -24,9 +24,9 @@
 <section 
     class="
         logo-carousel-section
-        <? if(isset($block['className'])) { echo ' ' . $block['className']; } ?>">
+        <?php if(isset($block['className'])) { echo ' ' . $block['className']; } ?>">
 
-    <? if($carousel_toggle == 'true') { ?>
+    <?php if($carousel_toggle == 'true') { ?>
 
     <div 
         class="swiper-container" 
@@ -34,11 +34,11 @@
         
         <div class="swiper-wrapper">
 
-            <? if($logos) { ?>
+            <?php if($logos) { ?>
 
-                <? foreach($logos as $logo) { ?>
+                <?php foreach($logos as $logo) { ?>
 
-                    <? // Determine if description contains a valid URL to use as a link
+                    <?php // Determine if description contains a valid URL to use as a link
                        $logo_link = (!empty($logo['description']) && filter_var($logo['description'], FILTER_VALIDATE_URL)) ? $logo['description'] : false;
                     ?>
 
@@ -50,71 +50,71 @@
                             -align-center" 
                         data-swiper-autoplay="<?= $slide_speed; ?>">
 
-                        <? if($logo_link) { ?>
+                        <?php if($logo_link) { ?>
                             <a href="<?= esc_url($logo_link); ?>" target="_blank" rel="noopener">
-                        <? } ?>
+                        <?php } ?>
 
                         <img 
-                            <? if($grayscale_logos == 'true') { ?>
+                            <?php if($grayscale_logos == 'true') { ?>
                             class="grayscale"
-                            <? } ?>
+                            <?php } ?>
                             src="<?= $logo['url']; ?>" 
                             alt="<?= $logo['alt']; ?>" 
                             loading="lazy">
 
-                        <? if($logo_link) { ?>
+                        <?php if($logo_link) { ?>
                             </a>
-                        <? } ?>
+                        <?php } ?>
 
                     </div>
 
-                <? } ?>
+                <?php } ?>
 
-            <? } ?>
+            <?php } ?>
 
         </div>
 
     </div>
 
-    <? } else { ?>
+    <?php } else { ?>
 
     <div class="_container">
 
-        <? if($logos) { ?>
+        <?php if($logos) { ?>
             
             <div class="_flex -wrap -align-center -justify-center">
 
-            <? foreach($logos as $logo) { ?>
+            <?php foreach($logos as $logo) { ?>
 
-                <? // Determine if description contains a valid URL to use as a link
+                <?php // Determine if description contains a valid URL to use as a link
                    $logo_link = (!empty($logo['description']) && filter_var($logo['description'], FILTER_VALIDATE_URL)) ? $logo['description'] : false;
                 ?>
 
                 <div class="logo">
-                    <? if($logo_link) { ?>
+                    <?php if($logo_link) { ?>
                         <a href="<?= esc_url($logo_link); ?>" target="_blank" rel="noopener">
-                    <? } ?>
+                    <?php } ?>
                     <img 
-                        <? if($grayscale_logos == 'true') { ?>
+                        <?php if($grayscale_logos == 'true') { ?>
                         class="grayscale"
-                        <? } ?>
+                        <?php } ?>
                         src="<?= $logo['url']; ?>" 
                         alt="<?= $logo['alt']; ?>" 
                         loading="lazy">
-                    <? if($logo_link) { ?>
+                    <?php if($logo_link) { ?>
                         </a>
-                    <? } ?>
+                    <?php } ?>
                 </div>
 
-            <? } ?>
+            <?php } ?>
 
             </div>
 
-        <? } ?>
+        <?php } ?>
 
     </div>
 
-    <? } ?>
+    <?php } ?>
 
 </section>
 

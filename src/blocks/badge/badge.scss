@@ -1,0 +1,13 @@
+.badge-block {
+	display: block;
+
+	// The badge itself is inline-flex, so text-align positions it within the
+	// block-level wrapper. Left is the default (no modifier).
+	&.-align-center {
+		text-align: center;
+	}
+
+	&.-align-right {
+		text-align: right;
+	}
+}

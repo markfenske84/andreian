@@ -1,4 +1,4 @@
-<? 
+<?php 
 /**
  * Block: Example Block
  */
@@ -6,7 +6,7 @@
 
 </section>
 
-<section class="style-guide<? if(isset($block['className'])) { echo ' ' . $block['className']; } ?>">
+<section class="style-guide<?php if(isset($block['className'])) { echo ' ' . $block['className']; } ?>">
     <div class="_flex _container">
         <div style="padding-right: 2rem;">
             <h1>Heading 1</h1>
@@ -15,8 +15,10 @@
             <h4>Heading 4</h4>
             <h5>Heading 5</h5>
             <h6>Heading 6</h6>
+            <p class="-xl">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla euismod, nisl eget aliquam ultricies, nunc ipsum aliquet nunc, vitae ali quam nunc nisl quis nunc. Nulla facilisi. Nulla facilisi. Nulla facilisi. Nulla facilisi. Nulla facilisi.</p>
+            <p class="-lg">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla euismod, nisl eget aliquam ultricies, nunc ipsum aliquet nunc, vitae ali quam nunc nisl quis nunc. Nulla facilisi. Nulla facilisi. Nulla facilisi. Nulla facilisi. Nulla facilisi.</p>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla euismod, nisl eget aliquam ultricies, nunc ipsum aliquet nunc, vitae ali quam nunc nisl quis nunc. Nulla facilisi. Nulla facilisi. Nulla facilisi. Nulla facilisi. Nulla facilisi.</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla euismod, nisl eget aliquam ultricies, nunc ipsum aliquet nunc, vitae ali quam nunc nisl quis nunc. Nulla facilisi. Nulla facilisi. Nulla facilisi. Nulla facilisi. Nulla facilisi.</p>
+            <p class="-sm">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla euismod, nisl eget aliquam ultricies, nunc ipsum aliquet nunc, vitae ali quam nunc nisl quis nunc. Nulla facilisi. Nulla facilisi. Nulla facilisi. Nulla facilisi. Nulla facilisi.</p>
             <ul>
                 <li>List Item Number One</li>
                 <li>List Item Number Two</li>

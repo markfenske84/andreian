@@ -6,7 +6,13 @@
 let gulp = require('gulp'); // Workflow Automation
 
 // NPM Packages
-const sass = require('gulp-sass')(require('sass')); // Converting our SASS into CSS
+const sassCompiler = require('sass');
+const sass = require('gulp-sass')(sassCompiler); // Converting our SASS into CSS
+
+const sassOptions = {
+	quietDeps: true,
+	logger: sassCompiler.Logger.silent,
+};
 const prefix = require('gulp-autoprefixer'); // Prefixes CSS to work with browsers
 const cleanCSS = require('gulp-clean-css'); // Minify CSS
 const concat = require('gulp-concat'); // Concatenate files
@@ -72,7 +78,7 @@ const blocks_js = [
 
 gulp.task('theme-scss', function(){
     return gulp.src(theme_scss)
-        .pipe(sass().on('error', sass.logError))
+        .pipe(sass(sassOptions).on('error', sass.logError))
         .pipe(prefix('last 2 versions'))
         .pipe(concat('theme.min.css'))
         .pipe(cleanCSS({compatibility: 'ie8'}))
@@ -89,7 +95,7 @@ gulp.task('theme-js', function(done){
 
 gulp.task('admin-scss', function(){
     return gulp.src(admin_scss)
-        .pipe(sass().on('error', sass.logError))
+        .pipe(sass(sassOptions).on('error', sass.logError))
         .pipe(prefix('last 2 versions'))
         .pipe(concat('admin.min.css'))
         .pipe(cleanCSS({compatibility: 'ie8'}))
@@ -106,7 +112,7 @@ gulp.task('admin-js', function(done){
 
 gulp.task('blocks-scss', function(){
     return gulp.src(blocks_scss)
-        .pipe(sass().on('error', sass.logError))
+        .pipe(sass(sassOptions).on('error', sass.logError))
         .pipe(prefix('last 2 versions'))
         .pipe(concat('blocks.min.css'))
         .pipe(cleanCSS({compatibility: 'ie8'}))

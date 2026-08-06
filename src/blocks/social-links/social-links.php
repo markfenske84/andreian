@@ -1,26 +1,31 @@
-<? 
+<?php
 /**
- * Block: Social Links
+ * Frontend render for the Social Links block.
+ *
+ * Pulls the global links managed in the Customizer (Social Links section).
  */
 
-$social_links = get_field('social_links', 'option');
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+$social_links = chw_get_social_links();
+
+if ( empty( $social_links ) ) {
+	return;
+}
 ?>
 
-<div class="
-    social-links
-    <? if(isset($block['className'])) { echo ' ' . $block['className']; } ?>">
+<div class="social-links">
 
-    <? foreach($social_links as $social_link) {
-        $channel = $social_link['social_channel'];
-        $link = $social_link['social_url']; ?>
-        <a 
-            href="<?= $link; ?>" 
-            target="_blank" 
-            <? if ( is_user_logged_in() && current_user_can('administrator') ) : // assist with Gutenberg rendering ?>
-            style="text-decoration: none;"<? endif; ?>>
-            <span class="sr-only">Visit <?= esc_attr( get_bloginfo( 'name', 'display' ) ); ?> on <?= $channel['label']; ?></span>
-            <i class="fa-brands fa-<?= $channel['value']; ?>"></i>
-        </a>
-    <? } ?>
+	<?php foreach ( $social_links as $social_link ) : ?>
+		<a
+			href="<?php echo esc_url( $social_link['url'] ); ?>"
+			target="_blank"
+			rel="noopener noreferrer">
+			<span class="sr-only"><?php echo esc_html( sprintf( __( 'Visit %1$s on %2$s', 'chw' ), get_bloginfo( 'name', 'display' ), $social_link['label'] ) ); ?></span>
+			<i class="fa-brands fa-<?php echo esc_attr( $social_link['platform'] ); ?>" aria-hidden="true"></i>
+		</a>
+	<?php endforeach; ?>
 
 </div>

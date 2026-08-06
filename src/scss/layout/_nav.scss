@@ -29,7 +29,7 @@ $submenu_width_offset: 200px;
         border: 0;
         border-radius: 0;
         background-color: transparent;
-        color: var(--color-primary);
+        color: $color-text;
       }
 
       .sub-menu {
@@ -102,21 +102,88 @@ $submenu_width_offset: 200px;
     position: relative;
     z-index: 100;
 
+    li:not(._cta-button):not(._button):not(.-login) a,
+    .toggle-button {
+      color: $color-text;
+    }
+
+    ._cta-button a {
+      color: #ffffff;
+      font-weight: 600;
+    }
+
     > li.menu-item {
       margin: 0 1rem;
       padding-top: .5rem;
       padding-bottom: .5rem;
 
-      > a {}
+      &:not(._cta-button):not(._button):not(.-login) > a {
+        font-weight: 500;
+      }
+
+      &:not(._cta-button):not(._button):not(.-login):hover,
+      &:not(._cta-button):not(._button):not(.-login):focus-within {
+        > a {
+          color: $color-secondary;
+          text-decoration: none;
+        }
+
+        > .toggle-button {
+          color: $color-secondary;
+        }
+      }
+
+      @media (min-width: 769px) {
+        &:not(._cta-button):not(._button):not(.-login) {
+          position: relative;
+          margin-top: calc(var(--container-gutter) * -.5);
+          margin-bottom: calc(var(--container-gutter) * -.5);
+          padding-top: calc(var(--container-gutter) * .5 + .5rem);
+          padding-bottom: calc(var(--container-gutter) * .5 + .5rem);
+
+          &::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background-color: $color-primary;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+          }
+
+          &:hover::after,
+          &:focus-within::after,
+          &.current-menu-item::after,
+          &.current-menu-ancestor::after {
+            opacity: 1;
+          }
+        }
+      }
 
       &.menu-item-has-children {
-        > .toggle-button {top: .4rem;}
+        > .toggle-button {top: .3rem;}
+
+        @media (min-width: 769px) {
+          > .toggle-button {
+            top: 50%;
+            transform: translateY(-50%);
+          }
+        }
 
         &.open,
         &:hover {
           > .toggle-button {transform: rotate(180deg);}
           > .sub-menu {display: block;}
         } 
+
+        @media (min-width: 769px) {
+          &.open,
+          &:hover {
+            > .toggle-button {transform: translateY(-50%) rotate(180deg);}
+          }
+        }
 
         &:hover {
           @include breakpoint('md') { 
@@ -128,8 +195,6 @@ $submenu_width_offset: 200px;
         > ul.sub-menu {
 
           > li.menu-item {
-
-            > a {}
 
             &.menu-item-has-children {
 
@@ -150,11 +215,6 @@ $submenu_width_offset: 200px;
               // 3rd Level
               > ul.sub-menu {
                 left: $submenu_width_offset;
-
-                > li.menu-item {
-                  > a {}
-                }
-                
               }
 
             }
@@ -163,20 +223,136 @@ $submenu_width_offset: 200px;
       }
     }
   }
+
+  #cta-header-menu.menu {
+    margin-left: var(--container-gutter);
+    > li.menu-item {
+      margin-left: 0 !important;
+    }
+  }
 }
 
 // CTA Menu Button Style
 ._cta-button {
   margin-right: 0 !important;
   a {
-      border-color: var(--color-primary);
-      background-color: var(--color-primary);
+      border-color: $color-primary;
+      background-color: $color-primary;
       margin: 0 !important;
       @include button_default;
       @include breakpoint('md') {margin-bottom: var(--container-gutter);}
-      &:hover, &:focus {}
+      &:hover, &:focus {
+        filter: brightness(1.1);
+      }
       &:active {}
   } 
+}
+
+// Mobile off-canvas — shared nav + CTA styles
+.mobile-offcanvas {
+  ul.menu {
+    li:not(._cta-button):not(._button):not(.-login) a,
+    .toggle-button {
+      color: $color-text;
+    }
+
+    > li.menu-item {
+      margin: 0;
+
+      &:not(._cta-button):not(._button):not(.-login) > a {
+        font-weight: 500;
+        color: $color-text;
+        padding: 0.5rem 0;
+        display: block;
+        text-decoration: none;
+        transition: color 0.2s ease;
+      }
+
+      &:not(._cta-button):not(._button):not(.-login):hover,
+      &:not(._cta-button):not(._button):not(.-login):focus-within {
+        > a {
+          color: $color-secondary;
+          text-decoration: none;
+        }
+
+        > .toggle-button {
+          color: $color-secondary;
+        }
+      }
+
+      &.current-menu-item,
+      &.current-menu-ancestor {
+        &:not(._cta-button):not(._button):not(.-login) > a {
+          color: $color-secondary;
+        }
+      }
+
+      &.menu-item-has-children > .toggle-button {
+        color: $color-text;
+      }
+    }
+
+    ._cta-button,
+    &._button,
+    > li._button {
+      width: 100%;
+      margin: 0 0 var(--container-gutter) 0 !important;
+
+      a {
+        display: block;
+        width: 100%;
+        text-align: center;
+        box-sizing: border-box;
+        margin: 0 !important;
+      }
+    }
+
+    a._button {
+      display: block;
+      width: 100%;
+      text-align: center;
+      box-sizing: border-box;
+      margin: 0 0 var(--container-gutter) 0 !important;
+    }
+
+    .sub-menu {
+      li:not(._cta-button):not(._button):not(.-login) a {
+        padding: 0.35rem 0 0.35rem 1rem;
+        font-weight: 500;
+        color: $color-text;
+
+        &:hover,
+        &:focus {
+          color: $color-secondary;
+        }
+      }
+    }
+
+    .-login {
+      width: 100%;
+      margin: 0 0 var(--container-gutter) 0 !important;
+
+      a {
+        display: block;
+        width: 100%;
+        text-align: center;
+        box-sizing: border-box;
+        margin: 0 !important;
+        padding-left: $button-padding-x;
+
+        &::before {
+          display: none;
+        }
+      }
+    }
+  }
+
+  #cta-header-menu.menu {
+    margin-top: var(--container-gutter);
+    padding-top: var(--container-gutter);
+    border-top: 1px solid color-mix(in oklab, #{$color-tertiary} 12%, white);
+    margin-left: 0;
+  }
 }
 
 // Mobile Offcanvas Menus
@@ -291,19 +467,18 @@ body:not(.mobile-menu-layout-panel) .mobile-offcanvas {
 
 .mobile-menu-layout-panel {
   .mobile-slide-panel {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    right: 0;
+    position: absolute;
+    inset: 0;
     width: 100%;
-    max-width: 400px; // same width as off-canvas
+    max-width: none;
     background-color: #fff;
     transform: translateX(100%);
     transition: transform .3s ease-in-out;
-    z-index: 22; // above off-canvas
+    z-index: 22;
     display: flex;
     flex-direction: column;
     overflow-y: auto;
+    border-radius: inherit;
 
     &.open {
       transform: translateX(0);
@@ -325,7 +500,7 @@ body:not(.mobile-menu-layout-panel) .mobile-offcanvas {
       background: transparent;
       margin-right: var(--container-gutter);
       font-size: 1.25rem;
-      color: var(--color-primary);
+      color: $color-primary;
       display: flex;
       align-items: center;
 
@@ -391,17 +566,23 @@ body:not(.mobile-menu-layout-panel) .mobile-offcanvas {
         margin: 0;
         padding: 0;
         & > a {
-          padding: .75rem var(--container-gutter);
+          padding: 0.5rem 0;
           display: block;
           width: 100%;
-          border-bottom: 1px solid #f0f0f0;
+          font-weight: 500;
+          color: $color-text;
+          text-decoration: none;
+
+          &:hover,
+          &:focus {
+            color: $color-secondary;
+          }
         }
       }
     }
 
     // Ensure toggle buttons adopt theme color (iOS default is blue)
     .toggle-button {
-      color: var(--color-primary);
       -webkit-appearance: none; // override iOS default link style
     }
   }
@@ -413,15 +594,56 @@ body:not(.mobile-menu-layout-panel) .mobile-offcanvas {
 @media (min-width: 769px) {
   .site-header {
     ul.menu {
+      $submenu-radius: $button-border-radius;
+
+      .sub-menu {
+        > li {
+          margin: 0;
+
+          > a {
+            display: block;
+            box-sizing: border-box;
+            padding: 0.5rem 1rem;
+            font-size: 0.9375rem;
+            font-weight: 500;
+            line-height: 1.3;
+            color: $color-text;
+            text-decoration: none;
+            border-left: 3px solid transparent;
+            transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+
+            &:hover,
+            &:focus-visible {
+              background-color: color-mix(in oklab, #{$color-primary} 10%, white);
+              color: $color-secondary;
+              border-left-color: $color-primary;
+              text-decoration: none;
+            }
+          }
+
+          &.current-menu-item > a,
+          &.current-menu-ancestor > a {
+            background-color: color-mix(in oklab, #{$color-quaternary} 70%, white);
+            color: $color-secondary;
+            font-weight: 600;
+            border-left-color: $color-primary;
+          }
+        }
+      }
 
       .menu-item-has-children {
         > .sub-menu {
           display: block; // keep in DOM so we can animate opacity/position
           opacity: 0;
           visibility: hidden;
-          transform: translateY(10px);
+          transform: translateY(8px);
           pointer-events: none;
-          transition: opacity 0.25s ease-out, transform 0.25s ease-out;
+          transition: opacity 0.2s ease-out, transform 0.2s ease-out, visibility 0.2s ease-out;
+          border-radius: $submenu-radius;
+          overflow: hidden;
+          box-shadow: 0 8px 20px -6px rgba(0, 0, 0, 0.12);
+          padding: 0.25rem 0;
+          border: 1px solid color-mix(in oklab, #{$color-tertiary} 12%, white);
         }
 
         &.open > .sub-menu,
@@ -430,6 +652,15 @@ body:not(.mobile-menu-layout-panel) .mobile-offcanvas {
           visibility: visible;
           transform: translateY(0);
           pointer-events: auto;
+        }
+
+        // Nested flyout submenus
+        > ul.sub-menu > li.menu-item.menu-item-has-children > ul.sub-menu {
+          border-radius: $submenu-radius;
+          overflow: hidden;
+          box-shadow: 0 8px 20px -6px rgba(0, 0, 0, 0.12);
+          border: 1px solid color-mix(in oklab, #{$color-tertiary} 12%, white);
+          padding: 0.25rem 0;
         }
       }
     }

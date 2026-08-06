@@ -1,0 +1,186 @@
+.stats-testimonials {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    color: $color-tertiary;
+
+    &__bg {
+        position: absolute;
+        inset: 0;
+        z-index: -2;
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        filter: grayscale(1);
+    }
+
+    &__overlay {
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        background-color: rgba(255, 255, 255, 0.55);
+    }
+
+    &__inner {
+        @include chw-section-spacing;
+        max-width: 1248px;
+    }
+
+    // --- Stats card ------------------------------------------------------
+    &__stats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1.5rem;
+        padding: 2.25rem 2.5rem;
+        background-color: rgba(255, 255, 255, 0.95);
+        border-radius: 0.375rem;
+        box-shadow: 0 20px 50px -20px rgba(15, 27, 61, 0.25);
+
+        &[data-count='1'] {
+            grid-template-columns: minmax(0, 18rem);
+            justify-content: center;
+        }
+
+        &[data-count='2'] {
+            grid-template-columns: repeat(2, minmax(0, 18rem));
+            justify-content: center;
+        }
+
+        &[data-count='3'] {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        @include breakpoint('md') {
+            grid-template-columns: repeat(2, 1fr) !important;
+            gap: 1.5rem 1.25rem;
+            padding: 1.75rem 1.5rem;
+            justify-content: stretch;
+        }
+    }
+
+    &__stat {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+
+    &__stat-bar {
+        flex-shrink: 0;
+        width: 3px;
+        height: 2.5rem;
+        margin-top: 0.25rem;
+        background-color: $color-primary;
+    }
+
+    &__stat-value {
+        font-weight: 700;
+        line-height: 1.1;
+        font-size: clamp(1.5rem, 1.2rem + 1vw, 1.875rem);
+        color: $color-secondary;
+    }
+
+    &__stat-label {
+        margin-top: 0.35rem;
+        font-size: 0.6875rem;
+        line-height: 1.3;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: color-mix(in oklab, #{$color-tertiary} 60%, white);
+    }
+
+    // --- Testimonial cards ----------------------------------------------
+    &__cards-wrap {
+        margin-top: 2rem;
+    }
+
+    &__cards {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        align-items: stretch;
+        gap: 1.5rem;
+        @include chw-mobile-horizontal-scroll-track;
+
+        &[data-count='1'] {
+            grid-template-columns: minmax(0, 24rem);
+            justify-content: center;
+        }
+
+        &[data-count='2'] {
+            grid-template-columns: repeat(2, minmax(0, 24rem));
+            justify-content: center;
+        }
+    }
+
+    &__card {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        margin: 0;
+        padding: 2rem;
+        background-color: rgba(255, 255, 255, 0.95);
+        border-radius: 0.375rem;
+        box-shadow: 0 20px 50px -20px rgba(15, 27, 61, 0.25);
+        @include chw-mobile-horizontal-scroll-item;
+
+        .stats-testimonials__cards[data-count='1'] & {
+            @include breakpoint('md') {
+                width: 100%;
+            }
+        }
+    }
+
+    &__quote {
+        min-height: 7.5rem;
+        font-size: 1.125rem;
+        font-style: italic;
+        line-height: 1.6;
+        color: $color-secondary;
+        border: none;
+        padding: 0 0 1rem; 
+    }
+
+    &__card-foot {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-top: auto;
+        padding-top: 1.25rem;
+        border-top: 1px solid color-mix(in oklab, #{$color-tertiary} 10%, white);
+    }
+
+    &__author-name {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: $color-tertiary;
+    }
+
+    &__author-location {
+        margin-top: 0.15rem;
+        font-size: 0.75rem;
+        color: color-mix(in oklab, #{$color-tertiary} 55%, white);
+    }
+
+    &__stars {
+        display: flex;
+        align-items: center;
+        gap: 0.15rem;
+        flex-shrink: 0;
+        color: $color-primary;
+    }
+
+    &__star {
+        width: 1rem;
+        height: 1rem;
+    }
+
+    // --- Editor-only controls -------------------------------------------
+    .stats-testimonials__add {
+        @include chw-section-editor-add;
+    }
+
+    .stats-testimonials__stat-actions,
+    .stats-testimonials__card-actions {
+        @include chw-section-editor-actions;
+    }
+}

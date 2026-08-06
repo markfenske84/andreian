@@ -1,4 +1,4 @@
-<? 
+<?php 
 // Add the blog prefix to post permalinks
 function add_blog_slug_to_posts($permalink, $post) {
     // Check if the post type is 'post' (default WordPress blog posts)
@@ -67,12 +67,19 @@ function set_blog_query($query) {
         if ($query->is_search()) {
             return $query;
         }
+
+        // Never hijack preview requests — they use /blog/{slug}/?preview=true URLs.
+        if ( is_preview() || $query->get( 'preview' ) ) {
+            return $query;
+        }
         
         // Only modify the main /blog/ URL - include paged URLs too
         if (isset($_SERVER['REQUEST_URI'])) {
+            $request_path = strtok( $_SERVER['REQUEST_URI'], '?' );
+
             // Main blog pages
-            if (strpos($_SERVER['REQUEST_URI'], '/blog/') === 0 && 
-                !preg_match('~/blog/[^/]+/$~', $_SERVER['REQUEST_URI'])) {
+            if (strpos($request_path, '/blog/') === 0 &&
+                !preg_match('~/blog/[^/]+/?$~', $request_path)) {
                 
                 // Reset conflicting query vars
                 $query->set('page', '');
@@ -107,6 +114,18 @@ function set_blog_query($query) {
     return $query;
 }
 add_action('pre_get_posts', 'set_blog_query', 2);
+
+/**
+ * Keep preview URLs from being canonical-redirected to the front page.
+ */
+function chw_disable_canonical_redirect_for_preview( $redirect_url ) {
+	if ( is_preview() || ( isset( $_GET['preview'] ) && 'true' === $_GET['preview'] ) ) {
+		return false;
+	}
+
+	return $redirect_url;
+}
+add_filter( 'redirect_canonical', 'chw_disable_canonical_redirect_for_preview', 1 );
 
 // Force flush rewrite rules - but only do this once or when needed
 // Flushing rules on every page load can cause performance issues

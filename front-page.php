@@ -1,4 +1,4 @@
-<? 
+<?php 
 /**
  * On the WordPress administration settings, the page set to be the Homepage under "Settings > Reading" will
  * display the template partial below.
@@ -6,10 +6,10 @@
  * @link https://developer.wordpress.org/themes/basics/template-files/#template-partials
  */
 
-get_header(); ?>
+get_header(); 
+get_template_part('src/components/inner-masthead');
+?>
 
-<section class="_container">
-    <? the_content(); ?>
-</section>
+<?php the_content(); ?>
 
-<? get_footer(); ?>
+<?php get_footer(); ?>

@@ -1,14 +1,16 @@
 {
-  "name": "krypton",
+  "name": "choice-home-warranty",
   "version": "1.0.0",
-  "description": "A web development starter theme.",
+  "description": "A Choice Home Warranty theme.",
   "scripts": {
     "start": "gulp",
-    "compile": "gulp compile"
+    "compile": "gulp compile",
+    "lighthouse": "lighthouse http://choice-home-warranty.local/ --view --only-categories=performance,accessibility,best-practices,seo"
   },
-  "author": "Mark Fenske",
+  "author": "Choice Home Warranty",
   "license": "ISC",
   "devDependencies": {
+    "lighthouse": "^12.8.2",
     "@babel/core": "^7.0.0",
     "babel-preset-env": "^1.7.0",
     "gulp": "^4.0.2",

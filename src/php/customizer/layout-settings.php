@@ -1,13 +1,13 @@
-<? 
+<?php 
 // Add a new section for Layout Settings
 $wp_customize->add_section('layout_settings_section', array(
-    'title'    => __('Layout Settings', 'krypton'),
+    'title'    => __('Layout Settings', 'chw'),
     'priority' => 29,
 ));
 
 $layout_option = array(
-    'container_gutter' => __('Container Gutter', 'krypton'),
-    'container_width' => __('Container Width', 'krypton'),
+    'container_gutter' => __('Container Gutter', 'chw'),
+    'container_width' => __('Container Width', 'chw'),
 );
 
 foreach ($layout_option as $option_name => $option_label) {
@@ -29,7 +29,7 @@ foreach ($layout_option as $option_name => $option_label) {
         'section'  => 'layout_settings_section',
         'settings' => $option_name,
         'type' => 'number',
-        'description' => __('Input values are in pixels (px).', 'krypton'), // Provide a description
+        'description' => __('Input values are in pixels (px).', 'chw'), // Provide a description
     );
 
     $wp_customize->add_control($option_name, $control_args);
@@ -50,11 +50,11 @@ $wp_customize->add_setting( 'mobile_menu_layout', array(
 
 // Add the control to choose layout.
 $wp_customize->add_control( 'mobile_menu_layout', array(
-    'label'   => __( 'Mobile Menu Layout', 'krypton' ),
+    'label'   => __( 'Mobile Menu Layout', 'chw' ),
     'section' => 'layout_settings_section',
     'type'    => 'select',
     'choices' => array(
-        'dropdown' => __( 'Expansion Dropdowns', 'krypton' ),
-        'panel'    => __( 'Slide-in Panels', 'krypton' ),
+        'dropdown' => __( 'Expansion Dropdowns', 'chw' ),
+        'panel'    => __( 'Slide-in Panels', 'chw' ),
     ),
 ) );

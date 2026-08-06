@@ -1,0 +1,212 @@
+.comparison-table {
+    position: relative;
+
+    ._container {
+        @include chw-section-spacing;
+        max-width: 1190px;
+
+        @include breakpoint('md') {
+            max-width: 100%;
+        }
+    }
+
+    &__header {
+        max-width: 52rem;
+        margin: 0;
+        text-align: left;
+    }
+
+    &__heading {
+        @include chw-section-heading;
+
+        .has-primary-color {
+            color: $color-primary;
+        }
+
+        .has-secondary-color {
+            color: $color-secondary;
+        }
+
+        .has-tertiary-color {
+            color: $color-tertiary;
+        }
+
+        .has-quaternary-color {
+            color: $color-quaternary;
+        }
+
+        .has-text-color {
+            color: $color-text;
+        }
+
+        .has-muted-color {
+            color: color-mix(in oklab, #{$color-tertiary} 72%, white);
+        }
+
+        .has-white-color {
+            color: #ffffff;
+        }
+
+        .has-black-color {
+            color: #000000;
+        }
+    }
+
+    &__intro {
+        @include chw-section-intro;
+    }
+
+    &__cards {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        align-items: stretch;
+        gap: 1.5rem;
+        width: 100%;
+        margin-top: 3rem;
+
+        &[data-count='2'] {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        &[data-count='1'] {
+            grid-template-columns: minmax(0, 1fr);
+        }
+
+        @include breakpoint('md') {
+            grid-template-columns: 100% !important;
+            margin-top: 2rem;
+        }
+    }
+
+    &__card {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        @include chw-card-surface;
+        padding: 1.75rem;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px -6px rgba(0, 0, 0, 0.15),
+                inset 0 0 0 1px color-mix(in oklab, #{$color-tertiary} 18%, white);
+        }
+
+        &.-primary {
+            .comparison-table__icon {
+                background-color: $color-primary;
+            }
+
+            .comparison-table__feature::before {
+                background-color: $color-primary;
+            }
+        }
+
+        &.-secondary {
+            .comparison-table__icon {
+                background-color: $color-secondary;
+            }
+
+            .comparison-table__feature::before {
+                background-color: $color-secondary;
+            }
+        }
+
+        &.-muted {
+            .comparison-table__icon {
+                background-color: $color-tertiary;
+            }
+
+            .comparison-table__feature::before {
+                background-color: color-mix(in oklab, #{$color-tertiary} 55%, white);
+            }
+        }
+    }
+
+    &__card-head {
+        display: flex;
+        align-items: center;
+        gap: 0.85rem;
+        margin-bottom: 1.25rem;
+    }
+
+    &__icon {
+        display: inline-flex;
+        flex-shrink: 0;
+        align-items: center;
+        justify-content: center;
+        width: 3rem;
+        height: 3rem;
+        border-radius: 999px;
+        color: #ffffff;
+
+        @include chw-inline-svg-icon(1.35rem);
+    }
+
+    &__card-title {
+        margin: 0;
+        font-size: 1.125rem;
+        font-weight: 700;
+        line-height: 1.3;
+    }
+
+    &__features {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        flex: 1 1 auto;
+    }
+
+    &__feature {
+        position: relative;
+        margin: 0;
+        padding: 0.45rem 0 0.45rem 1.1rem;
+        line-height: 1.45;
+        color: $color-tertiary;
+
+        &::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.85rem;
+            width: 0.4rem;
+            height: 0.4rem;
+            border-radius: 999px;
+            background-color: $color-primary;
+        }
+    }
+
+    &__cta {
+        margin-top: 2rem;
+
+        ._button {
+            margin: 0;
+        }
+    }
+
+    &__legal {
+        @include chw-section-legal;
+        margin-top: 2.5rem;
+        margin-left: 0;
+        margin-right: auto;
+    }
+
+    .comparison-table__add {
+        @include chw-section-editor-add;
+    }
+
+    .comparison-table__card-actions,
+    .comparison-table__feature-actions {
+        @include chw-section-editor-actions;
+    }
+
+    .comparison-table__feature-edit {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+    }
+
+    .comparison-table__icon-input {
+        margin-top: 0.75rem;
+    }
+}

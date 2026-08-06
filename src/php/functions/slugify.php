@@ -1,4 +1,4 @@
-<? 
+<?php 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 // function to transform any string into a slug

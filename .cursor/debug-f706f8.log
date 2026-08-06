@@ -1,0 +1,5 @@
+{"sessionId":"f706f8","location":"footer.php:paint-observer","message":"Visibility changed","data":{"visibility":"visible"},"timestamp":1782367111541,"hypothesisId":"A","runId":"pre-fix"}
+{"sessionId":"f706f8","location":"footer.php:paint-observer","message":"Paint entry recorded","data":{"name":"first-paint","startTime":1258096,"entryType":"paint"},"timestamp":1782367111593,"hypothesisId":"E","runId":"pre-fix"}
+{"sessionId":"f706f8","location":"footer.php:paint-observer","message":"Paint entry recorded","data":{"name":"first-contentful-paint","startTime":1258096,"entryType":"paint"},"timestamp":1782367111593,"hypothesisId":"E","runId":"pre-fix"}
+{"sessionId":"f706f8","location":"footer.php:paint-observer","message":"Visibility changed","data":{"visibility":"hidden"},"timestamp":1782367112643,"hypothesisId":"A","runId":"pre-fix"}
+{"sessionId":"f706f8","location":"footer.php:paint-observer","message":"Visibility changed","data":{"visibility":"visible"},"timestamp":1782367594014,"hypothesisId":"A","runId":"pre-fix"}

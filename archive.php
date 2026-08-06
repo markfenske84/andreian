@@ -9,6 +9,7 @@ get_template_part('src/components/inner-masthead');
 
 <section 
 	id="archive-template" 
+	aria-label="<?php esc_attr_e( 'Archive', 'chw' ); ?>"
 	class="
 		_container 
 		_archive">

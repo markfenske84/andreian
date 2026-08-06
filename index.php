@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * The main template file for displaying posts and pages.
  */
@@ -9,6 +9,7 @@ get_template_part('src/components/inner-masthead');
 
 <section 
 	id="index-template" 
+	aria-label="<?php esc_attr_e( 'Blog posts', 'chw' ); ?>"
 	class="
 		_container 
 		_archive">
@@ -18,7 +19,7 @@ get_template_part('src/components/inner-masthead');
 
 		<div class="_inner">
 
-			<?
+			<?php
 			$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
 			$args = array(
 				'post_type'      => 'post',
@@ -46,7 +47,7 @@ get_template_part('src/components/inner-masthead');
 
 		</div>
 
-		<? if ($query->have_posts()) : ?>
+		<?php if ($query->have_posts()) : ?>
 			<div class="_pagination">
 				<?php
 				global $wp_rewrite;
@@ -70,22 +71,22 @@ get_template_part('src/components/inner-masthead');
 				echo paginate_links($pagination);
 				?>
 			</div>
-		<? endif; ?>
+		<?php endif; ?>
 		
 
     </div>
 
-    <? if(is_active_sidebar('sidebar')) { ?>
+    <?php if(is_active_sidebar('sidebar')) { ?>
 		
 	<div 
 		class="_sidebar">
 
-		<? dynamic_sidebar('sidebar'); ?>
+		<?php dynamic_sidebar('sidebar'); ?>
 
 	</div>
 
-	<? } ?>
+	<?php } ?>
 
 </section>
 
-<? get_footer(); ?>
+<?php get_footer(); ?>

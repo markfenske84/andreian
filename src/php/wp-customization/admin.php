@@ -1,4 +1,4 @@
-<?
+<?php
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
@@ -9,16 +9,16 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 /**
  * Enqueuing administrative scripts + styles.
  */
-function krypton_admin_styles_and_scripts() {
+function chw_admin_styles_and_scripts() {
     // Styles
-    wp_register_style( 'admin-theme', get_template_directory_uri() . '/dist/css/admin.min.css', array(), filemtime(get_template_directory() . '/dist/css/admin.min.css') );
+    wp_register_style( 'admin-theme', get_template_directory_uri() . '/dist/css/admin.min.css', array(), chw_asset_version( get_template_directory() . '/dist/css/admin.min.css' ) );
     wp_enqueue_style( 'admin-theme' );
 
     // Scripts
-    wp_register_script( 'admin-theme', get_template_directory_uri() . '/dist/js/admin.min.js', array(), filemtime(get_template_directory() . '/dist/js/admin.min.js'), true );
+    wp_register_script( 'admin-theme', get_template_directory_uri() . '/dist/js/admin.min.js', array(), chw_asset_version( get_template_directory() . '/dist/js/admin.min.js' ), true );
     wp_enqueue_script( 'admin-theme' );
 }
-add_action('admin_head', 'krypton_admin_styles_and_scripts');
+add_action('admin_head', 'chw_admin_styles_and_scripts');
 
 /**
  * Remove the comments functionality from the administrative menu.

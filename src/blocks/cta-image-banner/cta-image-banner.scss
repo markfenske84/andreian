@@ -1,0 +1,167 @@
+.cta-image-banner {
+	&__box {
+		position: relative;
+		overflow: hidden;
+		padding: 2.5rem;
+		border-radius: 1.5rem;
+		color: #ffffff;
+		background-color: $brand-blue;
+		background-size: cover;
+		background-position: center;
+		box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.45);
+
+		@include breakpoint('md') {
+			padding: 2rem;
+		}
+	}
+
+	&__overlay {
+		position: absolute;
+		inset: 0;
+		background: color-mix(in oklab, #{$brand-blue} 75%, transparent);
+		pointer-events: none;
+	}
+
+	&__accent {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		width: 8px;
+		background-color: $brand-orange;
+		z-index: 1;
+	}
+
+	&__top {
+		position: relative;
+		z-index: 1;
+		display: grid;
+		grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+		align-items: center;
+		gap: 2.5rem;
+
+		@include breakpoint('md') {
+			grid-template-columns: 1fr;
+			gap: 2rem;
+		}
+	}
+
+	&__main {
+		display: flex;
+		align-items: flex-start;
+		gap: 1.25rem;
+		min-width: 0;
+
+		@include breakpoint('sm') {
+			flex-direction: column;
+		}
+	}
+
+	&__icon {
+		display: inline-flex;
+		flex-shrink: 0;
+		align-items: center;
+		justify-content: center;
+		width: 3.5rem;
+		height: 3.5rem;
+		border-radius: 50%;
+		background-color: $brand-orange;
+		color: #ffffff;
+
+		@include chw-inline-svg-icon(1.5rem);
+	}
+
+	&__content {
+		flex: 1 1 auto;
+		min-width: 0;
+	}
+
+	&__badge {
+		display: inline-flex;
+		margin-bottom: 0.75rem;
+	}
+
+	&__heading {
+		margin: 0;
+		color: #ffffff;
+		line-height: 1.1;
+		letter-spacing: -0.01em;
+
+		.accent,
+		.has-primary-color {
+			color: $brand-orange;
+		}
+
+		.has-secondary-color {
+			color: $color-secondary;
+		}
+
+		.has-tertiary-color {
+			color: $color-tertiary;
+		}
+
+		.has-quaternary-color {
+			color: $color-quaternary;
+		}
+
+		.has-text-color {
+			color: $color-text;
+		}
+
+		.has-muted-color {
+			color: color-mix(in oklab, #{$color-tertiary} 55%, white);
+		}
+
+		.has-white-color {
+			color: #ffffff;
+		}
+
+		.has-black-color {
+			color: #000000;
+		}
+	}
+
+	&__intro {
+		max-width: 34rem;
+		margin: 1rem 0 0;
+		font-size: 1.0625rem;
+		line-height: 1.55;
+		color: rgba(255, 255, 255, 0.75);
+	}
+
+	&__buttons {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-end;
+		gap: 1rem;
+
+		._button {
+			margin: 0;
+		}
+
+		@include breakpoint('md') {
+			align-items: stretch;
+
+			._button {
+				display: flex;
+				justify-content: center;
+			}
+		}
+	}
+
+	&__legal {
+		@include chw-section-legal;
+		position: relative;
+		z-index: 1;
+		width: 100%;
+		max-width: none;
+		margin: 2rem 0 0;
+		padding-top: 1.5rem;
+		border-top: 1px solid rgba(255, 255, 255, 0.12);
+		color: rgba(255, 255, 255, 0.55);
+
+		a {
+			color: inherit;
+		}
+	}
+}

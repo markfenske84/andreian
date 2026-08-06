@@ -1,10 +1,11 @@
 .announcement-bar {
-    padding-right: calc(var(--container-gutter) + var(--base-font-size) + var(--container-gutter));
+    padding-right: calc(var(--container-gutter) + #{$base-font-size} + var(--container-gutter));
     padding-top: calc(var(--container-gutter) / 2);
     padding-bottom: calc(var(--container-gutter) / 2);
-    background-color: var(--announcement-bar-background-color);
-    color: var(--announcement-bar-text-color);
+    background-color: var(--announcement-bar-background-color, #{$color-tertiary});
+    color: var(--announcement-bar-text-color, #ffffff);
     position: relative;
+    z-index: 1;
     text-align: center;
     @include breakpoint('lg') {
         text-align: left;
@@ -21,7 +22,7 @@
     ._close {
         position: absolute;
         right: var(--container-gutter);
-        top: calc(var(--base-font-size) / 1.5);
+        top: calc(#{$base-font-size} / 1.5);
         color: white;
     }
 }

@@ -1,3 +1,35 @@
+/* Brand palette */
+$brand-orange: oklch(69% .18 47);
+$brand-blue: lab(39.0216% -2.16544 -40.8018);;
+$brand-navy: oklch(28% .06 252);
+$brand-sand: oklch(97.5% .005 240);
+$brand-ink: oklch(22% .03 252);
+$brand-text: oklch(50% .02 252);
+
+/* Semantic color aliases */
+$color-primary: $brand-orange;
+$color-secondary: $brand-blue;
+$color-tertiary: $brand-navy;
+$color-quaternary: $brand-sand;
+$color-text: $brand-ink;
+
+/* Typography */
+$font-family-heading: "Hind", sans-serif;
+$font-family-body: "Hind", sans-serif;
+$base-font-size: 16px;
+
+/* Buttons */
+$button-padding: .65rem 1.5rem .5rem;
+$button-border-width: 1px;
+$button-border-radius: 6px;
+$image-rounded-border-radius: 20px;
+$blog-content-width: 920px;
+$archive-sidebar-gap: calc(var(--container-gutter) * 3);
+$button-font-weight: 600;
+$button-font-size: 16px;
+$button-font-size-mobile: 14px;
+$button-text-transform: uppercase;
+
 /* Breakpoints */
 $breakpoints: (
     xs: 0,

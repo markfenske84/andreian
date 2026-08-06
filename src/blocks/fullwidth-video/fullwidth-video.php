@@ -1,6 +1,6 @@
 </section>
 
-<? 
+<?php 
     // unique id
     $block_id = $block['id'];
     
@@ -27,7 +27,7 @@
     }
 ?>
 
-<? if($video_height == 'custom') { ?>
+<?php if($video_height == 'custom') { ?>
 <style>
     .fullwidth-video.-<?= $block_id; ?> {
         padding: <?= $video_desktop_padding; ?> !important;
@@ -38,12 +38,12 @@
         }
     }
 </style>
-<? } ?>
+<?php } ?>
 
 <section 
-    <? if(isset($block['anchor'])) { ?>
+    <?php if(isset($block['anchor'])) { ?>
     id="<?= esc_attr( $block['anchor'] ); ?>" 
-    <? } ?>
+    <?php } ?>
     class="
         fullwidth-video 
         -<?= $block_id; ?> 
@@ -51,10 +51,10 @@
         _flex 
         -align-center 
         -justify-center
-        <? if(isset($block['className'])) { echo ' ' . $block['className']; } ?>" 
-    <? if($video_placeholder) { ?>
+        <?php if(isset($block['className'])) { echo ' ' . $block['className']; } ?>" 
+    <?php if($video_placeholder) { ?>
         style="background: url('<?= $video_placeholder['url']; ?>') center/cover;"
-    <? } ?>>
+    <?php } ?>>
 
     <div 
         class="_video">
@@ -63,8 +63,8 @@
             class="_overlay" 
             style="background-color: <?= $video_overlay; ?>"></span>
         
-        <? if($video_source == 'self') { ?>
-            <? if($video_file) { ?>
+        <?php if($video_source == 'self') { ?>
+            <?php if($video_file) { ?>
             <video 
                 autoplay 
                 loop 
@@ -74,22 +74,22 @@
                     src="<?= $video_file['url']; ?>" 
                     type="video/mp4">
             </video>
-            <? } ?>
+            <?php } ?>
 
-        <? } elseif($video_source == 'youtube') { ?>
+        <?php } elseif($video_source == 'youtube') { ?>
 
-            <? if($video_url) { ?>
+            <?php if($video_url) { ?>
             <iframe 
                 src="<?= $video_url; ?>&controls=0&showinfo=0&rel=0&autoplay=1&loop=1&modestbranding=1&disablekb=1&mute=1" 
                 frameborder="0" 
                 webkitallowfullscreen 
                 mozallowfullscreen 
                 allowfullscreen></iframe>
-            <? } ?>
+            <?php } ?>
         
-        <? } elseif($video_source == 'vimeo') { ?>
+        <?php } elseif($video_source == 'vimeo') { ?>
             
-            <? if($video_url) { ?>
+            <?php if($video_url) { ?>
             <iframe 
                 src="<?= $video_url; ?>?background=1&autoplay=1&loop=1&byline=0&title=0?rel=0" 
                 frameborder="0" 
@@ -98,13 +98,13 @@
                 webkitallowfullscreen 
                 mozallowfullscreen 
                 allowfullscreen></iframe>
-            <? } ?>
+            <?php } ?>
         
-        <? } ?>
+        <?php } ?>
 
     </div>
 
-    <? if($video_content) { ?>
+    <?php if($video_content) { ?>
 
     <div 
         class="_container">
@@ -116,48 +116,48 @@
                 <?= $text_alignment; ?> 
                 <?= $additional_content_classes; ?>">
 
-            <? if($headline) { ?>
+            <?php if($headline) { ?>
 
             <h1><?= $headline; ?></h1>
 
-            <? } ?>
+            <?php } ?>
 
-            <? if($subheading) { ?>
+            <?php if($subheading) { ?>
 
             <h2><?= $subheading; ?></h2>
 
-            <? } ?>
+            <?php } ?>
 
-            <? if($cta_links) { ?>
+            <?php if($cta_links) { ?>
 
                 <div class="_cta-links">
 
-                    <? foreach($cta_links as $cta_link) { 
+                    <?php foreach($cta_links as $cta_link) { 
                         $link = $cta_link['link'];
                         $cta_class = ($cta_link === reset($cta_links)) ? '-primary' : '-outline'; ?>
                         
-                        <? if($link) { ?>
+                        <?php if($link) { ?>
                         <a 
                             href="<?= $link['url']; ?>" 
                             class="_button <?= $cta_class; ?>"
-                            <? if($link['target']) { ?> target="<?= $link['target']; ?>"<? } ?>>
+                            <?php if($link['target']) { ?> target="<?= $link['target']; ?>"<?php } ?>>
 
                             <?= $link['title']; ?>
 
                         </a>
-                        <? } ?>
+                        <?php } ?>
 
-                    <? } ?>
+                    <?php } ?>
 
                 </div>
 
-            <? } ?>
+            <?php } ?>
 
         </div>
 
     </div>
 
-    <? } ?>
+    <?php } ?>
 
 </section>
 

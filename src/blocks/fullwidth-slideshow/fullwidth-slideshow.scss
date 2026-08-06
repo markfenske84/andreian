@@ -54,8 +54,8 @@
             .swiper-pagination {
                 .swiper-pagination-bullet {
                     filter: brightness(0) invert(0);
-                    width: var(--base-font-size);
-                    height: var(--base-font-size);
+                    width: $base-font-size;
+                    height: $base-font-size;
                     &.swiper-pagination-bullet-active {}
                 } 
             }

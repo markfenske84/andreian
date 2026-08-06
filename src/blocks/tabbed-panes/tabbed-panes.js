@@ -1,26 +1,33 @@
 document.querySelectorAll('.tabbed-panes').forEach((tabbedPanes) => {
-    var tabs = tabbedPanes.querySelectorAll('._tab');
-    var panes = tabbedPanes.querySelectorAll('._pane');
+    var tabs = tabbedPanes.querySelectorAll('[role="tab"]');
+    var panes = tabbedPanes.querySelectorAll('[role="tabpanel"]');
+
+    function activateTab(tab) {
+        var paneId = tab.getAttribute('aria-controls');
+        var pane = paneId ? document.getElementById(paneId) : null;
+
+        tabs.forEach((t) => {
+            t.classList.remove('-active');
+            t.setAttribute('aria-selected', 'false');
+            t.setAttribute('tabindex', '-1');
+        });
+
+        panes.forEach((p) => {
+            p.classList.remove('-active');
+            p.setAttribute('hidden', '');
+        });
+
+        tab.classList.add('-active');
+        tab.setAttribute('aria-selected', 'true');
+        tab.setAttribute('tabindex', '0');
+
+        if (pane) {
+            pane.classList.add('-active');
+            pane.removeAttribute('hidden');
+        }
+    }
 
     tabs.forEach((tab) => {
-        tab.addEventListener('click', () => {
-            var slug = tab.getAttribute('data-slug');
-
-            // Remove '-active' class from all tabs
-            tabs.forEach((t) => {
-                t.classList.remove('-active');
-            });
-
-            // Remove '-active' class from all panes and add to the selected one
-            panes.forEach((pane) => {
-                pane.classList.remove('-active');
-                if (pane.getAttribute('data-slug') === slug) {
-                    pane.classList.add('-active');
-                }
-            });
-
-            // Add '-active' class to the clicked tab
-            tab.classList.add('-active');
-        });
+        tab.addEventListener('click', () => activateTab(tab));
     });
 });

@@ -1,0 +1,88 @@
+.cta-subtle {
+
+	&__card {
+		display: grid;
+		grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+		align-items: center;
+		gap: 2.5rem;
+		padding: 1.5rem 1.5rem 1.25rem;
+		background-color: $color-quaternary;
+		border: 1px solid $chw-card-border;
+		border-radius: 1rem;
+
+		@include breakpoint('md') {
+			grid-template-columns: 1fr;
+			gap: 1rem;
+		}
+	}
+
+	&__main {
+		min-width: 0;
+	}
+
+	&__heading {
+		margin: 0;
+		color: $color-text;
+		line-height: 1.1;
+		letter-spacing: -0.01em;
+
+		.accent,
+		.has-primary-color {
+			color: $color-primary;
+		}
+
+		.has-secondary-color {
+			color: $color-secondary;
+		}
+
+		.has-tertiary-color {
+			color: $color-tertiary;
+		}
+
+		.has-quaternary-color {
+			color: $color-quaternary;
+		}
+
+		.has-text-color {
+			color: $color-text;
+		}
+
+		.has-muted-color {
+			color: color-mix(in oklab, #{$color-tertiary} 55%, white);
+		}
+
+		.has-white-color {
+			color: #ffffff;
+		}
+
+		.has-black-color {
+			color: #000000;
+		}
+	}
+
+	&__description {
+		max-width: 34rem;
+		margin: 0.75rem 0 0;
+		font-size: 1.0625rem;
+		line-height: 1.55;
+		color: color-mix(in oklab, #{$color-tertiary} 55%, white);
+	}
+
+	&__button {
+		display: flex;
+		justify-content: flex-end;
+
+		._button {
+			margin: 0;
+		}
+
+		@include breakpoint('md') {
+			justify-content: stretch;
+
+			._button {
+				display: flex;
+				justify-content: center;
+			}
+		}
+	}
+}

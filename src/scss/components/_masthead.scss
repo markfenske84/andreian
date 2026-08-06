@@ -1,26 +1,408 @@
 .masthead {
   position: relative;
   padding: 4rem 0;
-  background-color: var(--color-text);
+  background-color: $color-tertiary;
+  overflow: hidden;
+  // Set explicitly so the editor canvas (which doesn't load base/_elements) uses the brand font.
+  font-family: $font-family-body;
 
   // If masthead has an image, remove if not in comp
   background-size: cover;
   background-position: center;
 
-  img {
+  @include breakpoint('md') {
+    padding: 2rem 0;
+  }
+
+  // Dark blue overlay so foreground text stays legible over the photo.
+  &__overlay {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    inset: 0;
     pointer-events: none;
-    object-fit: cover;
+    background: linear-gradient(
+      100deg,
+      oklch(28% .06 252 / 0.92) 0%,
+      oklch(28% .06 252 / 0.78) 45%,
+      oklch(28% .06 252 / 0.55) 100%
+    );
+    z-index: 1;
+  }
+
+  .-inner {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2.5rem;
+
+    @include breakpoint(lg) {
+      flex-direction: column;
+      align-items: stretch;
+    }
   }
 
   h1 {
     margin: 0;
-    text-align: center;
     color: #fff;
   }
 
-} 
+  // --- Editable page/post masthead ---------------------------------------
+  // Drop the section's bottom padding when the As Seen In strip is present so
+  // the logos sit close to the bottom edge (the strip supplies its own spacing).
+  &.-editable:has(.masthead__as-seen-in) {
+    padding-bottom: 0;
+  }
+
+  // --- Footer (award seal + As Seen In), aligned to the content container --
+  &__footer {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    margin-top: 3rem;
+  }
+
+  &__content {
+    position: relative;
+    z-index: 2;
+    flex: 1 1 auto;
+    max-width: 640px;
+    color: #fff;
+
+    .masthead__button-icon {
+      svg, img {
+        width: 1em;
+        height: 1em;
+        object-fit: contain;
+      }
+    }
+  }
+
+  &__title {
+    font-family: $font-family-heading;
+    font-size: clamp(2.25rem, 5vw, 3.5rem);
+    line-height: 1.05;
+    font-weight: 700;
+    max-width: 40rem; 
+
+    span {
+      color: $color-primary;
+    }
+  }
+
+  &__eyelash {
+    margin-bottom: 1.25rem;
+  }
+
+  &__description {
+    margin: 1.5rem 0 0;
+    max-width: 37rem; 
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.85);
+    @include breakpoint('md') {
+      margin: .5rem 0 0;
+    }
+  }
+
+  &__buttons {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 2rem;
+    @include breakpoint('md') {
+      margin-top: 1rem;
+    }
+    .-button,
+    ._button {
+      margin: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: $button-icon-gap;
+    }
+  }
+
+  &__button-icon {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  ._button.-small {
+    padding: 0.5rem 1rem 0.4rem;
+    font-size: 0.8125rem;
+  }
+
+  &__secondary-cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1.75rem;
+
+    &-text {
+      font-size: 0.9375rem;
+      color: rgba(255, 255, 255, 0.8);
+
+      strong,
+      b {
+        color: #fff;
+      }
+    }
+
+    ._button {
+      margin: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: $button-icon-gap;
+    }
+  }
+
+  &__stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2.5rem;
+    margin-top: 2.5rem;
+    @include breakpoint('md') {
+      margin-top: 1.5rem;
+      gap: 1.5rem;
+    }
+  }
+
+  &__stat {
+    display: flex;
+    flex-direction: column;
+    padding-left: 1rem;
+    border-left: 3px solid $color-primary;
+
+    &-value {
+      font-size: 1.75rem;
+      font-weight: 700;
+      line-height: 1.1;
+      color: #fff;
+    }
+
+    &-label {
+      font-size: 0.8125rem;
+      color: rgba(255, 255, 255, 0.7);
+    }
+  }
+
+  &__legal {
+    margin-top: 2.5rem;
+    max-width: 37rem; 
+    font-size: 0.6875rem;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.55);
+    @include breakpoint('md') {
+      margin-top: 1.5rem;
+    }
+    a {
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: underline;
+    }
+  }
+
+  // --- Territory representative CTA box -----------------------------------
+  &__rep-box {
+    position: relative;
+    z-index: 2;
+    flex: 0 0 auto;
+    width: 100%;
+    max-width: 440px;
+    padding: 2rem;
+    border-radius: 16px;
+    background-color: #fff;
+    box-shadow: 0 25px 60px oklch(22% .03 252 / 0.25);
+    color: $color-text;
+
+    @include breakpoint(lg) {
+      max-width: none;
+    }
+
+    &-eyebrow {
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    &-heading {
+      margin: 0 0 0.5rem;
+      font-size: 1.375rem;
+      line-height: 1.2;
+      color: $color-tertiary;
+    }
+
+    &-text {
+      margin: 0 0 1.25rem;
+      font-size: 0.9375rem;
+      line-height: 1.5;
+      color: oklch(22% .03 252 / 0.75);
+    }
+
+    ._button {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      margin: 0 0 0.75rem;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  // --- Award seal ---------------------------------------------------------
+  &__award {
+    align-self: flex-end;
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    margin-bottom: 1.25rem;
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 10px 30px oklch(22% .03 252 / 0.25);
+    max-width: 320px;
+
+    @include breakpoint(lg) {
+      align-self: flex-start;
+    }
+
+    &-img {
+      width: 54px;
+      height: auto;
+      flex: 0 0 auto;
+      object-fit: contain;
+    }
+
+    &-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.25;
+      color: $color-text;
+    }
+
+    &-eyebrow {
+      display: block;
+    }
+
+    &-title {
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: $color-tertiary;
+    }
+
+    &-source {
+      font-size: 0.6875rem;
+      color: oklch(22% .03 252 / 0.6);
+    }
+  }
+
+  // When the As Seen In strip is present, float the award seal above it
+  // (anchored to the footer so it auto-tracks the strip's height).
+  &:has(.masthead__as-seen-in) &__award {
+    position: absolute;
+    right: var(--container-padding-x);
+    bottom: calc(100% + 1rem);
+    margin: 0;
+    z-index: 3;
+
+    @include breakpoint(lg) {
+      position: static;
+      bottom: auto;
+      margin-bottom: 1.25rem;
+      align-self: flex-start;
+    }
+  }
+
+  // --- As Seen In strip ---------------------------------------------------
+  &__as-seen-in {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.5rem 0 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+
+    @include breakpoint('md') {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    &-label {
+      flex: 0 0 auto;
+      font-size: 0.6875rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    &-logos {
+      flex: 1 1 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-around;
+      gap: .5rem 1.5rem;
+      width: 100%;
+      min-width: 0;
+
+      @include breakpoint('md') {
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        gap: 1.5rem;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        scroll-snap-type: x mandatory;
+        scroll-padding-inline: 0;
+
+        &::-webkit-scrollbar {
+          display: none;
+        }
+      }
+
+      img {
+        width: auto;
+        height: 40px;
+        max-width: 160px;
+        object-fit: contain;
+        object-position: center;
+        filter: brightness(0) invert(1);
+        opacity: 0.75;
+        flex-shrink: 0;
+
+        @include breakpoint('md') {
+          // Two full logos + half of the next (~2.5 visible in the row).
+          flex: 0 0 calc((100% - 3rem) / 2.5);
+          max-width: calc((100% - 3rem) / 2.5);
+          width: 100%;
+          scroll-snap-align: start;
+          scroll-snap-stop: always;
+        }
+      }
+    }
+  }
+}
+
+// --- Editor live preview ---------------------------------------------------
+// The preview container is injected above the block list inside the canvas.
+.chw-masthead-preview-root {
+  margin-bottom: 1.5rem;
+
+  .masthead {
+    pointer-events: none;
+
+    &.-editable {
+      padding: 5rem 0;
+
+      &:has(.masthead__as-seen-in) {
+        padding-bottom: 0;
+      }
+    }
+  }
+}

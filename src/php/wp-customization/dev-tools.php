@@ -1,4 +1,4 @@
-<? 
+<?php 
 /**
  * Initialization function for the Webfor theme.
  */
@@ -6,24 +6,24 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 // register a new admin settings page called "Developer Tools", hide after launch
-function krypton_developer_tools() {
+function chw_developer_tools() {
     if (current_user_can('administrator')) {
         add_menu_page(
             'Developer Tools',
             'Developer Tools',
             'manage_options',
             'developer-tools',
-            'krypton_developer_tools_page',
+            'chw_developer_tools_page',
             'dashicons-editor-code',
             80
         );
     }
 }
 
-add_action('admin_menu', 'krypton_developer_tools');
+add_action('admin_menu', 'chw_developer_tools');
 
 // Function to render the developer tools page
-function krypton_developer_tools_page() {
+function chw_developer_tools_page() {
 
     ?> 
         <style>
@@ -46,7 +46,7 @@ function krypton_developer_tools_page() {
             }
             
         </style>
-    <?
+    <?php
     // Add your code here to render the developer tools page
     echo '<h1>Developer Tools</h1>';
 

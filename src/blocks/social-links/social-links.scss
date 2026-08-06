@@ -1,10 +1,1 @@
-.social-links {
-    a {
-        text-decoration: none;
-        font-size: calc(var(--base-font-size) * 1.25);
-        i {color: var(--color-primary);}
-        &:hover, &:focus, &:active {
-            i {color: var(--color-secondary);}
-        }
-    }
-}
+@import '../../scss/components/social-links';

@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * Theme Header
  * 
@@ -8,78 +8,29 @@
  * 
  * @link https://developer.wordpress.org/themes/basics/template-files/#template-partials
  * @link https://codex.wordpress.org/Function_Reference/get_header
- * @author Webfor <https://www.webfor.com/>
+ * @author Choice Home Warranty <https://www.choicehomewarranty.com/>
  */
 
-// Theme Settings
-$font_file_url = get_theme_mod('font_url_setting');
-$header_positioning = get_field('header_positioning'); // Select: fixed, absolute, relative
 ?>
 
 <!doctype html>
-<html <? language_attributes(); ?>>
+<html <?php language_attributes(); ?>>
 	<head>
 		<meta charset="<?= bloginfo( 'charset' ); ?>" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 		<link rel="profile" href="http://gmpg.org/xfn/11">
-		<? wp_head(); ?>
+		<?php wp_head(); ?>
 
-		<? get_template_part('src/components/root-customizer-vars');  ?>
-
-		<? if($font_file_url): ?>
-			<link rel="preload" href="<?= $font_file_url; ?>" as="style" />
-			<link rel="stylesheet" href="<?= $font_file_url; ?>">
-		<? endif; ?>
-
-		<? 
-		$settings_header_scripts = get_field('header_scripts', 'option'); 
-		$page_scripts = get_field('page_scripts'); 
-		if($settings_header_scripts) { echo $settings_header_scripts; } 
-		if($page_scripts) {
-			$page_header_scripts = $page_scripts['header_scripts'];  
-			echo $page_header_scripts; 
-		} 
-		if(!is_home()) {
-			$header_styles = get_field('header_styles');
-			if($header_styles) { 
-				$background_color = $header_styles['background_color']; // Color picker field
-				$backdrop_filter = $header_styles['backdrop_filter']; // Number field
-				$transparent_white_logo = $header_styles['transparent_white_logo']; // true / false field
-				$main_nav_link_color = $header_styles['main_nav_link_color']; // Color picker field
-			} 
-		}
-		?>
-
-		<? if(!is_home() && $header_positioning != 'relative') { ?>
-		<style>
-			<? if($transparent_white_logo) { ?> 
-			.site-header .header-col .site-logo img {
-				filter: brightness(0) invert(1);
-			}
-			<? } if($main_nav_link_color) { ?>
-			.site-header #main-header-menu > li > a,
-			.site-header #main-header-menu > li > .toggle-button,
-			.site-header #cta-header-menu > li > a  {
-				color: <?= $main_nav_link_color; ?>;
-			}
-			.site-header .line-bar {background-color: <?= $main_nav_link_color; ?>;}
-			<? } ?>
-		</style>
-		<? } ?>
+		<?php get_template_part('src/components/root-customizer-vars');  ?>
 	</head>
 
-	<body <? body_class(); ?>>
+	<body <?php body_class(); ?>>
 
-		<header 
+		<header
 			id="main-header" 
 			class="
 				site-header 
-				-position-<?= $header_positioning; ?>"
-			<? if(!is_home() && $header_positioning != 'relative') { ?> 
-			style="
-				<? if($background_color) { ?>background-color: <?= $background_color; ?>; <? } ?>
-				<? if($backdrop_filter) { ?>backdrop-filter: blur(<?= $backdrop_filter; ?>px);<? } ?>"
-			<? } ?>>
+				-position-fixed">
 
 			<div 
 				class="accessibility-navigation">
@@ -91,13 +42,12 @@ $header_positioning = get_field('header_positioning'); // Select: fixed, absolut
 					class="sr-only">Skip to Content</a>
 			</div>
 
-			<? get_template_part('src/components/announcement-bar');  ?>
+			<?php get_template_part('src/components/announcement-bar');  ?>
 
 			<div 
 				class="
 					_inner 
 					_container 
-					-max-width-100 
 					_flex 
 					-justify-end 
 					-align-center">
@@ -107,7 +57,7 @@ $header_positioning = get_field('header_positioning'); // Select: fixed, absolut
 						header-col 
 						-logo">
 
-					<? get_template_part('src/components/site-logo'); ?>
+					<?php get_template_part('src/components/site-logo'); ?>
 
 				</div>
 
@@ -118,7 +68,7 @@ $header_positioning = get_field('header_positioning'); // Select: fixed, absolut
 						--main 
 						_flex
 						_display-desktop">
-					<? wp_nav_menu( array( 
+					<?php wp_nav_menu( array( 
 						'theme_location' => 'main-nav', 
 						'menu_id' => 'main-header-menu'
 					)); ?>
@@ -132,7 +82,7 @@ $header_positioning = get_field('header_positioning'); // Select: fixed, absolut
 						_flex 
 						_display-desktop">
 
-					<? wp_nav_menu( array( 
+					<?php wp_nav_menu( array( 
 						'cta_menu', 
 						'menu_id' => 'cta-header-menu'
 					)); ?>
@@ -145,20 +95,45 @@ $header_positioning = get_field('header_positioning'); // Select: fixed, absolut
 						-mobile-navigation-toggle 
 						_display-mobile">
 
-					<button 
-						class="mobile-offcanvas-toggle" 
-						aria-label="Open mobile navigation">
+					<div class="mobile-header-actions _flex _align-center">
+						<?php
+						$header_phone = function_exists( 'chw_get_header_phone_link' ) ? chw_get_header_phone_link() : null;
+						if ( $header_phone ) :
+							?>
+						<a
+							class="mobile-header-phone"
+							href="<?= esc_url( $header_phone['url'] ); ?>"
+							aria-label="<?= esc_attr( sprintf( __( 'Call %s', 'chw' ), $header_phone['label'] ) ); ?>">
 
-						<span class="line-bar"></span>
-						<span class="line-bar"></span>
-						<span class="line-bar"></span>
+							<span class="sr-only"><?= esc_html( $header_phone['label'] ); ?></span>
 
-					</button>
+						</a>
+						<?php endif; ?>
+
+						<button 
+							class="mobile-offcanvas-toggle" 
+							aria-label="Open mobile navigation">
+
+							<span class="line-bar"></span>
+							<span class="line-bar"></span>
+							<span class="line-bar"></span>
+
+						</button>
+					</div>
 
 				</div>
 			</div>
 
 		</header>
+		<script>
+			(function () {
+				var header = document.getElementById('main-header');
+				if (!header || !header.classList.contains('-position-fixed')) return;
+				var height = header.offsetHeight + 'px';
+				document.documentElement.style.setProperty('--header-height', height);
+				document.body.style.setProperty('--header-height', height);
+			})();
+		</script>
 
 		<div 
 			id="mobile-offcanvas" 
@@ -173,7 +148,10 @@ $header_positioning = get_field('header_positioning'); // Select: fixed, absolut
 					class="
 						mobile-offcanvas__header 
 						_flex 
-						-column">
+						-align-center 
+						-justify-between">
+
+					<?php get_template_part( 'src/components/site-icon' ); ?>
 
 					<button 
 						class="
@@ -186,18 +164,16 @@ $header_positioning = get_field('header_positioning'); // Select: fixed, absolut
 
 					</button>
 
-					<? get_template_part('src/components/site-logo');  ?>
-
 				</div>
 
 				<div class="mobile-offcanvas__content">
 
-					<? wp_nav_menu( array( 
+					<?php wp_nav_menu( array( 
 						'theme_location' => 'main-nav', 
 						'menu_id' => 'mobile-header-menu'
 					)); ?>
 
-					<? wp_nav_menu( array( 
+					<?php wp_nav_menu( array( 
 						'cta_menu', 
 						'menu_id' => 'cta-header-menu'
 					)); ?>

@@ -1,4 +1,4 @@
-<? 
+<?php 
 if ( ! defined( 'ABSPATH' ) ) exit;
 /**
  * Add "Duplicate" link to post row actions for posts, pages, and custom post types

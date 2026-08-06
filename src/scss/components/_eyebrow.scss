@@ -1,0 +1,84 @@
+// Shared eyebrow / eyelash label — typography and pill chrome are consistent
+// site-wide. Use surface modifiers (-on-dark, -on-light) and _text color
+// utilities for context-specific coloring. Icons use ._eyebrow__icon.
+
+$eyebrow-border-light: color-mix(in oklab, #{$color-tertiary} 12%, white);
+$eyebrow-brand-orange-bg: #fde8df;
+$eyebrow-brand-orange-border: #fcddcc;
+
+._eyebrow {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	padding: 0.45rem 0.9rem 0.3rem;
+	border-radius: 999px;
+	font-size: 0.75rem;
+	font-weight: 600;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	line-height: 1.2;
+
+	@include breakpoint('md') {
+		font-size: calc(0.75rem - 2px);
+		padding: calc(0.45rem - 1px) calc(0.9rem - 2px) calc(0.3rem - 1px);
+	}
+
+	&__icon {
+		display: inline-flex;
+		align-items: center;
+		flex-shrink: 0;
+		font-size: 0.9rem;
+
+		@include breakpoint('md') {
+			font-size: calc(0.9rem - 2px);
+		}
+
+		@include chw-svg-current-color;
+
+		svg,
+		img {
+			width: 1em;
+			height: 1em;
+			object-fit: contain;
+		}
+	}
+
+	&__label {
+		display: inline;
+	}
+
+	// Text-only — shared typography, no pill chrome.
+	&.-plain {
+		padding: 0;
+		border: none;
+		border-radius: 0;
+		background: transparent;
+		backdrop-filter: none;
+		-webkit-backdrop-filter: none;
+		box-shadow: none;
+	}
+
+	// Masthead and other dark/image backgrounds.
+	&.-on-dark {
+		border: 1px solid rgba(255, 255, 255, 0.35);
+		background-color: rgba(255, 255, 255, 0.08);
+		backdrop-filter: blur(10px);
+		-webkit-backdrop-filter: blur(10px);
+		color: #ffffff;
+	}
+
+	// Light section backgrounds (e.g. awards block).
+	&.-on-light {
+		border: none;
+		background-color: #ffffff;
+		box-shadow: inset 0 0 0 1px #{$eyebrow-border-light};
+	}
+
+	// Brand orange pill — warm tint background with orange label text.
+	&.-brand-orange {
+		color: $color-primary;
+		background-color: $eyebrow-brand-orange-bg;
+		border: 1px solid $eyebrow-brand-orange-border;
+		box-shadow: none;
+	}
+}

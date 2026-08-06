@@ -1,6 +1,6 @@
 </section>
 
-<?
+<?php
     $block_width = get_field('block_width'); // select, container, or full options
     $mobile_display = get_field('mobile_display'); // select, tiles (default) or swipe
     $modal_background = get_field('modal_background'); // color picker w/ opacity enabled
@@ -9,18 +9,18 @@
     $gallery_images = get_field('gallery_images'); // gallery 
 ?>
 
-<? if ($gallery_images) { ?>
+<?php if ($gallery_images) { ?>
 <section 
     class="
         gallery-tiles 
         -mobile-<?= $mobile_display; ?>
-        <? if(isset($block['className'])) { echo ' ' . $block['className']; } ?>"
-    style="padding: <?= $tile_gap; ?>px<? if ($block_width == 'container') { ?> 0<? } ?>;"
+        <?php if(isset($block['className'])) { echo ' ' . $block['className']; } ?>"
+    style="padding: <?= $tile_gap; ?>px<?php if ($block_width == 'container') { ?> 0<?php } ?>;"
     role="region" aria-label="Image gallery">
 
-    <? if ($block_width == 'container') { ?>
+    <?php if ($block_width == 'container') { ?>
         <div class="_container">
-    <? } ?>
+    <?php } ?>
 
         <div 
             class="
@@ -31,7 +31,7 @@
                 grid-template-columns: repeat(auto-fill, minmax(calc(25% - <?= $tile_gap; ?>px), 1fr));"
             role="grid">
             
-        <? foreach ($gallery_images as $image) { 
+        <?php foreach ($gallery_images as $image) { 
             $img_url = $image['url'];
             $img_alt = $image['alt']; ?>
 
@@ -50,23 +50,23 @@
 
             </button>
 
-        <? } ?>
+        <?php } ?>
 
         </div>
 
-    <? if ($block_width == 'container') { ?>
+    <?php if ($block_width == 'container') { ?>
         </div>
-    <? } ?>
+    <?php } ?>
 
 </section>
-<? } ?>
+<?php } ?>
 
 <div 
     class="gallery-modal" 
     style="background-color: <?= $modal_background; ?>;"
     role="dialog" aria-label="Image viewer modal">
 
-    <? get_template_part('src/components/close-button');  ?>
+    <?php get_template_part('src/components/close-button');  ?>
 
     <div class="_inner" role="document">
 

@@ -1,20 +1,20 @@
-<? 
+<?php 
     $tabbed_panes = get_field('tabbed_panes'); // repeater -> tab_label (text), pane_content (WYSIWYG)  ?>
 
 <div 
-    <? if(isset($block['anchor'])) { ?>
+    <?php if(isset($block['anchor'])) { ?>
     id="<?= esc_attr( $block['anchor'] ); ?>" 
-    <? } ?>
+    <?php } ?>
     class="
         tabbed-panes
-        <? if(isset($block['className'])) { echo ' ' . $block['className']; } ?>" 
+        <?php if(isset($block['className'])) { echo ' ' . $block['className']; } ?>" 
     role="tablist">
 
-    <? if ($tabbed_panes): ?>
+    <?php if ($tabbed_panes): ?>
 
         <div class="_tabs -flex">
 
-            <? foreach ($tabbed_panes as $index => $tabbed_pane):
+            <?php foreach ($tabbed_panes as $index => $tabbed_pane):
                 $tab_label = $tabbed_pane['tab_label'];
                 $is_active = ($index === 0) ? '-active' : '';
                 $slug = slugify($tab_label); ?>
@@ -30,13 +30,13 @@
 
                 </button>
 
-            <? endforeach; ?>
+            <?php endforeach; ?>
 
         </div>
 
         <div class="_panes">
 
-            <? foreach ($tabbed_panes as $index => $tabbed_pane):
+            <?php foreach ($tabbed_panes as $index => $tabbed_pane):
                 $tab_label = $tabbed_pane['tab_label'];
                 $is_active = ($index === 0) ? '-active' : '';
                 $slug = slugify($tab_label); ?>
@@ -52,10 +52,10 @@
 
                 </div>
 
-            <? endforeach; ?>
+            <?php endforeach; ?>
 
         </div>
 
-    <? endif; ?>
+    <?php endif; ?>
 
 </div>

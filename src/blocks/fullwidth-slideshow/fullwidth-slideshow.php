@@ -1,6 +1,6 @@
 </section>
 
-<? 
+<?php 
     // unique id
     $block_id = $block['id'];
 
@@ -32,7 +32,7 @@
     $slides = get_field('slideshow_slides'); // Repeater
 ?>
 
-<? if($slideshow_height == 'custom') { ?>
+<?php if($slideshow_height == 'custom') { ?>
 <style>
     .fullwidth-slideshow.-<?= $block_id; ?> ._content {
         padding: <?= $slideshow_desktop_padding; ?> !important;
@@ -43,29 +43,29 @@
         }
     }
 </style>
-<? } ?>
+<?php } ?>
 
 <section 
-    <? if(isset($block['anchor'])) { ?>
+    <?php if(isset($block['anchor'])) { ?>
     id="<?= esc_attr( $block['anchor'] ); ?>" 
-    <? } ?>
+    <?php } ?>
     class="
         fullwidth-slideshow 
         -<?= $block_id; ?> 
         -size-<?= $slideshow_height; ?>
-        <? if($block['className']) { echo ' ' . $block['className']; } ?>">
+        <?php if($block['className']) { echo ' ' . $block['className']; } ?>">
 
     <div 
         class="swiper-container" 
         data-swiper="{'loop': <?= $loop; ?>, 'autoplay': <?= $autoplay; ?>, 'speed': <?= $transition_speed; ?>
-        <? if($navigation == 'true') { ?>, 'navigation': { 'nextEl': '.swiper-button-next', 'prevEl': '.swiper-button-prev' }<? } ?>
-        <? if($pagination == 'true') { ?>, 'pagination': { 'el': '.swiper-pagination', 'clickable': true}<? } ?>}">
+        <?php if($navigation == 'true') { ?>, 'navigation': { 'nextEl': '.swiper-button-next', 'prevEl': '.swiper-button-prev' }<?php } ?>
+        <?php if($pagination == 'true') { ?>, 'pagination': { 'el': '.swiper-pagination', 'clickable': true}<?php } ?>}">
 
         <div class="swiper-wrapper">
 
-            <? if($slides) { ?>
+            <?php if($slides) { ?>
 
-                <? foreach($slides as $slide) { 
+                <?php foreach($slides as $slide) { 
                     $image = $slide['image']; // Image
                     $title = $slide['title']; // Text
                     $description = $slide['description']; // Text Area
@@ -85,32 +85,32 @@
 
                             <div class="_content _container">
 
-                                <? if($title) { ?><h2><?= $title; ?></h2><? } ?>
+                                <?php if($title) { ?><h2><?= $title; ?></h2><?php } ?>
 
-                                <? if($description) { ?><p><?= $description; ?></p><? } ?>
+                                <?php if($description) { ?><p><?= $description; ?></p><?php } ?>
 
-                                <? if($cta_links) { ?>
+                                <?php if($cta_links) { ?>
 
                                     <div class="_cta-links">
 
-                                        <? foreach($cta_links as $cta_link) { 
+                                        <?php foreach($cta_links as $cta_link) { 
                                             $link = $cta_link['link'];
                                             $cta_class = ($cta_link === reset($cta_links)) ? '-primary' : '-outline'; ?>
 
                                             <a 
                                                 href="<?= $link['url']; ?>" 
                                                 class="_button <?= $cta_class; ?>"
-                                                <? if($link['target']) { ?> target="<?= $link['target']; ?>"<? } ?>>
+                                                <?php if($link['target']) { ?> target="<?= $link['target']; ?>"<?php } ?>>
 
                                                 <?= $link['title']; ?>
 
                                             </a>
 
-                                        <? } ?>
+                                        <?php } ?>
 
                                     </div>
 
-                                <? } ?>
+                                <?php } ?>
 
                             </div>
 
@@ -118,28 +118,28 @@
 
                     </div>
 
-                <? } ?>
+                <?php } ?>
 
-            <? } ?>
+            <?php } ?>
 
         </div>
         
-        <? if($navigation == 'true') { ?>
+        <?php if($navigation == 'true') { ?>
         <div class="
             _swiper-actions 
             -prev-next">
             <div class="swiper-button-prev"></div>
             <div class="swiper-button-next"></div>
         </div>
-        <? } ?>
+        <?php } ?>
 
-        <? if($pagination == 'true') { ?>
+        <?php if($pagination == 'true') { ?>
         <div class="
             _swiper-actions 
             -bullets">
             <div class="swiper-pagination"></div>
         </div>
-        <? } ?>
+        <?php } ?>
 
     </div>
 

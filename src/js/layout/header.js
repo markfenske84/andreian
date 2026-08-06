@@ -1,7 +1,107 @@
 document.addEventListener("DOMContentLoaded", function() {
 
+    /*** START --- Fixed Header Height Offset ***/
+
+    function applyHeaderHeight(height) {
+        const value = `${height}px`;
+        document.documentElement.style.setProperty('--header-height', value);
+        document.body.style.setProperty('--header-height', value);
+    }
+
+    function setHeaderHeight(entryHeight) {
+        const header = document.getElementById('main-header');
+        if (!header || !header.classList.contains('-position-fixed')) return;
+
+        const height = typeof entryHeight === 'number' ? entryHeight : header.offsetHeight;
+        applyHeaderHeight(height);
+    }
+
+    function initHeaderHeight() {
+        const header = document.getElementById('main-header');
+        if (!header) return;
+
+        setHeaderHeight();
+
+        requestAnimationFrame(function () {
+            requestAnimationFrame(function () {
+                document.body.classList.add('header-offset-animate');
+            });
+        });
+
+        if ('ResizeObserver' in window) {
+            const headerObserver = new ResizeObserver((entries) => {
+                const entry = entries[0];
+                if (!entry) return;
+
+                let height = entry.contentRect.height;
+                if (entry.borderBoxSize && entry.borderBoxSize.length) {
+                    height = entry.borderBoxSize[0].blockSize;
+                }
+
+                requestAnimationFrame(() => applyHeaderHeight(height));
+            });
+            headerObserver.observe(header);
+        }
+
+        window.addEventListener('resize', () => {
+            requestAnimationFrame(() => setHeaderHeight());
+        });
+        window.addEventListener('load', () => {
+            requestAnimationFrame(() => setHeaderHeight());
+        });
+    }
+
+    initHeaderHeight();
+
+    /*** END --- Fixed Header Height Offset ***/
+
+    /*** START --- Header Scroll Hide/Show ***/
+
+    function initHeaderScrollHide() {
+        const header = document.getElementById('main-header');
+        if (!header || !header.classList.contains('-position-fixed')) return;
+
+        let lastScrollY = window.scrollY;
+        let ticking = false;
+        const scrollThreshold = 10;
+        const topThreshold = 10;
+
+        function updateHeader() {
+            const currentScrollY = window.scrollY;
+
+            if (document.body.classList.contains('mobile-offcanvas-open')) {
+                header.classList.remove('-scroll-hidden');
+                lastScrollY = currentScrollY;
+                ticking = false;
+                return;
+            }
+
+            if (currentScrollY <= topThreshold) {
+                header.classList.remove('-scroll-hidden');
+            } else if (currentScrollY > lastScrollY + scrollThreshold) {
+                header.classList.add('-scroll-hidden');
+            } else if (currentScrollY < lastScrollY - scrollThreshold) {
+                header.classList.remove('-scroll-hidden');
+            }
+
+            lastScrollY = currentScrollY;
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', function() {
+            if (!ticking) {
+                window.requestAnimationFrame(updateHeader);
+                ticking = true;
+            }
+        }, { passive: true });
+    }
+
+    initHeaderScrollHide();
+
+    /*** END --- Header Scroll Hide/Show ***/
+
     // Detect the Mobile Menu Layout selected in the WP Customizer via localized data.
-    const mobileMenuLayout = (window.krypton_localize && window.krypton_localize.mobile_menu_layout) ? window.krypton_localize.mobile_menu_layout : 'dropdown';
+    const mobileMenuLayout = (window.chw_localize && window.chw_localize.mobile_menu_layout) ? window.chw_localize.mobile_menu_layout : 'dropdown';
 
     const isPanelLayout = mobileMenuLayout === 'panel';
 
@@ -30,10 +130,29 @@ document.addEventListener("DOMContentLoaded", function() {
 
         const subMenu = menuItem.querySelector('.sub-menu');
         menuItem.insertBefore(button, subMenu);
+    }
 
-        // For desktop positioning (existing behaviour)
-        const topLevelHeight = menuItem.offsetHeight;
-        subMenu.style.top = `${topLevelHeight}px`;
+    // Batch submenu top offsets after all toggle buttons are inserted (avoids forced reflow).
+    function positionSubmenus(menuItems) {
+        requestAnimationFrame(() => {
+            const positions = [];
+
+            menuItems.forEach((menuItem) => {
+                const subMenu = menuItem.querySelector('.sub-menu');
+                if (subMenu) {
+                    positions.push({
+                        subMenu,
+                        top: menuItem.offsetHeight,
+                    });
+                }
+            });
+
+            requestAnimationFrame(() => {
+                positions.forEach(({ subMenu, top }) => {
+                    subMenu.style.top = `${top}px`;
+                });
+            });
+        });
     }
 
     // Attach event listeners to menu items (root level inside off-canvas)
@@ -59,6 +178,8 @@ document.addEventListener("DOMContentLoaded", function() {
             });
         }
     });
+
+    positionSubmenus(rootMenuItems);
 
     /** -------------------------------------------
      * Slide-in Panel helper functions (panel mode)
@@ -130,6 +251,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 openPanel(item);
             });
         });
+        positionSubmenus(nestedMenuItems);
     }
 
     /*** END --- Accessible Submenu Navigation 
@@ -186,4 +308,5 @@ document.addEventListener("DOMContentLoaded", function() {
             item.classList.toggle('open');
         });
     });
+    positionSubmenus(desktopMenuItems);
 });

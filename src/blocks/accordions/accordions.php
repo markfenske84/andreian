@@ -2,14 +2,14 @@
 $accordions = get_field('accordions'); // repeater -> summery (text), details_inner (WYSIWYG)
 ?>
 
-<? if($accordions) { ?>
+<?php if($accordions) { ?>
 <div 
     <?php if(isset($block['anchor'])) { ?>
         id="<?= esc_attr($block['anchor']); ?>" 
     <?php } ?>
     class="
         accordions
-        <? if(isset($block['className'])) { echo ' ' . $block['className']; } ?>">
+        <?php if(isset($block['className'])) { echo ' ' . $block['className']; } ?>">
 
     <?php foreach($accordions as $index => $accordion) { ?>
 
@@ -47,4 +47,4 @@ $accordions = get_field('accordions'); // repeater -> summery (text), details_in
     <?php } ?>
 
 </div>
-<? } ?>
+<?php } ?>
