@@ -31,9 +31,7 @@ $wrapper_attributes = isset( $block_wrapper_attributes ) ? $block_wrapper_attrib
 
 <section <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput ?>>
 
-	<div class="_container">
-
-		<div class="tabbed-comparison-table__body<?php echo $show_tablist ? ' -has-tabs' : ' -single-tab'; ?>">
+	<div class="tabbed-comparison-table__body<?php echo $show_tablist ? ' -has-tabs' : ' -single-tab'; ?>">
 
 			<?php if ( $show_tablist ) : ?>
 				<div class="tabbed-comparison-table__tabs _tabs -flex" role="tablist" aria-label="<?php echo esc_attr__( 'Coverage tables', 'chw' ); ?>">
@@ -88,5 +86,4 @@ $wrapper_attributes = isset( $block_wrapper_attributes ) ? $block_wrapper_attrib
 
 		</div>
 
-	</div>
 </section>

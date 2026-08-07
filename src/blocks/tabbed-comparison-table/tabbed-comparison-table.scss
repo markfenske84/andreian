@@ -3,16 +3,6 @@
     margin-top: 0;
     margin-bottom: 0;
 
-    ._container {
-        padding-top: 0;
-        padding-bottom: 0;
-        max-width: 1190px;
-
-        @include breakpoint('md') {
-            max-width: 100%;
-        }
-    }
-
     &__body {
         margin-top: 0;
         margin-bottom: 0;
