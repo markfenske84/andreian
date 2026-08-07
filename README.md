@@ -172,6 +172,7 @@ Each block lives in `src/blocks/<slug>/` and typically includes:
 - CHW Buttons
 - CHW Legal
 - Comparison Table
+- Tabbed Comparison Table
 - CTA Banner, CTA Block, CTA Highlights, CTA Image Banner, CTA Subtle
 - Fullwidth Cover Section
 - Fullwidth Halfscreen

@@ -20,6 +20,7 @@ include_once( 'src/blocks/awards-recognition/register-awards-block.php' ); // Na
 include_once( 'src/blocks/steps-section/register-steps-block.php' ); // Native Steps Section block
 include_once( 'src/blocks/plans-section/register-plans-block.php' ); // Native Plans Section block
 include_once( 'src/blocks/comparison-table/register-comparison-table-block.php' ); // Native Comparison Table block
+include_once( 'src/blocks/tabbed-comparison-table/register-tabbed-comparison-table-block.php' ); // Native Tabbed Comparison Table block
 include_once( 'src/blocks/highlight-cards/register-highlight-cards-block.php' ); // Native Highlight Cards block
 include_once( 'src/blocks/highlights-list/register-highlights-list-block.php' ); // Native Highlights List block
 include_once( 'src/blocks/video-modal/register-video-modal-block.php' ); // Native Video Modal block

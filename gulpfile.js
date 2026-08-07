@@ -142,4 +142,4 @@ gulp.task('browser-sync', function() {
 gulp.task('watch-bs', gulp.parallel('browser-sync', 'watch'));
 
 gulp.task('default', gulp.series('theme-scss', 'theme-js', 'admin-scss', 'admin-js', 'blocks-scss', 'blocks-js', 'browser-sync', 'watch'));
-gulp.task('compile', gulp.series('theme-scss', 'theme-js', 'admin-scss', 'admin-js', 'blocks-scss'));
+gulp.task('compile', gulp.series('theme-scss', 'theme-js', 'admin-scss', 'admin-js', 'blocks-scss', 'blocks-js'));
