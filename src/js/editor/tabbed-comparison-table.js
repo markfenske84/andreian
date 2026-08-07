@@ -70,6 +70,24 @@
 		return next;
 	}
 
+	function duplicateRow( rows, index ) {
+		const source = rows[ index ];
+		if ( ! source ) {
+			return rows;
+		}
+
+		const copy = Object.assign( {}, source, {
+			id: uid( 'row' ),
+			cells: ( Array.isArray( source.cells ) ? source.cells : [] ).map( function ( cell ) {
+				return Object.assign( {}, cell );
+			} ),
+		} );
+
+		const next = rows.slice();
+		next.splice( index + 1, 0, copy );
+		return next;
+	}
+
 	function emptyCell() {
 		return { type: 'none', text: '' };
 	}
@@ -381,6 +399,15 @@
 							isSmall: true,
 							onClick: function () {
 								const nextRows = moveRow( rows, rowIndex, 1 );
+								setGroups( updateRow( groups, groupIndex, { rows: nextRows } ) );
+							},
+						} ),
+						el( Button, {
+							icon: 'admin-page',
+							label: __( 'Duplicate row', 'chw' ),
+							isSmall: true,
+							onClick: function () {
+								const nextRows = duplicateRow( rows, rowIndex );
 								setGroups( updateRow( groups, groupIndex, { rows: nextRows } ) );
 							},
 						} ),
