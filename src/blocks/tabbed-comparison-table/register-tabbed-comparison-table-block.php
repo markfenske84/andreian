@@ -121,6 +121,27 @@ function chw_tabbed_comparison_table_filter_tabs( $tabs ) {
 }
 
 /**
+ * Allowed inline HTML for custom comparison cell text (links, basic formatting).
+ *
+ * @return array
+ */
+function chw_tabbed_comparison_table_cell_text_allowed() {
+	return array(
+		'a'      => array(
+			'href'   => array(),
+			'target' => array(),
+			'rel'    => array(),
+			'class'  => array(),
+			'title'  => array(),
+		),
+		'span'   => array( 'class' => array() ),
+		'strong' => array(),
+		'em'     => array(),
+		'br'     => array(),
+	);
+}
+
+/**
  * Render a single comparison table for one tab.
  *
  * @param array $tab Tab attribute array.
@@ -143,6 +164,8 @@ function chw_tabbed_comparison_table_render_table( $tab ) {
 		'em'     => array(),
 		'br'     => array(),
 	);
+
+	$cell_text_allowed = chw_tabbed_comparison_table_cell_text_allowed();
 
 	$column_count = count( $columns );
 	?>
@@ -232,7 +255,7 @@ function chw_tabbed_comparison_table_render_table( $tab ) {
 										</span>
 										<span class="sr-only"><?php esc_html_e( 'Included', 'chw' ); ?></span>
 									<?php elseif ( 'text' === $type && $text ) : ?>
-										<span class="tabbed-comparison-table__cell-text"><?php echo wp_kses( $text, $inline_allowed ); ?></span>
+										<span class="tabbed-comparison-table__cell-text"><?php echo wp_kses( $text, $cell_text_allowed ); ?></span>
 									<?php else : ?>
 										<span class="sr-only"><?php esc_html_e( 'Not included', 'chw' ); ?></span>
 									<?php endif; ?>

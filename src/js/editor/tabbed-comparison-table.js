@@ -250,8 +250,11 @@
 			return el(
 				'div',
 				{ className: 'tabbed-comparison-table__cell-edit', contentEditable: false },
-				el( TextControl, {
+				el( RichText, {
+					tagName: 'span',
+					className: 'tabbed-comparison-table__cell-text',
 					value: text,
+					allowedFormats: [ 'core/bold', 'core/italic', 'core/link' ],
 					placeholder: __( 'Custom value', 'chw' ),
 					onChange: function ( value ) {
 						onCellChange( { type: 'text', text: value } );
