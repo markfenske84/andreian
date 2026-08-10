@@ -80,6 +80,14 @@ function chw_register_awards_block() {
 		true
 	);
 
+	wp_localize_script(
+		'chw-awards-recognition',
+		'awardsRecognitionData',
+		array(
+			'legalText' => get_theme_mod( 'legal_text', '' ),
+		)
+	);
+
 	register_block_type(
 		'chw/awards-recognition',
 		array(

@@ -174,5 +174,11 @@ $wrapper_attributes = isset( $block_wrapper_attributes ) ? $block_wrapper_attrib
 			</div>
 		<?php endif; ?>
 
+		<?php
+		if ( function_exists( 'chw_render_chw_legal_block' ) ) {
+			echo chw_render_chw_legal_block( array( 'textStyle' => 'dark' ) ); // phpcs:ignore WordPress.Security.EscapeOutput
+		}
+		?>
+
 	</div>
 </section>

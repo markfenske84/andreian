@@ -11,6 +11,9 @@
 	const { createElement: el, Fragment } = wp.element;
 	const { __ } = wp.i18n;
 
+	const blockData = window.awardsRecognitionData || {};
+	const legalText = blockData.legalText || '';
+
 	const EYEBROW_ICON = el(
 		'span',
 		{ className: '_eyebrow__icon _text -primary' },
@@ -435,6 +438,20 @@
 											__( 'Add supporting item', 'chw' )
 										)
 									)
+							  )
+							: null,
+
+						legalText
+							? el(
+									'div',
+									{
+										className: 'chw-legal -text-dark',
+										contentEditable: false,
+									},
+									el( 'div', {
+										className: 'chw-legal__content',
+										dangerouslySetInnerHTML: { __html: legalText },
+									} )
 							  )
 							: null
 					)
