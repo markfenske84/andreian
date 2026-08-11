@@ -133,7 +133,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // Batch submenu top offsets after all toggle buttons are inserted (avoids forced reflow).
-    function positionSubmenus(menuItems) {
+    function positionSubmenus(menuItems, overlap = 0) {
         requestAnimationFrame(() => {
             const positions = [];
 
@@ -142,7 +142,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 if (subMenu) {
                     positions.push({
                         subMenu,
-                        top: menuItem.offsetHeight,
+                        top: menuItem.offsetHeight - overlap,
                     });
                 }
             });

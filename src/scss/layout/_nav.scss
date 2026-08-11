@@ -1,4 +1,5 @@
 $submenu_width_offset: 200px;
+$submenu-hover-bridge: 0.5rem;
 
 // Shared Styles
 .menu {
@@ -138,25 +139,32 @@ $submenu_width_offset: 200px;
           position: relative;
           margin-top: calc(var(--container-gutter) * -.5);
           margin-bottom: calc(var(--container-gutter) * -.5);
-          padding-top: calc(var(--container-gutter) * .5 + .5rem);
-          padding-bottom: calc(var(--container-gutter) * .5 + .5rem);
+          padding-top: 0;
+          padding-bottom: 0;
 
-          &::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background-color: $color-primary;
-            opacity: 0;
-            transition: opacity 0.2s ease;
+          > a {
+            position: relative;
+            display: block;
+            padding-top: calc(var(--container-gutter) * .5 + .5rem);
+            padding-bottom: calc(var(--container-gutter) * .5 + .5rem);
+
+            &::after {
+              content: '';
+              position: absolute;
+              bottom: 0;
+              left: 0;
+              right: 0;
+              height: 3px;
+              background-color: $color-primary;
+              opacity: 0;
+              transition: opacity 0.2s ease;
+            }
           }
 
-          &:hover::after,
-          &:focus-within::after,
-          &.current-menu-item::after,
-          &.current-menu-ancestor::after {
+          &:hover > a::after,
+          &:focus-within > a::after,
+          &.current-menu-item > a::after,
+          &.current-menu-ancestor > a::after {
             opacity: 1;
           }
         }
@@ -632,6 +640,15 @@ body:not(.mobile-menu-layout-panel) .mobile-offcanvas {
       }
 
       .menu-item-has-children {
+        &::before {
+          content: '';
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 100%;
+          height: $submenu-hover-bridge;
+        }
+
         > .sub-menu {
           display: block; // keep in DOM so we can animate opacity/position
           opacity: 0;
