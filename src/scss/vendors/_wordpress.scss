@@ -15,6 +15,15 @@
 	border-radius: $image-rounded-border-radius !important;
 }
 
+// Core Image — normalize editor aspect ratios on mobile.
+@include breakpoint('md') {
+	.wp-block-image img[style*='aspect-ratio'] {
+		aspect-ratio: 5 / 4 !important;
+		width: 100% !important;
+		height: auto !important;
+	}
+}
+
 // Core Columns — reverse visual stack order on mobile (782px matches core breakpoint).
 @media (max-width: 782px) {
 	.wp-block-columns.is-chw-reverse-mobile:not(.is-not-stacked-on-mobile) {
