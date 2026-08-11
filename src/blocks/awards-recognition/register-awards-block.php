@@ -25,21 +25,13 @@ function chw_awards_block_attributes() {
 			'type'    => 'string',
 			'default' => '',
 		),
-		'intro'          => array(
+		'intro'   => array(
 			'type'    => 'string',
 			'default' => '',
 		),
-		'featured'       => array(
+		'logos'   => array(
 			'type'    => 'array',
 			'default' => array(),
-		),
-		'supporting'     => array(
-			'type'    => 'array',
-			'default' => array(),
-		),
-		'showAdditional' => array(
-			'type'    => 'boolean',
-			'default' => false,
 		),
 	);
 }

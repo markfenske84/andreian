@@ -15,12 +15,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $attributes = isset( $attributes ) && is_array( $attributes ) ? $attributes : array();
 
-$eyebrow         = isset( $attributes['eyebrow'] ) ? $attributes['eyebrow'] : '';
-$heading         = isset( $attributes['heading'] ) ? $attributes['heading'] : '';
-$intro           = isset( $attributes['intro'] ) ? $attributes['intro'] : '';
-$featured        = isset( $attributes['featured'] ) && is_array( $attributes['featured'] ) ? $attributes['featured'] : array();
-$supporting      = isset( $attributes['supporting'] ) && is_array( $attributes['supporting'] ) ? $attributes['supporting'] : array();
-$show_additional = ! empty( $attributes['showAdditional'] );
+$eyebrow = isset( $attributes['eyebrow'] ) ? $attributes['eyebrow'] : '';
+$heading = isset( $attributes['heading'] ) ? $attributes['heading'] : '';
+$intro   = isset( $attributes['intro'] ) ? $attributes['intro'] : '';
+$logos   = isset( $attributes['logos'] ) && is_array( $attributes['logos'] ) ? $attributes['logos'] : array();
 
 // Allowed inline formatting for RichText-authored fields.
 $inline_allowed = array(
@@ -46,34 +44,20 @@ $heading_allowed = array(
 	'br'     => array(),
 );
 
-/**
- * Returns true when at least one meaningful field of an item is populated.
- */
-$item_has_content = function ( $item, $fields ) {
-	foreach ( $fields as $field ) {
-		if ( ! empty( $item[ $field ] ) ) {
-			return true;
+$logos = array_filter(
+	$logos,
+	function ( $logo ) {
+		if ( ! is_array( $logo ) ) {
+			return false;
 		}
-	}
-	return false;
-};
-
-$featured = array_filter(
-	$featured,
-	function ( $item ) use ( $item_has_content ) {
-		return $item_has_content( $item, array( 'imageUrl', 'title', 'source', 'year' ) );
-	}
-);
-
-$supporting = array_filter(
-	$supporting,
-	function ( $item ) use ( $item_has_content ) {
-		return $item_has_content( $item, array( 'imageUrl', 'wordmark', 'title', 'caption' ) );
+		$id  = isset( $logo['id'] ) ? absint( $logo['id'] ) : 0;
+		$url = isset( $logo['url'] ) ? (string) $logo['url'] : '';
+		return $id > 0 || '' !== $url;
 	}
 );
 
 // Nothing meaningful to render.
-if ( empty( $featured ) && empty( $eyebrow ) && empty( $heading ) && empty( $intro ) ) {
+if ( empty( $logos ) && empty( $eyebrow ) && empty( $heading ) && empty( $intro ) ) {
 	return;
 }
 
@@ -106,71 +90,38 @@ $wrapper_attributes = isset( $block_wrapper_attributes ) ? $block_wrapper_attrib
 			<?php endif; ?>
 		</div>
 
-		<?php if ( ! empty( $featured ) ) : ?>
-			<div class="awards-recognition__featured">
-				<?php foreach ( $featured as $award ) : ?>
-					<article class="awards-recognition__card _flex -column -align-center _text -align-center">
-						<div class="awards-recognition__card-media _flex -align-center -justify-center">
-							<?php if ( ! empty( $award['imageUrl'] ) ) : ?>
+		<?php if ( ! empty( $logos ) ) : ?>
+			<div class="awards-recognition__gallery">
+				<ul class="awards-recognition__logos">
+					<?php foreach ( $logos as $logo ) : ?>
+						<?php
+						$attachment_id = isset( $logo['id'] ) ? absint( $logo['id'] ) : 0;
+						$url           = isset( $logo['url'] ) ? (string) $logo['url'] : '';
+						$alt           = isset( $logo['alt'] ) ? (string) $logo['alt'] : '';
+						?>
+						<li class="awards-recognition__logo">
+							<?php if ( $attachment_id && wp_attachment_is_image( $attachment_id ) ) : ?>
+								<?php
+								echo wp_get_attachment_image(
+									$attachment_id,
+									'medium',
+									false,
+									array(
+										'loading' => 'lazy',
+										'class'   => 'awards-recognition__logo-img',
+									)
+								); // phpcs:ignore WordPress.Security.EscapeOutput
+								?>
+							<?php elseif ( $url ) : ?>
 								<img
-									src="<?php echo esc_url( $award['imageUrl'] ); ?>"
-									alt="<?php echo esc_attr( isset( $award['imageAlt'] ) ? $award['imageAlt'] : '' ); ?>"
-									width="140"
-									height="80"
+									class="awards-recognition__logo-img"
+									src="<?php echo esc_url( $url ); ?>"
+									alt="<?php echo esc_attr( $alt ); ?>"
 									loading="lazy" />
 							<?php endif; ?>
-						</div>
-						<div class="awards-recognition__card-rule"></div>
-						<?php if ( ! empty( $award['title'] ) ) : ?>
-							<p class="awards-recognition__card-title _text -tertiary _text-size -base"><?php echo wp_kses( $award['title'], $inline_allowed ); ?></p>
-						<?php endif; ?>
-						<?php if ( ! empty( $award['source'] ) ) : ?>
-							<p class="awards-recognition__card-source _text -secondary _text-size -sm"><?php echo wp_kses( $award['source'], $inline_allowed ); ?></p>
-						<?php endif; ?>
-						<?php if ( ! empty( $award['year'] ) ) : ?>
-							<p class="awards-recognition__card-year _text -muted -transform-uppercase _text-size -sm"><?php echo wp_kses( $award['year'], $inline_allowed ); ?></p>
-						<?php endif; ?>
-					</article>
-				<?php endforeach; ?>
-			</div>
-		<?php endif; ?>
-
-		<?php if ( $show_additional && ! empty( $supporting ) ) : ?>
-			<div class="awards-recognition__divider _flex -align-center">
-				<span class="_text -muted -transform-uppercase _text-size -sm"><?php esc_html_e( 'Additional recognition', 'chw' ); ?></span>
-			</div>
-
-			<div
-				class="awards-recognition__supporting-wrap"
-				data-count="<?php echo esc_attr( count( $supporting ) ); ?>">
-				<div
-					class="awards-recognition__supporting"
-					data-count="<?php echo esc_attr( count( $supporting ) ); ?>">
-				<?php foreach ( $supporting as $item ) : ?>
-					<figure class="awards-recognition__item _flex -align-center">
-						<div class="awards-recognition__item-media _flex -align-center -justify-center">
-							<?php if ( ! empty( $item['imageUrl'] ) ) : ?>
-								<img
-									src="<?php echo esc_url( $item['imageUrl'] ); ?>"
-									alt="<?php echo esc_attr( isset( $item['imageAlt'] ) ? $item['imageAlt'] : '' ); ?>"
-									width="80"
-									height="40"
-									loading="lazy" />
-							<?php elseif ( ! empty( $item['wordmark'] ) ) : ?>
-								<span class="awards-recognition__item-wordmark _text -tertiary _text-size -xl"><?php echo wp_kses( $item['wordmark'], $inline_allowed ); ?></span>
-							<?php endif; ?>
-						</div>
-						<figcaption class="awards-recognition__item-caption">
-							<?php if ( ! empty( $item['title'] ) ) : ?>
-								<span class="awards-recognition__item-title _text -tertiary _text-size -sm"><?php echo wp_kses( $item['title'], $inline_allowed ); ?></span>
-							<?php endif; ?>
-							<?php if ( ! empty( $item['caption'] ) ) : ?>
-								<span class="awards-recognition__item-text _text -muted _text-size -sm"><?php echo wp_kses( $item['caption'], $inline_allowed ); ?></span>
-							<?php endif; ?>
-						</figcaption>
-					</figure>
-				<?php endforeach; ?>
-				</div>
+						</li>
+					<?php endforeach; ?>
+				</ul>
 			</div>
 		<?php endif; ?>
 
