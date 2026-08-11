@@ -50,6 +50,8 @@ add_action( 'admin_init', 'duplicate_post_action' );
  * @return int|WP_Error The ID of the new duplicated post, or WP_Error object on failure.
  */
 function duplicate_post( $post_id ) {
+    global $wpdb;
+
     // Get the original post object
     $post = get_post( $post_id );
 
@@ -58,12 +60,18 @@ function duplicate_post( $post_id ) {
         return new WP_Error( 'invalid_post', __( 'Invalid post ID.' ) );
     }
 
-    // Create an array for post data
+    $meta_exclude = array( '_edit_lock', '_edit_last', '_wp_old_slug' );
+
+    // Create the shell post first; block content is copied byte-for-byte below.
     $new_post_data = array(
         'post_title'   => $post->post_title . ' (Copy)',
-        'post_content' => $post->post_content,
+        'post_content' => '',
+        'post_excerpt' => $post->post_excerpt,
         'post_status'  => 'draft',
         'post_type'    => $post->post_type,
+        'post_author'  => get_current_user_id(),
+        'menu_order'   => $post->menu_order,
+        'post_parent'  => $post->post_parent,
     );
 
     // Insert the new post
@@ -74,10 +82,28 @@ function duplicate_post( $post_id ) {
         return $new_post_id;
     }
 
+    // wp_insert_post strips backslashes from \uXXXX JSON escapes in block attributes.
+    // Copy post_content directly from the database to preserve exact block markup.
+    $wpdb->query(
+        $wpdb->prepare(
+            "UPDATE {$wpdb->posts} AS dest
+            INNER JOIN {$wpdb->posts} AS src ON src.ID = %d
+            SET dest.post_content = src.post_content
+            WHERE dest.ID = %d",
+            $post_id,
+            $new_post_id
+        )
+    );
+
+    clean_post_cache( $new_post_id );
+
     // Duplicate post meta
     $post_meta = get_post_meta( $post_id );
     if ( ! empty( $post_meta ) ) {
         foreach ( $post_meta as $key => $values ) {
+            if ( in_array( $key, $meta_exclude, true ) ) {
+                continue;
+            }
             foreach ( $values as $value ) {
                 add_post_meta( $new_post_id, $key, $value );
             }
