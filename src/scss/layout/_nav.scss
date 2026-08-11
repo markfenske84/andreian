@@ -639,10 +639,11 @@ body:not(.mobile-menu-layout-panel) .mobile-offcanvas {
           transform: translateY(8px);
           pointer-events: none;
           transition: opacity 0.2s ease-out, transform 0.2s ease-out, visibility 0.2s ease-out;
-          border-radius: $submenu-radius;
+          border-bottom-right-radius: $submenu-radius;
+          border-bottom-left-radius: $submenu-radius;
           overflow: hidden;
           box-shadow: 0 8px 20px -6px rgba(0, 0, 0, 0.12);
-          padding: 0.75rem 0;
+          padding: 0;
         }
 
         &.open > .sub-menu,
