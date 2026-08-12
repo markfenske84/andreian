@@ -289,24 +289,66 @@
 
     @include breakpoint('md') {
         &__table {
-            min-width: 28rem;
+            min-width: 22rem;
         }
 
         &__corner,
         &__feature-label,
         &__group-label {
-            width: 13rem;
-            min-width: 13rem;
-            padding: 0.75rem 1rem;
+            width: 9.5rem;
+            min-width: 9.5rem;
+            padding: 0.65rem 0.75rem;
+            font-size: 0.875rem;
         }
 
         &__plan-head,
         &__group-col,
         &__cell {
-            width: 4.5rem;
-            min-width: 4.5rem;
-            max-width: 5rem;
-            padding: 0.5rem 0.25rem;
+            width: 4rem;
+            min-width: 4rem;
+            max-width: 4rem;
+            padding: 0.45rem 0.2rem;
+        }
+
+        &__plan-subtitle {
+            font-size: 0.75rem;
+        }
+    }
+
+    @include breakpoint('sm') {
+        &__table {
+            min-width: 18rem;
+        }
+
+        &__corner,
+        &__feature-label,
+        &__group-label {
+            width: 7.5rem;
+            min-width: 7.5rem;
+            padding: 0.55rem 0.5rem;
+            font-size: 0.8125rem;
+        }
+
+        &__plan-head,
+        &__group-col,
+        &__cell {
+            width: 3.5rem;
+            min-width: 3.5rem;
+            max-width: 3.5rem;
+            padding: 0.4rem 0.15rem;
+        }
+
+        &__plan-title {
+            font-size: 0.8125rem;
+        }
+
+        &__plan-subtitle {
+            font-size: 0.6875rem;
+        }
+
+        &__check {
+            width: 1.1rem;
+            height: 1.1rem;
         }
     }
 }

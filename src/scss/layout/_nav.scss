@@ -325,7 +325,7 @@ $submenu-hover-bridge: 0.5rem;
 
     .sub-menu {
       li:not(._cta-button):not(._button):not(.-login) a {
-        padding: 0.35rem 0 0.35rem 1rem;
+        padding: 0 0 0 1rem;
         font-weight: 500;
         color: $color-text;
 
