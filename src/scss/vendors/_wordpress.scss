@@ -30,3 +30,12 @@
 		flex-direction: column-reverse;
 	}
 }
+
+// Core Spacer — hide on mobile (782px matches core breakpoint).
+@media (max-width: 782px) {
+	.wp-block-spacer.is-chw-hide-mobile {
+		display: none !important;
+		height: 0 !important;
+		min-height: 0 !important;
+	}
+}
