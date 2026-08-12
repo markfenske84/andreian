@@ -143,6 +143,7 @@ include_once 'wp-customization/page-document-settings.php';
 include_once 'wp-customization/image-monotone-filter.php';
 include_once 'wp-customization/columns-reverse-mobile.php';
 include_once 'wp-customization/spacer-hide-mobile.php';
+include_once 'wp-customization/heading-margin-top.php';
 // include_once 'wp-customization/dev-tools.php';
 
 // Additional Functionality
