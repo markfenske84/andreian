@@ -87,7 +87,8 @@
 
     // --- Logo gallery ---------------------------------------------------------
     &__gallery {
-        margin-top: 2.5rem;
+        margin: 2.5rem auto 0;
+        max-width: 60rem;
         background-color: #ffffff;
         border-radius: 1rem;
         padding: 2rem 1.5rem;
@@ -98,7 +99,7 @@
             padding-inline: 0;
         }
     }
-
+ 
     &__logos {
         display: flex;
         flex-wrap: wrap;
