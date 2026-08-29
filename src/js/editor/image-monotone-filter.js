@@ -13,11 +13,11 @@
 	const { __ } = wp.i18n;
 
 	const BLOCK_NAME = 'core/image';
-	const ATTR = 'chwMonotone';
+	const ATTR = 'andreianMonotone';
 
 	addFilter(
 		'blocks.registerBlockType',
-		'chw/image-monotone-attribute',
+		'andreian/image-monotone-attribute',
 		function ( settings, name ) {
 			if ( name !== BLOCK_NAME ) {
 				return settings;
@@ -43,7 +43,7 @@
 					if ( monotone ) {
 						props.className = (
 							( props.className || '' ) +
-							' has-chw-monotone-' +
+							' has-andreian-monotone-' +
 							monotone
 						).trim();
 					}
@@ -77,7 +77,7 @@
 					el(
 						ToolsPanel,
 						{
-							label: __( 'Monotone', 'chw' ),
+							label: __( 'Monotone', 'andreian' ),
 							panelId: clientId,
 							resetAll: function () {
 								setAttributes( { [ ATTR ]: '' } );
@@ -90,7 +90,7 @@
 								hasValue: function () {
 									return !! monotone;
 								},
-								label: __( 'Monotone', 'chw' ),
+								label: __( 'Monotone', 'andreian' ),
 								onDeselect: function () {
 									setAttributes( { [ ATTR ]: '' } );
 								},
@@ -107,7 +107,7 @@
 											setAttributes( { [ ATTR ]: 'normal' } );
 										},
 									},
-									__( 'Black', 'chw' )
+									__( 'Black', 'andreian' )
 								),
 								el(
 									Button,
@@ -117,7 +117,7 @@
 											setAttributes( { [ ATTR ]: 'inverted' } );
 										},
 									},
-									__( 'White', 'chw' )
+									__( 'White', 'andreian' )
 								)
 							)
 						)
@@ -129,7 +129,7 @@
 
 	addFilter(
 		'editor.BlockEdit',
-		'chw/image-monotone-control',
+		'andreian/image-monotone-control',
 		withMonotoneFilter
 	);
 
@@ -138,7 +138,7 @@
 			return props;
 		}
 
-		const className = 'has-chw-monotone-' + attributes[ ATTR ];
+		const className = 'has-andreian-monotone-' + attributes[ ATTR ];
 		props.className = props.className
 			? props.className + ' ' + className
 			: className;
@@ -148,7 +148,7 @@
 
 	addFilter(
 		'blocks.getSaveContent.extraProps',
-		'chw/image-monotone-save-props',
+		'andreian/image-monotone-save-props',
 		applyMonotoneClass
 	);
 } )( window.wp );

@@ -7,14 +7,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$items = chw_get_breadcrumb_items();
+$items = andreian_get_breadcrumb_items();
 
 if ( count( $items ) < 2 ) {
 	return;
 }
 ?>
 
-<nav class="post-breadcrumbs" aria-label="<?php esc_attr_e( 'Breadcrumb', 'chw' ); ?>">
+<nav class="post-breadcrumbs" aria-label="<?php esc_attr_e( 'Breadcrumb', 'andreian' ); ?>">
 	<ol class="post-breadcrumbs__list">
 		<?php foreach ( $items as $index => $item ) : ?>
 			<li class="post-breadcrumbs__item">

@@ -7,8 +7,8 @@
 	const { __ } = wp.i18n;
 
 	const BLOCK_NAME = 'core/spacer';
-	const ATTR = 'chwHideMobile';
-	const CLASS_NAME = 'is-chw-hide-mobile';
+	const ATTR = 'andreianHideMobile';
+	const CLASS_NAME = 'is-andreian-hide-mobile';
 
 	function applyHideMobileClass( props, attributes ) {
 		if ( ! attributes[ ATTR ] ) {
@@ -21,7 +21,7 @@
 
 	addFilter(
 		'blocks.registerBlockType',
-		'chw/spacer-hide-mobile-attribute',
+		'andreian/spacer-hide-mobile-attribute',
 		function ( settings, name ) {
 			if ( name !== BLOCK_NAME ) {
 				return settings;
@@ -67,10 +67,10 @@
 					null,
 					el(
 						PanelBody,
-						{ title: __( 'Mobile layout', 'chw' ), initialOpen: false },
+						{ title: __( 'Mobile layout', 'andreian' ), initialOpen: false },
 						el( ToggleControl, {
-							label: __( 'Hide on mobile', 'chw' ),
-							help: __( 'Hide this spacer when viewed on mobile devices.', 'chw' ),
+							label: __( 'Hide on mobile', 'andreian' ),
+							help: __( 'Hide this spacer when viewed on mobile devices.', 'andreian' ),
 							checked: isEnabled,
 							onChange: function ( value ) {
 								setAttributes( { [ ATTR ]: value } );
@@ -82,11 +82,11 @@
 		};
 	}, 'withHideMobileControl' );
 
-	addFilter( 'editor.BlockEdit', 'chw/spacer-hide-mobile-control', withHideMobileControl );
+	addFilter( 'editor.BlockEdit', 'andreian/spacer-hide-mobile-control', withHideMobileControl );
 
 	addFilter(
 		'blocks.getSaveContent.extraProps',
-		'chw/spacer-hide-mobile-save-props',
+		'andreian/spacer-hide-mobile-save-props',
 		function ( props, blockType, attributes ) {
 			if ( blockType.name !== BLOCK_NAME ) {
 				return props;

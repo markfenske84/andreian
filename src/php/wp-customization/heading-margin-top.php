@@ -10,55 +10,55 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Default heading top margin multiplier (matches theme typography).
  */
-function chw_heading_margin_top_default_multiplier() {
+function andreian_heading_margin_top_default_multiplier() {
 	return 2.5;
 }
 
 /**
- * Register chwMarginTopMultiplier attribute server-side.
+ * Register andreianMarginTopMultiplier attribute server-side.
  *
  * @param array  $args        Block type registration arguments.
  * @param string $block_type  Block name.
  * @return array
  */
-function chw_register_heading_margin_top_attribute( $args, $block_type ) {
+function andreian_register_heading_margin_top_attribute( $args, $block_type ) {
 	if ( 'core/heading' !== $block_type ) {
 		return $args;
 	}
 
-	$args['attributes']['chwMarginTopMultiplier'] = array(
+	$args['attributes']['andreianMarginTopMultiplier'] = array(
 		'type'    => 'number',
-		'default' => chw_heading_margin_top_default_multiplier(),
+		'default' => andreian_heading_margin_top_default_multiplier(),
 	);
 
 	return $args;
 }
-add_filter( 'register_block_type_args', 'chw_register_heading_margin_top_attribute', 10, 2 );
+add_filter( 'register_block_type_args', 'andreian_register_heading_margin_top_attribute', 10, 2 );
 
 /**
  * Enqueue block editor script.
  */
-function chw_enqueue_heading_margin_top() {
+function andreian_enqueue_heading_margin_top() {
 	$script_path = get_template_directory() . '/src/js/editor/heading-margin-top.js';
 
 	wp_enqueue_script(
-		'chw-heading-margin-top',
+		'andreian-heading-margin-top',
 		get_template_directory_uri() . '/src/js/editor/heading-margin-top.js',
 		array( 'wp-hooks', 'wp-compose', 'wp-block-editor', 'wp-components', 'wp-element', 'wp-i18n' ),
-		chw_asset_version( $script_path ),
+		andreian_asset_version( $script_path ),
 		true
 	);
 
 	wp_localize_script(
-		'chw-heading-margin-top',
-		'chwHeadingMarginTop',
+		'andreian-heading-margin-top',
+		'andreianHeadingMarginTop',
 		array(
-			'defaultMultiplier' => chw_heading_margin_top_default_multiplier(),
+			'defaultMultiplier' => andreian_heading_margin_top_default_multiplier(),
 			'containerGutter'   => (int) get_theme_mod( 'container_gutter', 16 ),
 		)
 	);
 }
-add_action( 'enqueue_block_editor_assets', 'chw_enqueue_heading_margin_top' );
+add_action( 'enqueue_block_editor_assets', 'andreian_enqueue_heading_margin_top' );
 
 /**
  * Sanitize a margin multiplier for inline CSS.
@@ -66,7 +66,7 @@ add_action( 'enqueue_block_editor_assets', 'chw_enqueue_heading_margin_top' );
  * @param mixed $multiplier Raw multiplier value.
  * @return string
  */
-function chw_sanitize_heading_margin_multiplier( $multiplier ) {
+function andreian_sanitize_heading_margin_multiplier( $multiplier ) {
 	$multiplier = round( (float) $multiplier, 2 );
 
 	return rtrim( rtrim( sprintf( '%.2F', $multiplier ), '0' ), '.' );
@@ -78,12 +78,12 @@ function chw_sanitize_heading_margin_multiplier( $multiplier ) {
  * @param mixed $multiplier Raw multiplier value.
  * @return bool
  */
-function chw_heading_margin_top_is_default( $multiplier ) {
+function andreian_heading_margin_top_is_default( $multiplier ) {
 	if ( null === $multiplier || '' === $multiplier ) {
 		return true;
 	}
 
-	return abs( (float) $multiplier - chw_heading_margin_top_default_multiplier() ) < 0.001;
+	return abs( (float) $multiplier - andreian_heading_margin_top_default_multiplier() ) < 0.001;
 }
 
 /**
@@ -92,8 +92,8 @@ function chw_heading_margin_top_is_default( $multiplier ) {
  * @param mixed $multiplier Raw multiplier value.
  * @return string
  */
-function chw_get_heading_margin_top_inline_style( $multiplier ) {
-	if ( chw_heading_margin_top_is_default( $multiplier ) ) {
+function andreian_get_heading_margin_top_inline_style( $multiplier ) {
+	if ( andreian_heading_margin_top_is_default( $multiplier ) ) {
 		return '';
 	}
 
@@ -103,7 +103,7 @@ function chw_get_heading_margin_top_inline_style( $multiplier ) {
 
 	return sprintf(
 		'margin-top:calc(var(--container-gutter) * %s)',
-		chw_sanitize_heading_margin_multiplier( $multiplier )
+		andreian_sanitize_heading_margin_multiplier( $multiplier )
 	);
 }
 
@@ -114,7 +114,7 @@ function chw_get_heading_margin_top_inline_style( $multiplier ) {
  * @param string $rule     New margin-top rule.
  * @return string
  */
-function chw_merge_heading_margin_top_style( $existing, $rule ) {
+function andreian_merge_heading_margin_top_style( $existing, $rule ) {
 	if ( empty( $existing ) ) {
 		return $rule;
 	}
@@ -136,13 +136,13 @@ function chw_merge_heading_margin_top_style( $existing, $rule ) {
  * @param array  $block         Block data.
  * @return string
  */
-function chw_render_heading_margin_top( $block_content, $block ) {
+function andreian_render_heading_margin_top( $block_content, $block ) {
 	if ( 'core/heading' !== ( $block['blockName'] ?? '' ) ) {
 		return $block_content;
 	}
 
-	$multiplier = $block['attrs']['chwMarginTopMultiplier'] ?? null;
-	$style_rule = chw_get_heading_margin_top_inline_style( $multiplier );
+	$multiplier = $block['attrs']['andreianMarginTopMultiplier'] ?? null;
+	$style_rule = andreian_get_heading_margin_top_inline_style( $multiplier );
 
 	if ( '' === $style_rule ) {
 		return $block_content;
@@ -155,8 +155,8 @@ function chw_render_heading_margin_top( $block_content, $block ) {
 	}
 
 	$existing_style = $processor->get_attribute( 'style' );
-	$processor->set_attribute( 'style', chw_merge_heading_margin_top_style( (string) $existing_style, $style_rule ) );
+	$processor->set_attribute( 'style', andreian_merge_heading_margin_top_style( (string) $existing_style, $style_rule ) );
 
 	return $processor->get_updated_html();
 }
-add_filter( 'render_block', 'chw_render_heading_margin_top', 10, 2 );
+add_filter( 'render_block', 'andreian_render_heading_margin_top', 10, 2 );

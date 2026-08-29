@@ -1,7 +1,7 @@
 ( function ( wp ) {
 	const { subscribe, select } = wp.data;
 
-	const config = window.chwPageLayout || {};
+	const config = window.andreianPageLayout || {};
 	const BUILDER_TEMPLATE = config.builderTemplate || 'src/templates/template-page-builder.php';
 
 	function getEditorDocument() {
@@ -32,8 +32,8 @@
 		// constrained to the blog column measure. Standard width applies to posts only.
 		const useBuilderLayout = postType === 'page' || isBuilderTemplate;
 
-		wrapper.classList.toggle( 'chw-layout-builder', useBuilderLayout );
-		wrapper.classList.toggle( 'chw-layout-standard', ! useBuilderLayout );
+		wrapper.classList.toggle( 'andreian-layout-builder', useBuilderLayout );
+		wrapper.classList.toggle( 'andreian-layout-standard', ! useBuilderLayout );
 	}
 
 	wp.domReady( function () {

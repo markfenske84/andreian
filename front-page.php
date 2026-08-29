@@ -1,15 +1,17 @@
-<?php 
+<?php
 /**
- * On the WordPress administration settings, the page set to be the Homepage under "Settings > Reading" will
- * display the template partial below.
- * 
- * @link https://developer.wordpress.org/themes/basics/template-files/#template-partials
+ * Front page template.
  */
 
-get_header(); 
-get_template_part('src/components/inner-masthead');
+get_header();
 ?>
 
-<?php the_content(); ?>
+<?php if ( have_posts() ) : ?>
+	<?php while ( have_posts() ) : the_post(); ?>
+		<div class="entry-content">
+			<?php the_content(); ?>
+		</div>
+	<?php endwhile; ?>
+<?php endif; ?>
 
 <?php get_footer(); ?>

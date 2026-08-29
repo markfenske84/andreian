@@ -15,10 +15,10 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @return array<string, string> slug => label
  */
-function chw_get_registered_page_templates() {
+function andreian_get_registered_page_templates() {
 	return array(
-		'src/templates/template-page-builder.php' => __( 'Page Builder (Full Width)', 'chw' ),
-		'src/templates/template-sidebar.php'      => __( 'Sidebar', 'chw' ),
+		'src/templates/template-page-builder.php' => __( 'Page Builder (Full Width)', 'andreian' ),
+		'src/templates/template-sidebar.php'      => __( 'Sidebar', 'andreian' ),
 	);
 }
 
@@ -27,7 +27,7 @@ function chw_get_registered_page_templates() {
  *
  * @return string
  */
-function chw_get_page_builder_template_slug() {
+function andreian_get_page_builder_template_slug() {
 	return 'src/templates/template-page-builder.php';
 }
 
@@ -37,7 +37,7 @@ function chw_get_page_builder_template_slug() {
  * @param int|null $post_id Post ID.
  * @return bool
  */
-function chw_page_uses_builder_template( $post_id = null ) {
+function andreian_page_uses_builder_template( $post_id = null ) {
 	if ( ! $post_id ) {
 		$post_id = get_the_ID();
 	}
@@ -48,7 +48,7 @@ function chw_page_uses_builder_template( $post_id = null ) {
 
 	$template = get_page_template_slug( $post_id );
 
-	return chw_get_page_builder_template_slug() === $template;
+	return andreian_get_page_builder_template_slug() === $template;
 }
 
 /**
@@ -57,27 +57,14 @@ function chw_page_uses_builder_template( $post_id = null ) {
  * @param array<string, string> $post_templates Existing templates.
  * @return array<string, string>
  */
-function chw_register_theme_page_templates( $post_templates ) {
-	foreach ( chw_get_registered_page_templates() as $slug => $label ) {
+function andreian_register_theme_page_templates( $post_templates ) {
+	foreach ( andreian_get_registered_page_templates() as $slug => $label ) {
 		$post_templates[ $slug ] = $label;
 	}
 
 	return $post_templates;
 }
-add_filter( 'theme_page_templates', 'chw_register_theme_page_templates' );
-
-/**
- * Sidebar template is also available to posts.
- *
- * @param array<string, string> $post_templates Existing templates.
- * @return array<string, string>
- */
-function chw_register_theme_post_templates( $post_templates ) {
-	$post_templates['src/templates/template-sidebar.php'] = __( 'Sidebar', 'chw' );
-
-	return $post_templates;
-}
-add_filter( 'theme_post_templates', 'chw_register_theme_post_templates' );
+add_filter( 'theme_page_templates', 'andreian_register_theme_page_templates' );
 
 /**
  * Resolve nested template paths when core cannot locate them.
@@ -85,7 +72,7 @@ add_filter( 'theme_post_templates', 'chw_register_theme_post_templates' );
  * @param string $template Path to the template file about to be loaded.
  * @return string
  */
-function chw_resolve_page_template( $template ) {
+function andreian_resolve_page_template( $template ) {
 	if ( ! is_singular() ) {
 		return $template;
 	}
@@ -102,7 +89,7 @@ function chw_resolve_page_template( $template ) {
 		return $template;
 	}
 
-	$registered = chw_get_registered_page_templates();
+	$registered = andreian_get_registered_page_templates();
 
 	if ( ! isset( $registered[ $slug ] ) ) {
 		return $template;
@@ -112,13 +99,13 @@ function chw_resolve_page_template( $template ) {
 
 	return $resolved ? $resolved : $template;
 }
-add_filter( 'template_include', 'chw_resolve_page_template', 99 );
+add_filter( 'template_include', 'andreian_resolve_page_template', 99 );
 
 /**
  * One-time backfill: existing pages on the default template keep full-width layout.
  */
-function chw_backfill_page_builder_templates() {
-	if ( get_option( 'chw_page_template_backfill_v1' ) ) {
+function andreian_backfill_page_builder_templates() {
+	if ( get_option( 'andreian_page_template_backfill_v1' ) ) {
 		return;
 	}
 
@@ -145,7 +132,7 @@ function chw_backfill_page_builder_templates() {
 		)
 	);
 
-	$builder_slug = chw_get_page_builder_template_slug();
+	$builder_slug = andreian_get_page_builder_template_slug();
 
 	foreach ( $page_ids as $page_id ) {
 		if ( in_array( (int) $page_id, $skip_ids, true ) ) {
@@ -161,6 +148,6 @@ function chw_backfill_page_builder_templates() {
 		update_post_meta( $page_id, '_wp_page_template', $builder_slug );
 	}
 
-	update_option( 'chw_page_template_backfill_v1', 1, true );
+	update_option( 'andreian_page_template_backfill_v1', 1, true );
 }
-add_action( 'admin_init', 'chw_backfill_page_builder_templates' );
+add_action( 'admin_init', 'andreian_backfill_page_builder_templates' );

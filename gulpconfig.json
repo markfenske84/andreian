@@ -1,6 +1,6 @@
 {
 	"browserSyncOptions": {
-		"proxy": "choice-home-warranty.local/",
+		"proxy": "andreian.local/",
 		"notify": false,
 		"files": ["./dist/css/*.min.css", "./dist/js/*.min.js", "./**/*.php"]
 	},

@@ -1,31 +1,4 @@
-.svg-angle {
-    overflow: visible;
-
-    g {
-        transform: rotate(0deg);
-        transform-origin: center center;
-        transition: 0.6s;
-    }
-
-    &.-down g {
-        transform: rotate(90deg) translateX(3px);
-    }
-
-    &.-left g {
-        transform: rotate(180deg);
-    }
-
-    &.-up g {
-        transform: rotate(270deg) translateX(-3px);
-    }
-
-    &.-large {
-        width: 30px;
-
-        path {
-            stroke-width: 1;
-        }
-    }
+svg {
+	display: inline-block;
+	vertical-align: middle;
 }
-
-

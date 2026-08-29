@@ -9,16 +9,16 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 /**
  * Enqueuing administrative scripts + styles.
  */
-function chw_admin_styles_and_scripts() {
+function andreian_admin_styles_and_scripts() {
     // Styles
-    wp_register_style( 'admin-theme', get_template_directory_uri() . '/dist/css/admin.min.css', array(), chw_asset_version( get_template_directory() . '/dist/css/admin.min.css' ) );
+    wp_register_style( 'admin-theme', get_template_directory_uri() . '/dist/css/admin.min.css', array(), andreian_asset_version( get_template_directory() . '/dist/css/admin.min.css' ) );
     wp_enqueue_style( 'admin-theme' );
 
     // Scripts
-    wp_register_script( 'admin-theme', get_template_directory_uri() . '/dist/js/admin.min.js', array(), chw_asset_version( get_template_directory() . '/dist/js/admin.min.js' ), true );
+    wp_register_script( 'admin-theme', get_template_directory_uri() . '/dist/js/admin.min.js', array(), andreian_asset_version( get_template_directory() . '/dist/js/admin.min.js' ), true );
     wp_enqueue_script( 'admin-theme' );
 }
-add_action('admin_head', 'chw_admin_styles_and_scripts');
+add_action('admin_head', 'andreian_admin_styles_and_scripts');
 
 /**
  * Remove the comments functionality from the administrative menu.

@@ -7,8 +7,8 @@
 	const { __ } = wp.i18n;
 
 	const BLOCK_NAME = 'core/columns';
-	const ATTR = 'chwReverseMobile';
-	const CLASS_NAME = 'is-chw-reverse-mobile';
+	const ATTR = 'andreianReverseMobile';
+	const CLASS_NAME = 'is-andreian-reverse-mobile';
 
 	function applyReverseMobileClass( props, attributes ) {
 		if ( ! attributes[ ATTR ] ) {
@@ -21,7 +21,7 @@
 
 	addFilter(
 		'blocks.registerBlockType',
-		'chw/columns-reverse-mobile-attribute',
+		'andreian/columns-reverse-mobile-attribute',
 		function ( settings, name ) {
 			if ( name !== BLOCK_NAME ) {
 				return settings;
@@ -67,12 +67,12 @@
 					null,
 					el(
 						PanelBody,
-						{ title: __( 'Mobile layout', 'chw' ), initialOpen: false },
+						{ title: __( 'Mobile layout', 'andreian' ), initialOpen: false },
 						el( ToggleControl, {
-							label: __( 'Reverse mobile direction', 'chw' ),
+							label: __( 'Reverse mobile direction', 'andreian' ),
 							help: __(
 								'When columns stack on mobile, show them in reverse order (bottom column first).',
-								'chw'
+								'andreian'
 							),
 							checked: isEnabled,
 							onChange: function ( value ) {
@@ -87,13 +87,13 @@
 
 	addFilter(
 		'editor.BlockEdit',
-		'chw/columns-reverse-mobile-control',
+		'andreian/columns-reverse-mobile-control',
 		withReverseMobileControl
 	);
 
 	addFilter(
 		'blocks.getSaveContent.extraProps',
-		'chw/columns-reverse-mobile-save-props',
+		'andreian/columns-reverse-mobile-save-props',
 		function ( props, blockType, attributes ) {
 			if ( blockType.name !== BLOCK_NAME ) {
 				return props;

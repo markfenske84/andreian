@@ -1,0 +1,34 @@
+@charset 'UTF-8';
+
+@import 'abstracts/variables';
+@import 'abstracts/mixins';
+@import 'vendors/wordpress';
+
+.editor-styles-wrapper {
+	font-family: $font-family-body;
+	font-size: $base-font-size;
+	color: $color-text;
+	line-height: 1.5;
+}
+
+.wp-block {
+	max-width: none;
+}
+
+.editor-styles-wrapper.andreian-layout-standard {
+	.is-root-container,
+	.block-editor-block-list__layout.is-root-container,
+	.wp-block-post-content {
+		max-width: $content-max-width;
+		margin-left: auto;
+		margin-right: auto;
+	}
+}
+
+.editor-styles-wrapper.andreian-layout-builder {
+	.is-root-container,
+	.block-editor-block-list__layout.is-root-container,
+	.wp-block-post-content {
+		max-width: none;
+	}
+}

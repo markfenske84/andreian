@@ -6,13 +6,13 @@
 	const { createElement: el, Fragment } = wp.element;
 	const { __, sprintf } = wp.i18n;
 
-	const settings = window.chwHeadingMarginTop || {
+	const settings = window.andreianHeadingMarginTop || {
 		defaultMultiplier: 2.5,
 		containerGutter: 16,
 	};
 
 	const BLOCK_NAME = 'core/heading';
-	const ATTR = 'chwMarginTopMultiplier';
+	const ATTR = 'andreianMarginTopMultiplier';
 	const DEFAULT = settings.defaultMultiplier;
 	const CONTAINER_GUTTER = settings.containerGutter;
 	const MIN = 0;
@@ -69,7 +69,7 @@
 				/* translators: 1: multiplier, 2: pixel value */
 				__(
 					'Theme default: %1$s× gutter (%2$spx). Drag to adjust or set to 0 to remove.',
-					'chw'
+					'andreian'
 				),
 				formatMultiplier( DEFAULT ),
 				Math.round( DEFAULT * CONTAINER_GUTTER )
@@ -77,12 +77,12 @@
 		}
 
 		if ( Math.abs( normalizeMultiplier( multiplier ) ) < 0.001 ) {
-			return __( 'Top margin removed.', 'chw' );
+			return __( 'Top margin removed.', 'andreian' );
 		}
 
 		return sprintf(
 			/* translators: 1: multiplier, 2: pixel value */
-			__( 'Custom: %1$s× gutter (%2$spx).', 'chw' ),
+			__( 'Custom: %1$s× gutter (%2$spx).', 'andreian' ),
 			formatMultiplier( multiplier ),
 			Math.round( normalizeMultiplier( multiplier ) * CONTAINER_GUTTER )
 		);
@@ -90,7 +90,7 @@
 
 	addFilter(
 		'blocks.registerBlockType',
-		'chw/heading-margin-top-attribute',
+		'andreian/heading-margin-top-attribute',
 		function ( blockSettings, name ) {
 			if ( name !== BLOCK_NAME ) {
 				return blockSettings;
@@ -111,7 +111,7 @@
 
 	addFilter(
 		'editor.BlockListBlock',
-		'chw/heading-margin-top-editor',
+		'andreian/heading-margin-top-editor',
 		createHigherOrderComponent( function ( BlockListBlock ) {
 			return function ( props ) {
 				if ( props.name !== BLOCK_NAME ) {
@@ -159,9 +159,9 @@
 					null,
 					el(
 						PanelBody,
-						{ title: __( 'Top margin', 'chw' ), initialOpen: false },
+						{ title: __( 'Top margin', 'andreian' ), initialOpen: false },
 						el( RangeControl, {
-							label: __( 'Top margin', 'chw' ),
+							label: __( 'Top margin', 'andreian' ),
 							help: getHelpText( multiplier ),
 							value: multiplier,
 							onChange: function ( value ) {
@@ -185,7 +185,7 @@
 									setAttributes( { [ ATTR ]: DEFAULT } );
 								},
 							},
-							__( 'Reset to theme default', 'chw' )
+							__( 'Reset to theme default', 'andreian' )
 						),
 						el(
 							Button,
@@ -196,7 +196,7 @@
 									setAttributes( { [ ATTR ]: 0 } );
 								},
 							},
-							__( 'Remove top margin', 'chw' )
+							__( 'Remove top margin', 'andreian' )
 						)
 					)
 				)
@@ -206,13 +206,13 @@
 
 	addFilter(
 		'editor.BlockEdit',
-		'chw/heading-margin-top-control',
+		'andreian/heading-margin-top-control',
 		withHeadingMarginTopControl
 	);
 
 	addFilter(
 		'blocks.getSaveContent.extraProps',
-		'chw/heading-margin-top-save-props',
+		'andreian/heading-margin-top-save-props',
 		function ( props, blockType, attributes ) {
 			if ( blockType.name !== BLOCK_NAME ) {
 				return props;

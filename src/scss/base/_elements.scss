@@ -1,206 +1,79 @@
-* {
-  word-wrap: break-word;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-
-  &:before,
-  &:after {
-    box-sizing: border-box;
-  }
-}
-
-html, body {
-  // clip (not hidden) — overflow-x: hidden creates a scroll container and breaks position: sticky
-  overflow-x: clip;
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
 }
 
 html {
-  scroll-behavior: smooth;
+	scroll-behavior: smooth;
 }
 
 body {
-  font-family: $font-family-body;
-  font-size: $base-font-size;
-  color: $color-text;
-  line-height: 1.5;
-  position: relative;
-  &::before {
-    content: '';
-    position: fixed;
-    z-index: 20;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background-color: rgba(0,0,0,.75);
-    transition: opacity .3s ease-in-out;
-    opacity: 0;
-    pointer-events: none;
-  }
+	margin: 0;
+	font-family: $font-family-body;
+	font-size: $base-font-size;
+	line-height: 1.5;
+	color: $color-text;
+	background: $color-background;
+	padding-top: var(--header-height, 0);
 }
 
-html, body {}
-
-h1, h2, h3, h4, h5, h6 {
-  font-family: $font-family-heading;
-  margin-top: 0;
-  margin-bottom: var(--container-gutter);
-  line-height: 1.1;
-  font-weight: 600;
-}
-
-h1,
-._text-style.-h1 {
-  font-size: 3.75rem;
-  @include breakpoint('lg') {font-size: 3rem;}
-}
-
-h2,
-._text-style.-h2 {
-  font-size: 3rem;
-  @include breakpoint('lg') {font-size: 2.5rem;}
-}
-
-h3,
-._text-style.-h3 {
-  font-size: 2.5rem;
-  @include breakpoint('lg') {font-size: 2rem;}
-}
-
-h4,
-._text-style.-h4 {
-  font-size: 2rem;
-  @include breakpoint('lg') {font-size: 1.75rem;}
-}
-
-h5,
-._text-style.-h5 {
-  font-size: 1.75rem;
-  @include breakpoint('lg') {font-size: 1.5rem;}
-}
-
-h6,
-._text-style.-h6 {
-  font-size: 1.5rem;
-  @include breakpoint('lg') {font-size: 1.25rem;}
-}
-
-p {
-  margin-bottom: var(--container-gutter);
-  margin-top: 0;
-  &:last-child {margin-bottom: 0;}
-  @include breakpoint('lg') {}
-  &.-xl {
-    font-size: 1.25rem;
-  }
-  &.-lg {
-    font-size: 1.125rem;
-  }
-  &.-sm {
-    font-size: 0.875rem;
-  }
-}
-
-b, 
-strong {
-
-}
-
-ul {
-  li {
-    margin-bottom: 0.75rem;
-
-    &:last-child {
-      margin-bottom: 0;
-    }
-  }
-}
-
-ol {
-  li {
-    margin-bottom: 0.75rem;
-
-    &:last-child {
-      margin-bottom: 0;
-    }
-  }
-}
-
-ol, ul {
-  padding-left: var(--container-gutter);
-  margin-bottom: var(--container-gutter);
+img {
+	max-width: 100%;
+	height: auto;
 }
 
 a {
-  color: $color-primary;
-  text-decoration: none;
-
-  &:hover,
-  &:focus,
-  &:active {
-    text-decoration: underline;
-  }
+	color: inherit;
 }
 
-details {
-  summary {
-    display: inline-block;
-    // remove default arrow
-    list-style-type: none;
-    cursor: pointer;
-    &::-webkit-details-marker {
-      content: '';
-      display: none; 
-      color: transparent;
-    } // END remove default arrow
-  }
-  .details-inner {
-    padding: var(--container-gutter);
-  }
-  // Opened
-  &[open] {
-    summary {}
-  } 
+._container {
+	width: min(100% - (var(--container-gutter) * 2), var(--container-width));
+	margin-inline: auto;
 }
 
-img {}
-
-svg {}
-
-iframe,
-svg {
-  max-width: 100%;
+._flex {
+	display: flex;
 }
 
-sub {
-  font-size: 0.8em;
-  position: relative;
-  top: 0.5em;
+.-justify-between {
+	justify-content: space-between;
 }
 
-sup {
-  font-size: 0.8em;
-  position: relative;
-  top: -0.5em;
+.-align-center {
+	align-items: center;
 }
 
-blockquote {
-  border-left: 6px solid $color-primary;
-  padding-left: var(--container-gutter);
+._display-desktop {
+	@include breakpoint('md') {
+		display: none !important;
+	}
 }
 
-button {
-  cursor: pointer;
-  border: none;
-  background: transparent;
-  padding: 0;
+._display-mobile {
+	display: none;
+
+	@include breakpoint('md') {
+		display: block;
+	}
 }
 
+._archive {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) 280px;
+	gap: calc(var(--container-gutter) * 2);
 
-a, input, textarea, button, select, textarea {
-  transition: all .2s ease-in-out;
+	@include breakpoint('lg') {
+		grid-template-columns: 1fr;
+	}
 }
 
+.-content-width {
+	max-width: $content-max-width;
+}
 
-strong {font-weight: 600;}
+.entry-content {
+	> *:first-child {
+		margin-top: 0;
+	}
+}

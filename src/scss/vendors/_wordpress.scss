@@ -1,39 +1,24 @@
 .wp-block-image {
-	&.has-chw-monotone-normal img {
+	&.has-andreian-monotone-normal img {
 		filter: brightness(0);
 	}
 
-	&.has-chw-monotone-inverted img {
+	&.has-andreian-monotone-inverted img {
 		filter: brightness(0) invert(1);
 	}
 }
 
-// Override core "Rounded" style (default 9999px pill) with theme radius.
-// Avoid :where() — gulp-clean-css merges ".is-style-rounded img" into ".is-style-roundedimg".
 .wp-block-image.is-style-rounded img,
 .wp-block-image .is-style-rounded img {
 	border-radius: $image-rounded-border-radius !important;
 }
 
-// Core Image — normalize editor aspect ratios on mobile.
-@include breakpoint('md') {
-	.wp-block-image img[style*='aspect-ratio'] {
-		aspect-ratio: 5 / 4 !important;
-		width: 100% !important;
-		height: auto !important;
-	}
-}
-
-// Core Columns — reverse visual stack order on mobile (782px matches core breakpoint).
 @media (max-width: 782px) {
-	.wp-block-columns.is-chw-reverse-mobile:not(.is-not-stacked-on-mobile) {
+	.wp-block-columns.is-andreian-reverse-mobile:not(.is-not-stacked-on-mobile) {
 		flex-direction: column-reverse;
 	}
-}
 
-// Core Spacer — hide on mobile (782px matches core breakpoint).
-@media (max-width: 782px) {
-	.wp-block-spacer.is-chw-hide-mobile {
+	.wp-block-spacer.is-andreian-hide-mobile {
 		display: none !important;
 		height: 0 !important;
 		min-height: 0 !important;

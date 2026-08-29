@@ -1,13 +1,13 @@
 <?php 
 // Add a new section for Layout Settings
 $wp_customize->add_section('layout_settings_section', array(
-    'title'    => __('Layout Settings', 'chw'),
+    'title'    => __('Layout Settings', 'andreian'),
     'priority' => 29,
 ));
 
 $layout_option = array(
-    'container_gutter' => __('Container Gutter', 'chw'),
-    'container_width' => __('Container Width', 'chw'),
+    'container_gutter' => __('Container Gutter', 'andreian'),
+    'container_width' => __('Container Width', 'andreian'),
 );
 
 foreach ($layout_option as $option_name => $option_label) {
@@ -16,7 +16,7 @@ foreach ($layout_option as $option_name => $option_label) {
     if($option_name === 'container_gutter') {
         $default_value = '16';
     } elseif ($option_name === 'container_width') {
-        $default_value = '1440';
+        $default_value = '1200';
     }
 
     $wp_customize->add_setting($option_name, array(
@@ -29,7 +29,7 @@ foreach ($layout_option as $option_name => $option_label) {
         'section'  => 'layout_settings_section',
         'settings' => $option_name,
         'type' => 'number',
-        'description' => __('Input values are in pixels (px).', 'chw'), // Provide a description
+        'description' => __('Input values are in pixels (px).', 'andreian'), // Provide a description
     );
 
     $wp_customize->add_control($option_name, $control_args);
@@ -50,11 +50,11 @@ $wp_customize->add_setting( 'mobile_menu_layout', array(
 
 // Add the control to choose layout.
 $wp_customize->add_control( 'mobile_menu_layout', array(
-    'label'   => __( 'Mobile Menu Layout', 'chw' ),
+    'label'   => __( 'Mobile Menu Layout', 'andreian' ),
     'section' => 'layout_settings_section',
     'type'    => 'select',
     'choices' => array(
-        'dropdown' => __( 'Expansion Dropdowns', 'chw' ),
-        'panel'    => __( 'Slide-in Panels', 'chw' ),
+        'dropdown' => __( 'Expansion Dropdowns', 'andreian' ),
+        'panel'    => __( 'Slide-in Panels', 'andreian' ),
     ),
 ) );

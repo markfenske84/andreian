@@ -1,151 +1,32 @@
-<?php 
-if ( ! defined( 'ABSPATH' ) ) exit;
-
+<?php
 /**
- * Returns a string with anchor linked categories.
- * @return string The categories.
+ * Post helpers.
  */
-function chw_post_categories() {
-    global $post;
-    $cats = get_the_category();
-    $cat_array = array();
 
-    foreach ($cats as $category) {
-        if ($category->name == 'Uncategorized') {
-            continue;
-        }
-        array_push($cat_array, '<a href="' . get_category_link( $category->term_id ) . '">' . $category->name . '</a>');
-    }
-
-    $cat_string = implode(', ', $cat_array);
-    return $cat_string;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
 }
 
-/**
- * Returns an excerpt limited to amount within argument.
- * @param int $limit The character limit desired for the excerpt.
- * @return string The post's excerpt.
- */
-function chw_excerpt($limit = 150) {
-    global $post;
-    $excerpt = get_the_excerpt($post);
+function andreian_post_categories() {
+	$cats      = get_the_category();
+	$cat_links = array();
 
-    if (strlen($excerpt) > $limit) {
-        $excerpt = substr($excerpt, 0, strpos($excerpt, ' ', $limit)) . '...';
-    }
-
-    return $excerpt;
-}
-
-/**
- * Returns an array with the current post's categories.
- * @return array The categories.
- */
-function get_post_categories() {
-  global $post;
-  $cats = get_the_category();
-  $cat_array = [];
-  foreach ($cats as $category) {
-    if ($category->name == 'Uncategorized') {
-      continue;
-    }
-
-    $cat_array[] = [
-      'title' => $category->name,
-      'permalink' => get_category_link( $category->term_id ),
-    ];
-  }
-
-  return $cat_array;
-}
-
-/**
- * Returns an array with the general post categories available.
- * @return array The categories.
- */
-function list_post_categories() {
-  $categories = get_categories();
-  $res = [];
-  
-  foreach($categories as $category) {
-    $res[] = [
-      'id' => $category->term_id,
-      'title' => $category->name,
-      'permalink' => get_category_link($category->term_id),
-    ];
-  }
-
-  return $res;
-}
-
-/**
- * Returns pagination links for the current post.
- * WordPress returns in reverse chronological order for these functions so prev and next are switched.
- *
- * @return array The pagination URLs for previous and next posts.
- */
-function get_sibling_post_links() {
-	global $post;
-
-	$prev = get_previous_post();
-	$next = get_next_post();
-
-	if ($prev) {
-		$prev_link = get_permalink($prev->ID);
-	} else {
-		$prev_link = false;
+	foreach ( $cats as $category ) {
+		if ( 'Uncategorized' === $category->name ) {
+			continue;
+		}
+		$cat_links[] = '<a href="' . esc_url( get_category_link( $category->term_id ) ) . '">' . esc_html( $category->name ) . '</a>';
 	}
 
-	if ($next) {
-		$next_link = get_permalink($next->ID);
-	} else {
-		$next_link = false;
+	return implode( ', ', $cat_links );
+}
+
+function andreian_excerpt( $limit = 150 ) {
+	$excerpt = get_the_excerpt();
+
+	if ( strlen( $excerpt ) > $limit ) {
+		$excerpt = substr( $excerpt, 0, strpos( $excerpt, ' ', $limit ) ) . '...';
 	}
 
-	// Reverse Chronological Order so we switch the variables
-	return ['prev' => $next_link, 'next' => $prev_link];
+	return $excerpt;
 }
-
-/**
- * Retrieve page data for the posts page.
- */
-function get_posts_page() {
-  $posts_page_id = get_option('page_for_posts');
-  $posts_page = get_page($posts_page_id);
-  $posts_page->permalink = get_permalink($posts_page_id);
-  return $posts_page;
-}
-
-// Adds a fallback featured image when a post does not have one set.
-function chw_default_featured_image_html($html, $post_id, $post_thumbnail_id, $size, $attr) {
-  // If the post already has a featured image, keep it.
-  if (!empty($html)) {
-    return $html;
-  }
-
-  if ('post' !== get_post_type($post_id)) {
-    return $html;
-  }
-
-  // Customizer override, then the same default used by post mastheads.
-  $default_url = get_theme_mod('blog_default_featured_image');
-  if (!$default_url) {
-    $default_url = THEME_IMAGES . '/masthead-default.webp';
-  }
-
-  // Build attributes string.
-  $attr_string = '';
-  if (is_array($attr)) {
-    foreach ($attr as $key => $value) {
-      $attr_string .= sprintf(' %s="%s"', esc_attr($key), esc_attr($value));
-    }
-  }
-
-  // Ensure alt attribute at minimum.
-  if (strpos($attr_string, ' alt=') === false) {
-    $attr_string .= ' alt="' . esc_attr(get_the_title($post_id)) . '"';
-  }
-
-  return '<img src="' . esc_url($default_url) . '"' . $attr_string . ' loading="lazy" decoding="async" />';
-}
-add_filter('post_thumbnail_html', 'chw_default_featured_image_html', 10, 5);

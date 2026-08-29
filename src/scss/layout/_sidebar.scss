@@ -1,51 +1,9 @@
 ._sidebar {
-  width: 100%;
-  max-width: calc(33.3% - #{$archive-sidebar-gap});
-  background-color: color-mix(in oklab, #{$color-quaternary} 65%, white);
-  border: 1px solid color-mix(in oklab, #{$color-tertiary} 18%, white);
-  border-radius: $image-rounded-border-radius;
-  align-self: flex-start;
-  position: sticky;
-  top: calc(var(--header-height, 0px) + var(--admin-bar-height, 0px) + var(--container-gutter));
-  max-height: calc(100dvh - var(--header-height, 0px) - var(--admin-bar-height, 0px) - var(--container-gutter) * 2);
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  -webkit-overflow-scrolling: touch;
-  padding: calc(var(--container-gutter) * 1.5);
+	min-width: 0;
+}
 
-  // Match header hide/show — drop header offset when it scrolls away.
-  body:has(.site-header.-position-fixed.-scroll-hidden) & {
-    top: calc(var(--admin-bar-height, 0px) + var(--container-gutter));
-    max-height: calc(100dvh - var(--admin-bar-height, 0px) - var(--container-gutter) * 2);
-  }
-
-  body.header-offset-animate:has(.site-header.-position-fixed) & {
-    transition: top 0.3s ease-in-out, max-height 0.3s ease-in-out;
-  }
-
-  @include breakpoint('lg') {
-    position: static;
-    top: auto;
-    max-width: 100%;
-    max-height: none;
-    overflow-y: visible;
-  }
-
-  .widget {
-    margin-bottom: calc(var(--container-gutter) * 1.5);
-
-    &:last-child {
-      margin-bottom: 0;
-    }
-  }
-
-  .widget-title {
-    margin: 0 0 0.75rem;
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
-    line-height: 1.2;
-    color: color-mix(in oklab, #{$color-tertiary} 72%, white);
-  }
+.widget-title {
+	font-size: 1rem;
+	font-weight: 600;
+	margin: 0 0 0.75rem;
 }
