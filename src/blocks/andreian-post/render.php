@@ -1,0 +1,199 @@
+<?php
+/**
+ * Server render callback for the Andreian Post block.
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+/**
+ * Build shared query args for a post collection block.
+ *
+ * @param array $attributes Block attributes.
+ * @param array $overrides  Optional query overrides.
+ * @return array
+ */
+function andreian_get_post_block_query_args( $attributes, $overrides = array() ) {
+	$posts_to_show = min( 15, max( 1, (int) ( $attributes['postsToShow'] ?? 9 ) ) );
+	$category_id   = max( 0, (int) ( $attributes['categoryId'] ?? 0 ) );
+	$category_slug = sanitize_title( $attributes['categorySlug'] ?? '' );
+	$offset        = min( 40, max( 0, (int) ( $attributes['offset'] ?? 0 ) ) );
+	$order_by      = $attributes['orderBy'] ?? 'date';
+	$order_by      = in_array( $order_by, array( 'date', 'title', 'rand' ), true ) ? $order_by : 'date';
+	$order         = isset( $attributes['order'] ) && 'ASC' === strtoupper( $attributes['order'] ) ? 'ASC' : 'DESC';
+	$excluded_ids  = array_filter( array_map( 'absint', $attributes['excludePostIds'] ?? array() ) );
+	$layout        = $attributes['layout'] ?? 'grid';
+
+	if ( 'full' === $layout ) {
+		$posts_to_show = 1;
+	} elseif ( 'hero-tiles' === $layout ) {
+		$posts_to_show = min( 5, $posts_to_show );
+	}
+
+	$query_args = array(
+		'post_type'              => 'post',
+		'post_status'            => 'publish',
+		'posts_per_page'         => $posts_to_show,
+		'orderby'                => $order_by,
+		'order'                  => $order,
+		'offset'                 => $offset,
+		'post__not_in'           => $excluded_ids,
+		'ignore_sticky_posts'    => true,
+		'no_found_rows'          => true,
+		'update_post_meta_cache' => true,
+		'update_post_term_cache' => true,
+	);
+
+	if ( $category_slug ) {
+		$query_args['category_name'] = $category_slug;
+	} elseif ( $category_id ) {
+		$query_args['cat'] = $category_id;
+	}
+
+	return array_merge( $query_args, $overrides );
+}
+
+/**
+ * Render a dynamic post collection.
+ *
+ * @param array    $attributes Block attributes.
+ * @param string   $content    Saved block content.
+ * @param WP_Block $block      Block instance.
+ * @return string
+ */
+function andreian_render_post_block( $attributes, $content, $block ) {
+	$allowed_layouts = array( 'grid', 'list', 'full', 'hero-tiles', 'category-tiles' );
+	$layout          = isset( $attributes['layout'] ) && in_array( $attributes['layout'], $allowed_layouts, true )
+		? $attributes['layout']
+		: 'grid';
+	$prioritize      = ! empty( $attributes['prioritizeFirstImage'] ) && ! is_admin();
+
+	$widget_sidebar_requested = 'grid' === $layout && ! empty( $attributes['showSidebar'] );
+	$random_sidebar_requested = 'list' === $layout && ! empty( $attributes['showRandomSidebar'] );
+
+	$query = new WP_Query( andreian_get_post_block_query_args( array_merge( $attributes, array( 'layout' => $layout ) ) ) );
+
+	if ( ! $query->have_posts() ) {
+		if ( is_admin() || wp_is_json_request() ) {
+			return '<p class="andreian-posts__empty">' . esc_html__( 'No posts match this collection.', 'andreian' ) . '</p>';
+		}
+
+		return '';
+	}
+
+	$main_post_ids = wp_list_pluck( $query->posts, 'ID' );
+	$has_widget_sidebar = $widget_sidebar_requested && (
+		is_active_sidebar( 'homepage_latest' ) ||
+		is_admin() ||
+		wp_is_json_request()
+	);
+
+	$sidebar_posts_to_show = min( 15, max( 1, (int) ( $attributes['sidebarPostsToShow'] ?? 9 ) ) );
+	$sidebar_title         = isset( $attributes['sidebarTitle'] ) && '' !== trim( $attributes['sidebarTitle'] )
+		? $attributes['sidebarTitle']
+		: __( 'Random', 'andreian' );
+
+	$random_query = null;
+	if ( $random_sidebar_requested ) {
+		$random_query = new WP_Query(
+			andreian_get_post_block_query_args(
+				$attributes,
+				array(
+					'posts_per_page' => $sidebar_posts_to_show,
+					'orderby'        => 'rand',
+					'order'          => 'DESC',
+					'offset'         => 0,
+					'post__not_in'   => array_merge(
+						array_filter( array_map( 'absint', $attributes['excludePostIds'] ?? array() ) ),
+						$main_post_ids
+					),
+				)
+			)
+		);
+	}
+
+	$has_random_sidebar = $random_sidebar_requested && (
+		( $random_query && $random_query->have_posts() ) ||
+		is_admin() ||
+		wp_is_json_request()
+	);
+
+	$has_sidebar = $has_widget_sidebar || $has_random_sidebar;
+
+	$main_layout_class = $has_widget_sidebar ? 'grid' : $layout;
+
+	$wrapper_attributes = get_block_wrapper_attributes(
+		$has_sidebar
+			? array( 'class' => 'andreian-post-collection andreian-post-collection--sidebar' )
+			: array(
+				'class' => 'andreian-posts andreian-posts--' . $layout,
+				'role'  => 'list',
+			)
+	);
+
+	ob_start();
+	?>
+	<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php echo $has_sidebar ? '' : ' itemscope itemtype="https://schema.org/ItemList"'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+		<?php if ( $has_sidebar ) : ?>
+			<div class="andreian-posts andreian-posts--<?php echo esc_attr( $main_layout_class ); ?>" role="list" itemscope itemtype="https://schema.org/ItemList">
+		<?php endif; ?>
+		<meta itemprop="numberOfItems" content="<?php echo esc_attr( $query->post_count ); ?>">
+		<?php
+		$position = 0;
+		while ( $query->have_posts() ) :
+			$query->the_post();
+			++$position;
+			$image_size = in_array( $layout, array( 'full', 'hero-tiles' ), true )
+				? 'andreian-feature'
+				: 'andreian-card';
+			get_template_part(
+				'src/components/post-card',
+				null,
+				array(
+					'post_id'      => get_the_ID(),
+					'layout'       => $main_layout_class,
+					'position'     => $position,
+					'priority'     => $prioritize && 1 === $position,
+					'show_excerpt' => 'full' === $layout || ! empty( $attributes['showExcerpt'] ),
+					'item_list'    => true,
+					'image_size'   => $image_size,
+				)
+			);
+		endwhile;
+		wp_reset_postdata();
+		?>
+		<?php if ( $has_sidebar ) : ?>
+			</div>
+			<aside class="andreian-post-collection__sidebar" aria-label="<?php esc_attr_e( 'Latest entries sidebar', 'andreian' ); ?>">
+				<div class="andreian-post-collection__sidebar-inner">
+					<?php if ( $has_random_sidebar ) : ?>
+						<?php
+						get_template_part(
+							'src/components/random-slideshow',
+							null,
+							array(
+								'query' => $random_query,
+								'title' => $sidebar_title,
+							)
+						);
+						?>
+					<?php endif; ?>
+
+					<?php if ( $has_random_sidebar || $has_widget_sidebar ) : ?>
+						<div class="andreian-post-collection__sidebar-widgets">
+							<?php if ( is_active_sidebar( 'homepage_latest' ) ) : ?>
+								<?php dynamic_sidebar( 'homepage_latest' ); ?>
+							<?php elseif ( is_admin() || wp_is_json_request() ) : ?>
+								<p class="andreian-posts__empty"><?php esc_html_e( 'Add CTA widgets to Homepage Latest Sidebar.', 'andreian' ); ?></p>
+							<?php endif; ?>
+						</div>
+					<?php endif; ?>
+				</div>
+			</aside>
+		<?php endif; ?>
+	</div>
+	<?php
+
+	return (string) ob_get_clean();
+}

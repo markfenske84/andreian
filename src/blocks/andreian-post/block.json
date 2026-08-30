@@ -1,0 +1,79 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "andreian/post",
+	"version": "1.0.0",
+	"title": "Andreian Post",
+	"category": "widgets",
+	"icon": "grid-view",
+	"description": "Display a dynamic editorial collection of posts.",
+	"textdomain": "andreian",
+	"attributes": {
+		"categoryId": {
+			"type": "number",
+			"default": 0
+		},
+		"categorySlug": {
+			"type": "string",
+			"default": ""
+		},
+		"postsToShow": {
+			"type": "number",
+			"default": 9
+		},
+		"layout": {
+			"type": "string",
+			"default": "grid"
+		},
+		"orderBy": {
+			"type": "string",
+			"default": "date"
+		},
+		"order": {
+			"type": "string",
+			"default": "DESC"
+		},
+		"offset": {
+			"type": "number",
+			"default": 0
+		},
+		"excludePostIds": {
+			"type": "array",
+			"default": [],
+			"items": {
+				"type": "number"
+			}
+		},
+		"prioritizeFirstImage": {
+			"type": "boolean",
+			"default": false
+		},
+		"showExcerpt": {
+			"type": "boolean",
+			"default": false
+		},
+		"showSidebar": {
+			"type": "boolean",
+			"default": false
+		},
+		"showRandomSidebar": {
+			"type": "boolean",
+			"default": false
+		},
+		"sidebarPostsToShow": {
+			"type": "number",
+			"default": 9
+		},
+		"sidebarTitle": {
+			"type": "string",
+			"default": "Random"
+		}
+	},
+	"supports": {
+		"align": [
+			"wide",
+			"full"
+		],
+		"html": false
+	}
+}

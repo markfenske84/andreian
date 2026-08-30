@@ -30,6 +30,17 @@ function andreian_widgets_init() {
 		array_merge(
 			$sidebar_args,
 			array(
+				'name'        => __( 'Homepage Latest Sidebar', 'andreian' ),
+				'id'          => 'homepage_latest',
+				'description' => __( 'CTA content beneath the Random slideshow on the Latest Entries homepage section.', 'andreian' ),
+			)
+		)
+	);
+
+	register_sidebar(
+		array_merge(
+			$sidebar_args,
+			array(
 				'name'        => __( 'Footer', 'andreian' ),
 				'id'          => 'footer_main',
 				'description' => __( 'Footer widget area', 'andreian' ),

@@ -1,0 +1,12 @@
+.entry-content,
+.widget {
+	a {
+		@include link-hover-prose;
+	}
+}
+
+.site-wordmark,
+.site-footer__wordmark {
+	@include link-hover-opacity(0.88);
+	text-decoration: none;
+}

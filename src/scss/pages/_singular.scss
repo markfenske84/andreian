@@ -1,3 +1,38 @@
 #singular-template {
-	padding-block: calc(var(--container-gutter) * 2);
+	padding-top: clamp(2.5rem, 6vw, 5rem);
+
+	.entry-header {
+		margin-bottom: 1.5rem;
+	}
+}
+
+.single-article__featured-image {
+	margin: 0 0 2rem;
+
+	img {
+		width: 100%;
+		border-radius: $image-rounded-border-radius;
+	}
+}
+
+.single-article .entry-content {
+	margin-top: 2rem;
+
+	> p:first-child::first-letter {
+		float: left;
+		margin: 0.08em 0.08em 0 0;
+		font-family: $font-family-heading;
+		font-size: 3.8em;
+		font-weight: 700;
+		line-height: 0.82;
+		letter-spacing: $font-heading-letter-spacing;
+	}
+}
+
+@include breakpoint('sm') {
+	.single-article .entry-content > p:first-child::first-letter {
+		float: none;
+		margin: 0;
+		font: inherit;
+	}
 }

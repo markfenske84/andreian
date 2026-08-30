@@ -11,11 +11,27 @@ get_header();
 		<div class="_inner">
 			<?php if ( have_posts() ) : ?>
 				<?php while ( have_posts() ) : the_post(); ?>
-					<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+					<article id="post-<?php the_ID(); ?>" <?php post_class( 'single-article' ); ?>>
+						<?php get_template_part( 'src/components/post-breadcrumbs' ); ?>
 						<header class="entry-header">
 							<h1 class="entry-title"><?php the_title(); ?></h1>
 							<?php get_template_part( 'src/components/post-entry-meta' ); ?>
 						</header>
+						<?php if ( has_post_thumbnail() ) : ?>
+							<figure class="single-article__featured-image">
+								<?php
+								the_post_thumbnail(
+									'andreian-feature',
+									array(
+										'loading'       => 'eager',
+										'fetchpriority' => 'high',
+										'decoding'      => 'async',
+										'sizes'         => '(max-width: 1200px) 100vw, 1200px',
+									)
+								);
+								?>
+							</figure>
+						<?php endif; ?>
 						<div class="entry-content">
 							<?php the_content(); ?>
 						</div>

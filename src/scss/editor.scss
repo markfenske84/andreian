@@ -1,14 +1,31 @@
 @charset 'UTF-8';
 
+@import 'abstracts/fonts';
 @import 'abstracts/variables';
 @import 'abstracts/mixins';
 @import 'vendors/wordpress';
+@import 'components/andreian-post';
+@import 'components/social-links';
+@import 'pages/front-page';
 
 .editor-styles-wrapper {
 	font-family: $font-family-body;
 	font-size: $base-font-size;
 	color: $color-text;
-	line-height: 1.5;
+	font-weight: 500;
+	line-height: 1.7;
+
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		font-family: $font-family-heading;
+		font-weight: 700;
+		line-height: 1.12;
+		letter-spacing: $font-heading-letter-spacing;
+	}
 }
 
 .wp-block {

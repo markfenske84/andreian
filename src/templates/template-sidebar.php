@@ -15,6 +15,7 @@ get_header();
 			<div class="_posts">
 				<div class="_inner">
 					<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+						<?php get_template_part( 'src/components/page-entry-header' ); ?>
 						<div class="entry-content">
 							<?php the_content(); ?>
 						</div>

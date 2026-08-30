@@ -30,3 +30,13 @@ function andreian_excerpt( $limit = 150 ) {
 
 	return $excerpt;
 }
+
+/**
+ * Remove the default WordPress excerpt ellipsis.
+ *
+ * @return string
+ */
+function andreian_excerpt_more() {
+	return '';
+}
+add_filter( 'excerpt_more', 'andreian_excerpt_more' );

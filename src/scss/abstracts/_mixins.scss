@@ -7,3 +7,37 @@
 		@warn "Unknown breakpoint `#{$breakpoint}`.";
 	}
 }
+
+@mixin link-hover-opacity($rest: $link-opacity-rest, $hover: $link-opacity-hover) {
+	opacity: $rest;
+	transition: $link-transition-fast;
+
+	&:hover,
+	&:focus-visible {
+		opacity: $hover;
+	}
+}
+
+@mixin link-hover-row {
+	@include link-hover-opacity;
+	transition: $link-transition-interactive;
+
+	&:hover,
+	&:focus-visible {
+		background-color: $color-rule-light;
+	}
+}
+
+@mixin link-hover-prose {
+	text-decoration: underline;
+	text-decoration-color: color-mix(in srgb, currentColor 28%, transparent);
+	text-decoration-thickness: 1px;
+	text-underline-offset: 0.18em;
+	transition: $link-transition-interactive;
+
+	&:hover,
+	&:focus-visible {
+		opacity: $link-opacity-hover;
+		text-decoration-color: currentColor;
+	}
+}

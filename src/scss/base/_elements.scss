@@ -6,29 +6,54 @@
 
 html {
 	scroll-behavior: smooth;
+	-webkit-text-size-adjust: 100%;
 }
 
 body {
 	margin: 0;
 	font-family: $font-family-body;
 	font-size: $base-font-size;
-	line-height: 1.5;
+	font-weight: 500;
+	line-height: 1.7;
 	color: $color-text;
 	background: $color-background;
-	padding-top: var(--header-height, 0);
 }
 
 img {
+	display: block;
 	max-width: 100%;
 	height: auto;
 }
 
 a {
 	color: inherit;
+	text-underline-offset: 0.18em;
+	text-decoration-thickness: 1px;
+
+	&:focus-visible {
+		outline: 2px solid $color-text;
+		outline-offset: 3px;
+	}
+}
+
+button,
+input,
+select,
+textarea {
+	font: inherit;
+}
+
+button {
+	color: inherit;
+}
+
+::selection {
+	color: $color-background;
+	background: $color-text;
 }
 
 ._container {
-	width: min(100% - (var(--container-gutter) * 2), var(--container-width));
+	width: min(100% - (var(--container-gutter) * 2), var(--container-width, #{$site-max-width}), #{$site-max-width});
 	margin-inline: auto;
 }
 
@@ -73,6 +98,8 @@ a {
 }
 
 .entry-content {
+	max-width: 100%;
+
 	> *:first-child {
 		margin-top: 0;
 	}

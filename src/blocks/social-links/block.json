@@ -1,0 +1,14 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "andreian/social-links",
+	"version": "1.0.0",
+	"title": "Social Links",
+	"category": "widgets",
+	"icon": "share",
+	"description": "Display the social profile links managed in the Customizer.",
+	"textdomain": "andreian",
+	"supports": {
+		"html": false
+	}
+}

@@ -1,11 +1,44 @@
 .site-footer {
-	margin-top: calc(var(--container-gutter) * 3);
-	padding-block: calc(var(--container-gutter) * 2);
-	border-top: 1px solid rgba(0, 0, 0, 0.08);
+	margin-top: clamp(3rem, 8vw, 6rem);
+	padding-block: 2.5rem;
+	border-top: 3px double $color-text;
+}
+
+.site-footer__brand {
+	padding-bottom: 1.75rem;
+	text-align: center;
+}
+
+.site-footer__wordmark {
+	font-family: $font-family-heading;
+	font-size: clamp(1.6rem, 4vw, 2.5rem);
+	font-weight: 700;
+	letter-spacing: $font-heading-letter-spacing;
+	text-transform: uppercase;
+}
+
+.footer-main {
+	padding-block: 1.5rem;
+	border-block: 1px solid $color-rule;
+}
+
+.site-footer__lower {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1.5rem;
+	padding-top: 1.25rem;
 }
 
 .footer-copyright {
-	margin: 1rem 0 0;
-	font-size: 0.875rem;
-	color: rgba(0, 0, 0, 0.6);
+	margin: 0;
+	font-size: 0.75rem;
+	color: $color-muted;
+}
+
+@include breakpoint('sm') {
+	.site-footer__lower {
+		align-items: flex-start;
+		flex-direction: column;
+	}
 }

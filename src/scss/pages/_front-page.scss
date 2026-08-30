@@ -1,0 +1,43 @@
+.home .entry-content {
+	font-size: inherit;
+}
+
+.andreian-home {
+	max-width: 1200px;
+	padding-top: clamp(2rem, 5vw, 3.5rem);
+}
+
+.editorial-section {
+	margin-top: clamp(3.5rem, 8vw, 6rem);
+
+	&--lead {
+		margin-top: 0;
+	}
+}
+
+.editorial-section > .wp-block-group__inner-container,
+.editorial-section,
+.andreian-home {
+	width: 100%;
+}
+
+.andreian-home > .editorial-section,
+.editorial-section > .andreian-posts,
+.editorial-section > .andreian-post-collection {
+	max-width: none;
+}
+
+.home .wp-block-group.alignwide {
+	max-width: 1200px;
+	margin-inline: auto;
+}
+
+@include breakpoint('md') {
+	.andreian-home {
+		padding-top: 1.5rem;
+	}
+
+	.editorial-section {
+		margin-top: 3.5rem;
+	}
+}

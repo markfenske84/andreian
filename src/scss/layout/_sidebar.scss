@@ -1,9 +1,29 @@
 ._sidebar {
 	min-width: 0;
+	padding-left: 1.5rem;
+	border-left: 1px solid $color-rule;
 }
 
 .widget-title {
-	font-size: 1rem;
-	font-weight: 600;
 	margin: 0 0 0.75rem;
+	padding-block: 0.55rem;
+	border-block: 1px solid $color-text;
+	font-family: $font-family-heading;
+	font-size: 1rem;
+	font-weight: 700;
+	letter-spacing: $font-heading-letter-spacing;
+	text-transform: uppercase;
+}
+
+.widget {
+	margin-bottom: 2rem;
+}
+
+@include breakpoint('lg') {
+	._sidebar {
+		padding-top: 2rem;
+		padding-left: 0;
+		border-top: 1px solid $color-rule;
+		border-left: 0;
+	}
 }

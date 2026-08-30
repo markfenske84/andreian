@@ -1,4 +1,139 @@
-.blog-index,
-.archive {
-	padding-block: calc(var(--container-gutter) * 2);
+#index-template,
+#archive-template,
+#search-template {
+	padding-top: clamp(2rem, 5vw, 4rem);
+}
+
+.archive-header,
+#search-template .page-title {
+	margin-bottom: 2rem;
+	padding-bottom: 1rem;
+	border-bottom: 2px solid $color-text;
+}
+
+.archive-title,
+#search-template .page-title {
+	margin: 0;
+	font-size: clamp(2rem, 4vw, 3rem);
+}
+
+.archive-description {
+	max-width: 65ch;
+	margin-top: 0.75rem;
+	color: $color-muted;
+}
+
+.archive-post-list {
+	> .andreian-card {
+		display: grid;
+		grid-template-columns: minmax(180px, 38%) minmax(0, 1fr);
+		gap: 1.4rem;
+		padding-block: 1.5rem;
+		border-top: 1px solid $color-rule;
+	}
+
+	> .andreian-card:first-of-type {
+		border-top: 0;
+	}
+
+	.andreian-card__image-link {
+		margin-bottom: 0;
+	}
+}
+
+.category-archive {
+	._posts {
+		width: 100%;
+	}
+
+	.archive-header {
+		text-align: left;
+	}
+}
+
+.category-post-grid {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: clamp(2rem, 4vw, 3rem) clamp(1.25rem, 3vw, 2rem);
+
+	> .andreian-card {
+		display: block;
+		padding: 0;
+		border: 0;
+		text-align: left;
+	}
+
+	.andreian-card__image-link {
+		img {
+			aspect-ratio: 16 / 9;
+			object-fit: cover;
+		}
+	}
+
+	.andreian-card__title {
+		font-size: clamp(1.25rem, 2vw, 1.6rem);
+	}
+
+	.andreian-card__share {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.35rem 0.7rem;
+		margin-top: 1rem;
+		padding-top: 0.75rem;
+		border-top: 1px solid $color-rule-light;
+		font-size: 0.72rem;
+		line-height: 1.4;
+		text-align: left;
+	}
+
+	.andreian-card__share-label {
+		font-weight: 700;
+		text-transform: uppercase;
+	}
+}
+
+._pagination {
+	margin-top: 2rem;
+	padding-top: 1rem;
+	border-top: 1px solid $color-rule;
+
+	.nav-links {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+	}
+
+	.page-numbers {
+		padding: 0.35rem 0.65rem;
+		border: 1px solid $color-rule;
+		text-decoration: none;
+		transition: $link-transition-interactive;
+		@include link-hover-opacity;
+
+		&:hover,
+		&:focus-visible {
+			border-color: $color-text;
+		}
+	}
+
+	.current {
+		color: $color-background;
+		background: $color-text;
+	}
+}
+
+@include breakpoint('md') {
+	.category-post-grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+@include breakpoint('sm') {
+	.archive-post-list > .andreian-card {
+		grid-template-columns: 1fr;
+	}
+
+	.category-post-grid {
+		grid-template-columns: 1fr;
+	}
 }
