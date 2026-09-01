@@ -1,7 +1,7 @@
 .site-footer {
 	margin-top: clamp(3rem, 8vw, 6rem);
 	padding-block: 2.5rem;
-	border-top: 3px double $color-text;
+	background-color: #00000008
 }
 
 .site-footer__brand {
@@ -12,7 +12,7 @@
 .site-footer__wordmark {
 	font-family: $font-family-heading;
 	font-size: clamp(1.6rem, 4vw, 2.5rem);
-	font-weight: 700;
+	font-weight: 500;
 	letter-spacing: $font-heading-letter-spacing;
 	text-transform: uppercase;
 }
@@ -28,6 +28,7 @@
 	justify-content: space-between;
 	gap: 1.5rem;
 	padding-top: 1.25rem;
+	border-top: 1px solid $color-rule;
 }
 
 .footer-copyright {

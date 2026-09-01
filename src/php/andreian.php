@@ -45,7 +45,7 @@ function andreian_initialize() {
 	add_theme_support( 'post-thumbnails' );
 	set_post_thumbnail_size( 125, 125, true );
 	add_image_size( 'andreian-card', 720, 540, true );
-	add_image_size( 'andreian-feature', 1200, 675, true );
+	add_image_size( 'andreian-feature', 1920, 1080, true );
 	add_theme_support( 'menus' );
 	add_theme_support( 'title-tag' );
 	add_theme_support( 'align-wide' );
@@ -154,6 +154,7 @@ include_once 'wp-customization/posts.php';
 include_once 'wp-customization/users.php';
 include_once 'wp-customization/widgets.php';
 include_once 'wp-customization/classic-editor-posts.php';
+include_once 'wp-customization/short-description.php';
 include_once 'wp-customization/page-layout.php';
 include_once 'wp-customization/image-monotone-filter.php';
 include_once 'wp-customization/columns-reverse-mobile.php';

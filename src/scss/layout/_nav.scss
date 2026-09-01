@@ -51,6 +51,15 @@
 		border: 1px solid $color-rule;
 		text-transform: none;
 
+		&::before {
+			position: absolute;
+			right: 0;
+			bottom: 100%;
+			left: 0;
+			height: 0.35rem;
+			content: '';
+		}
+
 		li {
 			margin: 0;
 		}
