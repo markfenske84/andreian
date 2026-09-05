@@ -69,9 +69,6 @@ $image_attrs   = array(
 if ( $priority ) {
 	$image_attrs['fetchpriority'] = 'high';
 }
-
-$share_url   = rawurlencode( $permalink );
-$share_title = rawurlencode( wp_strip_all_tags( $title ) );
 ?>
 <article
 	class="andreian-card andreian-card--<?php echo esc_attr( $layout ); ?>"
@@ -138,13 +135,14 @@ $share_title = rawurlencode( wp_strip_all_tags( $title ) );
 		<?php endif; ?>
 
 		<?php if ( $show_share ) : ?>
+			<?php $share_platforms = andreian_share_platforms( $permalink, $title ); ?>
 			<nav class="andreian-card__share" aria-label="<?php echo esc_attr( sprintf( __( 'Share %s', 'andreian' ), $title ) ); ?>">
 				<span class="andreian-card__share-label"><?php esc_html_e( 'Share', 'andreian' ); ?></span>
-				<a href="<?php echo esc_url( 'https://www.facebook.com/sharer/sharer.php?u=' . $share_url ); ?>" target="_blank" rel="nofollow noopener"><?php esc_html_e( 'Facebook', 'andreian' ); ?></a>
-				<a href="<?php echo esc_url( 'https://twitter.com/intent/tweet?url=' . $share_url . '&text=' . $share_title ); ?>" target="_blank" rel="nofollow noopener"><?php esc_html_e( 'X', 'andreian' ); ?></a>
-				<a href="<?php echo esc_url( 'mailto:?subject=' . $share_title . '&body=' . $share_url ); ?>"><?php esc_html_e( 'Email', 'andreian' ); ?></a>
-				<a href="<?php echo esc_url( 'https://t.me/share/url?url=' . $share_url . '&text=' . $share_title ); ?>" target="_blank" rel="nofollow noopener"><?php esc_html_e( 'Telegram', 'andreian' ); ?></a>
-				<a href="<?php echo esc_url( 'https://share.flipboard.com/bookmarklet/popout?v=2&url=' . $share_url . '&title=' . $share_title ); ?>" target="_blank" rel="nofollow noopener"><?php esc_html_e( 'Flipboard', 'andreian' ); ?></a>
+				<?php foreach ( array( 'facebook', 'x', 'email', 'telegram', 'flipboard' ) as $share_key ) : ?>
+					<?php if ( isset( $share_platforms[ $share_key ] ) ) : ?>
+						<?php echo andreian_render_share_link( $share_platforms[ $share_key ], 'andreian-card__share-link' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+					<?php endif; ?>
+				<?php endforeach; ?>
 			</nav>
 		<?php endif; ?>
 	</div>

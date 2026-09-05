@@ -25,10 +25,22 @@ function andreian_get_post_block_query_args( $attributes, $overrides = array() )
 	$excluded_ids  = array_filter( array_map( 'absint', $attributes['excludePostIds'] ?? array() ) );
 	$layout        = $attributes['layout'] ?? 'grid';
 
+	if ( ! empty( $attributes['excludeFeaturedPosts'] ) && function_exists( 'andreian_get_hero_tiles_post_ids' ) ) {
+		$excluded_ids = array_values(
+			array_unique(
+				array_merge(
+					$excluded_ids,
+					andreian_get_hero_tiles_post_ids( 8, $excluded_ids )
+				)
+			)
+		);
+		$offset = 0;
+	}
+
 	if ( 'full' === $layout ) {
 		$posts_to_show = 1;
 	} elseif ( 'hero-tiles' === $layout ) {
-		$posts_to_show = min( 5, $posts_to_show );
+		$posts_to_show = 8;
 	}
 
 	$query_args = array(
@@ -72,7 +84,28 @@ function andreian_render_post_block( $attributes, $content, $block ) {
 	$widget_sidebar_requested = 'grid' === $layout && ! empty( $attributes['showSidebar'] );
 	$random_sidebar_requested = 'list' === $layout && ! empty( $attributes['showRandomSidebar'] );
 
-	$query = new WP_Query( andreian_get_post_block_query_args( array_merge( $attributes, array( 'layout' => $layout ) ) ) );
+	$query_args = andreian_get_post_block_query_args( array_merge( $attributes, array( 'layout' => $layout ) ) );
+
+	if ( 'hero-tiles' === $layout && function_exists( 'andreian_get_hero_tiles_post_ids' ) ) {
+		$hero_ids = andreian_get_hero_tiles_post_ids(
+			8,
+			$query_args['post__not_in'] ?? array()
+		);
+
+		if ( ! empty( $hero_ids ) ) {
+			$query_args = array_merge(
+				$query_args,
+				array(
+					'post__in'       => $hero_ids,
+					'orderby'        => 'post__in',
+					'posts_per_page' => count( $hero_ids ),
+					'offset'         => 0,
+				)
+			);
+		}
+	}
+
+	$query = new WP_Query( $query_args );
 
 	if ( ! $query->have_posts() ) {
 		if ( is_admin() || wp_is_json_request() ) {
@@ -162,6 +195,32 @@ function andreian_render_post_block( $attributes, $content, $block ) {
 			);
 		endwhile;
 		wp_reset_postdata();
+
+		if ( ! empty( $attributes['showArchiveLink'] ) ) {
+			$category_slug = sanitize_title( $attributes['categorySlug'] ?? '' );
+			$archive_url   = '';
+
+			if ( ! empty( $attributes['archiveLinkUrl'] ) ) {
+				$archive_url = $attributes['archiveLinkUrl'];
+			} elseif ( $category_slug ) {
+				$category = get_category_by_slug( $category_slug );
+				if ( $category ) {
+					$archive_url = get_category_link( $category );
+				}
+			}
+
+			$archive_label = ! empty( $attributes['archiveLinkLabel'] )
+				? $attributes['archiveLinkLabel']
+				: __( 'See more', 'andreian' );
+
+			if ( $archive_url && ! is_wp_error( $archive_url ) ) {
+				printf(
+					'<p class="andreian-posts__archive-link"><a href="%1$s">%2$s</a></p>',
+					esc_url( $archive_url ),
+					esc_html( $archive_label )
+				);
+			}
+		}
 		?>
 		<?php if ( $has_sidebar ) : ?>
 			</div>

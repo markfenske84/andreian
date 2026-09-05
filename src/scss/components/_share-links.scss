@@ -1,0 +1,44 @@
+.share-link {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 2.25rem;
+	height: 2.25rem;
+	padding: 0;
+	border: 0;
+	background: transparent;
+	text-decoration: none;
+	cursor: pointer;
+	@include link-hover-opacity;
+
+	&__icon,
+	&__icon svg {
+		display: block;
+		width: 1.5rem;
+		height: 1.5rem;
+		overflow: visible;
+	}
+}
+
+.post-share__list {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+	margin: 0.75rem 0 0;
+	padding: 0;
+	list-style: none;
+}
+
+.andreian-card__share {
+	align-items: center;
+}
+
+[data-theme='dark'] {
+	.share-link--x svg path,
+	.share-link--email svg path,
+	.share-link--copy svg path,
+	.post-share__copy svg path,
+	.andreian-card__share-link.share-link--x svg path {
+		fill: #fff;
+	}
+}

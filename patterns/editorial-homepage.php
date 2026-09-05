@@ -15,7 +15,7 @@
 		<!-- wp:heading {"className":"sr-only"} -->
 		<h2 class="wp-block-heading sr-only">Featured stories</h2>
 		<!-- /wp:heading -->
-		<!-- wp:andreian/post {"postsToShow":5,"layout":"hero-tiles","prioritizeFirstImage":true} /-->
+		<!-- wp:andreian/post {"postsToShow":8,"layout":"hero-tiles","prioritizeFirstImage":true} /-->
 	</div>
 	<!-- /wp:group -->
 
@@ -24,7 +24,7 @@
 		<!-- wp:heading {"textAlign":"center","className":"section-title"} -->
 		<h2 class="wp-block-heading has-text-align-center section-title">Latest Entries</h2>
 		<!-- /wp:heading -->
-		<!-- wp:andreian/post {"postsToShow":9,"layout":"list","offset":5,"showExcerpt":true,"showRandomSidebar":true,"sidebarPostsToShow":9,"sidebarTitle":"Random"} /-->
+		<!-- wp:andreian/post {"postsToShow":10,"layout":"list","offset":0,"showExcerpt":true,"showRandomSidebar":true,"sidebarPostsToShow":9,"sidebarTitle":"Random","excludeFeaturedPosts":true} /-->
 	</div>
 	<!-- /wp:group -->
 
@@ -33,7 +33,7 @@
 		<!-- wp:heading {"textAlign":"center","className":"section-title"} -->
 		<h2 class="wp-block-heading has-text-align-center section-title">Body</h2>
 		<!-- /wp:heading -->
-		<!-- wp:andreian/post {"categorySlug":"body","postsToShow":9,"layout":"category-tiles"} /-->
+		<!-- wp:andreian/post {"categorySlug":"body","postsToShow":9,"layout":"category-tiles","showArchiveLink":true} /-->
 	</div>
 	<!-- /wp:group -->
 
@@ -42,7 +42,7 @@
 		<!-- wp:heading {"textAlign":"center","className":"section-title"} -->
 		<h2 class="wp-block-heading has-text-align-center section-title">Mind</h2>
 		<!-- /wp:heading -->
-		<!-- wp:andreian/post {"categorySlug":"mind","postsToShow":9,"layout":"category-tiles"} /-->
+		<!-- wp:andreian/post {"categorySlug":"mind","postsToShow":9,"layout":"category-tiles","showArchiveLink":true} /-->
 	</div>
 	<!-- /wp:group -->
 
@@ -51,7 +51,7 @@
 		<!-- wp:heading {"textAlign":"center","className":"section-title"} -->
 		<h2 class="wp-block-heading has-text-align-center section-title">Spirit</h2>
 		<!-- /wp:heading -->
-		<!-- wp:andreian/post {"categorySlug":"spirit","postsToShow":9,"layout":"category-tiles"} /-->
+		<!-- wp:andreian/post {"categorySlug":"spirit","postsToShow":9,"layout":"category-tiles","showArchiveLink":true} /-->
 	</div>
 	<!-- /wp:group -->
 </div>

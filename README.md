@@ -74,7 +74,19 @@ Used on:
 - Single blog posts (Classic Editor layout)
 - Pages using the **Sidebar** page template
 
-Add standard WordPress widgets (search, categories, custom HTML, block widgets, etc.).
+Add standard WordPress widgets (search, categories, custom HTML, block widgets, etc.). Add the **Post Share** block here to display the current post's share icons.
+
+**Recommended cleanup:** Remove **Recent Comments** and **Recent Posts** from this area — comments are disabled site-wide, and recent posts duplicate homepage content. An email/newsletter widget can be added here later.
+
+### Homepage Featured posts
+
+When editing any post in the Classic Editor, use the **Homepage Featured** metabox (sidebar):
+
+- Check **Feature on homepage** to pin a post in the hero (8 slots max)
+- Set **Display order** (1–8) to control placement
+- Works for older posts — no need to re-edit homepage blocks
+
+The posts list table shows a **Featured** column (★) for quick reference.
 
 ### Homepage Latest Sidebar
 
@@ -111,9 +123,16 @@ Widget area above the footer menu on **internal pages only**. It is hidden on th
 - **Show excerpts** — teaser text under titles
 - **Show Random sidebar** — List layout only; slideshow + Homepage Latest Sidebar widgets
 - **Random slides** / **Random sidebar title** — when Random sidebar is on
-- **Prioritize first image** — LCP preload for the first hero image
+- **Exclude featured hero posts** — List layout only; avoids repeating homepage hero picks
+- **Show archive link** — Category Tiles layout; adds a “See more” link below the grid
+- **Archive link URL override** — Optional custom URL (e.g. Content Archives page)
 
 The pattern is an insertion template. After inserting, each block on the page is independent.
+
+**If your homepage was already saved:** Re-open the homepage in the block editor and update these block settings manually (pattern file changes do not overwrite saved content):
+
+- Latest Entries: set posts to **10**, enable **Exclude featured hero posts**
+- Body / Mind / Spirit blocks: enable **Show archive link**
 
 If the homepage has no saved content, the theme falls back to the default editorial pattern from the theme files.
 
@@ -121,8 +140,8 @@ If the homepage has no saved content, the theme falls back to the default editor
 
 | Section | Layout | Posts |
 |---------|--------|-------|
-| Featured lead | Hero Tiles | 5 |
-| Latest Entries | List + Random sidebar | 9 (offset `5` skips lead posts) |
+| Featured lead | Hero Tiles | 8 |
+| Latest Entries | List + Random sidebar | 10 (excludes featured hero posts) |
 | Body / Mind / Spirit | Category Tiles | 9 each (3×3 grid) |
 
 Random slideshow defaults to **9 slides**.
@@ -142,6 +161,26 @@ When editing a page, choose **Template** in the page sidebar:
 ### Posts
 
 Posts use the **Classic Editor** and the **Sidebar** widget area. Metadata (date, reading time, categories) is rendered by the theme.
+
+**Quote styles:** All `<blockquote>` elements render as full-width pull quotes (Aeon-style). Use **Formats → Inline Quote** in the editor for a subtle left-border variant. Add attribution with `<cite>Author Name</cite>` inside the blockquote.
+
+**Share links:** Single posts show colored brand icons (Facebook, X, Email, Telegram, Copy link) in the sticky sidebar.
+
+**Recommended posts:** Four related posts from the same category appear below the article.
+
+---
+
+## URL preservation (pre-launch checklist)
+
+Individual post URLs are controlled by **Settings → Permalinks** — not the theme. This theme does **not** add a `/blog/` prefix to posts.
+
+Before launch, verify:
+
+1. **Settings → Permalinks** is set to `/%postname%/` (or your existing structure without `/blog/`)
+2. Spot-check 3–5 live post URLs — unchanged after theme deploy
+3. Share a post on Facebook/X — confirm the shared URL matches the live permalink
+4. Category archives (`/category/body/`, etc.) and Content Archives menu links still resolve
+5. No redirect plugin is adding `/blog/` to post URLs
 
 ---
 
@@ -164,3 +203,5 @@ npm run compile
 ```
 
 Social icons are SVG files in `assets/svg` (`ico-facebook`, `ico-x`, `ico-instagram`, `ico-linkedin`).
+
+Share icons use colored brand SVGs (`ico-share-facebook`, `ico-share-x`, `ico-share-email`, `ico-share-telegram`, `ico-share-link`, `ico-share-flipboard`).

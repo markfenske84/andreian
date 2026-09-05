@@ -67,6 +67,22 @@
 		"sidebarTitle": {
 			"type": "string",
 			"default": "Random"
+		},
+		"excludeFeaturedPosts": {
+			"type": "boolean",
+			"default": false
+		},
+		"showArchiveLink": {
+			"type": "boolean",
+			"default": false
+		},
+		"archiveLinkLabel": {
+			"type": "string",
+			"default": "See more"
+		},
+		"archiveLinkUrl": {
+			"type": "string",
+			"default": ""
 		}
 	},
 	"supports": {

@@ -37,6 +37,10 @@
 		showRandomSidebar: { type: 'boolean', default: false },
 		sidebarPostsToShow: { type: 'number', default: 9 },
 		sidebarTitle: { type: 'string', default: 'Random' },
+		excludeFeaturedPosts: { type: 'boolean', default: false },
+		showArchiveLink: { type: 'boolean', default: false },
+		archiveLinkLabel: { type: 'string', default: 'See more' },
+		archiveLinkUrl: { type: 'string', default: '' },
 	};
 
 	function LayoutPreview( props ) {
@@ -240,7 +244,51 @@
 						onChange: function ( value ) {
 							setAttributes( { prioritizeFirstImage: value } );
 						},
-					} )
+					} ),
+					settings.layout === 'list'
+						? el( ToggleControl, {
+								label: __( 'Exclude featured hero posts', 'andreian' ),
+								help: __(
+									'Avoid repeating posts already shown in the homepage hero.',
+									'andreian'
+								),
+								checked: settings.excludeFeaturedPosts,
+								onChange: function ( value ) {
+									setAttributes( { excludeFeaturedPosts: value } );
+								},
+						  } )
+						: null,
+					settings.categorySlug || settings.categoryId
+						? el( ToggleControl, {
+								label: __( 'Show archive link', 'andreian' ),
+								checked: settings.showArchiveLink,
+								onChange: function ( value ) {
+									setAttributes( { showArchiveLink: value } );
+								},
+						  } )
+						: null,
+					settings.showArchiveLink
+						? el( TextControl, {
+								label: __( 'Archive link label', 'andreian' ),
+								value: settings.archiveLinkLabel || 'See more',
+								onChange: function ( value ) {
+									setAttributes( { archiveLinkLabel: value } );
+								},
+						  } )
+						: null,
+					settings.showArchiveLink
+						? el( TextControl, {
+								label: __( 'Archive link URL override', 'andreian' ),
+								help: __(
+									'Leave blank to use the category archive URL.',
+									'andreian'
+								),
+								value: settings.archiveLinkUrl || '',
+								onChange: function ( value ) {
+									setAttributes( { archiveLinkUrl: value } );
+								},
+						  } )
+						: null
 				)
 			),
 			el(

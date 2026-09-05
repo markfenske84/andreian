@@ -135,10 +135,11 @@
 }
 
 .andreian-posts--hero-tiles {
-	grid-template-columns: repeat(4, minmax(0, 1fr));
+	grid-template-columns: repeat(12, minmax(0, 1fr));
 	grid-template-areas:
-		'second lead lead third'
-		'fourth lead lead fifth';
+		'second second second lead lead lead lead lead lead third third third'
+		'fourth fourth fourth lead lead lead lead lead lead fifth fifth fifth'
+		'sixth sixth sixth sixth seventh seventh seventh seventh eighth eighth eighth eighth';
 	align-items: start;
 
 	.andreian-card:first-of-type {
@@ -167,6 +168,18 @@
 
 	.andreian-card:nth-of-type(5) {
 		grid-area: fifth;
+	}
+
+	.andreian-card:nth-of-type(6) {
+		grid-area: sixth;
+	}
+
+	.andreian-card:nth-of-type(7) {
+		grid-area: seventh;
+	}
+
+	.andreian-card:nth-of-type(8) {
+		grid-area: eighth;
 	}
 
 	.andreian-card:not(:first-of-type) .andreian-card__title {
@@ -384,7 +397,9 @@
 		grid-template-areas:
 			'lead lead'
 			'second third'
-			'fourth fifth';
+			'fourth fifth'
+			'sixth seventh'
+			'eighth eighth';
 	}
 
 	.andreian-posts--category-tiles {
@@ -436,5 +451,20 @@
 	.andreian-card__image-link img,
 	.andreian-random-slideshow__slide {
 		transition: none;
+	}
+}
+
+.andreian-posts__archive-link {
+	margin: 1.5rem 0 0;
+	text-align: center;
+
+	a {
+		font-family: $font-family-meta;
+		font-size: 0.85rem;
+		font-weight: 700;
+		letter-spacing: 0.06em;
+		text-decoration: none;
+		text-transform: uppercase;
+		@include link-hover-opacity;
 	}
 }
