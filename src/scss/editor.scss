@@ -8,6 +8,13 @@
 @import 'components/social-links';
 @import 'pages/front-page';
 
+body#tinymce.mce-content-body,
+body.mce-content-body.wp-autoresize {
+	margin: 0 !important;
+	padding: 1.25rem 1.5rem !important;
+	box-sizing: border-box;
+}
+
 .editor-styles-wrapper {
 	font-family: $font-family-body;
 	font-size: $base-font-size;
@@ -40,20 +47,13 @@
 	}
 }
 
-.editor-styles-wrapper.andreian-layout-standard {
+.editor-styles-wrapper.andreian-layout-standard,
+.editor-styles-wrapper.andreian-layout-builder {
 	.is-root-container,
 	.block-editor-block-list__layout.is-root-container,
 	.wp-block-post-content {
 		max-width: $content-max-width;
 		margin-left: auto;
 		margin-right: auto;
-	}
-}
-
-.editor-styles-wrapper.andreian-layout-builder {
-	.is-root-container,
-	.block-editor-block-list__layout.is-root-container,
-	.wp-block-post-content {
-		max-width: none;
 	}
 }

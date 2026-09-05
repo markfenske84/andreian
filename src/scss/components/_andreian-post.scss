@@ -543,6 +543,15 @@
 		padding-inline: var(--container-gutter, 1rem);
 	}
 
+	.andreian-random-slideshow__title,
+	.andreian-random-slideshow__controls {
+		padding-inline: var(--container-gutter, 1rem);
+	}
+
+	.andreian-random-slideshow__title {
+		text-align: center;
+	}
+
 	.andreian-posts--list .andreian-card__content {
 		padding-inline: 0 var(--container-gutter, 1rem);
 	}

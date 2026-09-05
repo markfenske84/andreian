@@ -20,6 +20,7 @@ get_header();
 							<?php the_content(); ?>
 						</div>
 					</article>
+					<?php comments_template(); ?>
 				</div>
 			</div>
 			<aside class="_sidebar post-sidebar" aria-label="<?php esc_attr_e( 'Page sidebar', 'andreian' ); ?>">

@@ -157,6 +157,7 @@ include_once 'wp-customization/widgets.php';
 include_once 'wp-customization/classic-editor-posts.php';
 include_once 'wp-customization/short-description.php';
 include_once 'wp-customization/featured-homepage.php';
+include_once 'wp-customization/featured-image-position.php';
 include_once 'wp-customization/page-layout.php';
 include_once 'wp-customization/image-monotone-filter.php';
 include_once 'wp-customization/columns-reverse-mobile.php';

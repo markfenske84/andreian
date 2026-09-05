@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		button.classList.add('toggle-button');
 		button.setAttribute('aria-expanded', 'false');
 		button.innerHTML =
-			'<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>';
+			'<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m5 8 7 8 7-8" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="square" stroke-linejoin="miter"></path></svg>';
 
 		const link = menuItem.querySelector('a');
 		if (link) {
@@ -22,24 +22,39 @@ document.addEventListener('DOMContentLoaded', function () {
 		}
 	}
 
-	function bindDropdownToggle(menuItem) {
-		const button = menuItem.querySelector('.toggle-button');
-		const subMenu = menuItem.querySelector('.sub-menu');
+	function bindDropdownToggle(menuItem, options) {
+		const button = menuItem.querySelector(':scope > .toggle-button');
+		const subMenu = menuItem.querySelector(':scope > .sub-menu');
+		const link = menuItem.querySelector(':scope > a');
 		if (!button || !subMenu) {
 			return;
 		}
 
-		button.addEventListener('click', function (event) {
-			event.preventDefault();
-			const isOpen = subMenu.classList.toggle('show');
+		function setOpen(isOpen) {
+			subMenu.classList.toggle('show', isOpen);
 			menuItem.classList.toggle('open', isOpen);
 			button.setAttribute('aria-expanded', String(isOpen));
-		});
+			if (link && options && options.toggleOnLink) {
+				link.setAttribute('aria-expanded', String(isOpen));
+			}
+		}
+
+		function toggle(event) {
+			event.preventDefault();
+			setOpen(!subMenu.classList.contains('show'));
+		}
+
+		button.addEventListener('click', toggle);
+
+		if (options && options.toggleOnLink && link) {
+			link.setAttribute('aria-expanded', 'false');
+			link.addEventListener('click', toggle);
+		}
 	}
 
 	document.querySelectorAll('#mobile-offcanvas .menu-item-has-children').forEach(function (item) {
 		insertToggleButton(item);
-		bindDropdownToggle(item);
+		bindDropdownToggle(item, { toggleOnLink: true });
 	});
 
 	document.querySelectorAll('.site-header .menu-item-has-children').forEach(function (item) {
@@ -154,9 +169,15 @@ document.addEventListener('DOMContentLoaded', function () {
 				: searchToggle.getAttribute('data-open-label') || 'Open search'
 		);
 
-		if (isOpen && searchField) {
-			searchField.focus();
-		} else if (!isOpen && restoreFocus) {
+		if (isOpen) {
+			const nav = document.querySelector('.site-header__navigation');
+			if (nav) {
+				nav.classList.remove('is-scroll-hidden');
+			}
+			if (searchField) {
+				searchField.focus();
+			}
+		} else if (restoreFocus) {
 			searchToggle.focus();
 		}
 
@@ -205,7 +226,8 @@ document.addEventListener('DOMContentLoaded', function () {
 		}
 
 		syncNavHeight = function () {
-			const height = stickyNav.offsetHeight;
+			const navInner = stickyNav.querySelector('.site-header__navigation-inner');
+			const height = (navInner && navInner.offsetHeight) || stickyNav.offsetHeight;
 			spacer.style.height = height + 'px';
 			document.documentElement.style.setProperty('--nav-bar-height', height + 'px');
 			document.documentElement.style.setProperty(
@@ -217,7 +239,11 @@ document.addEventListener('DOMContentLoaded', function () {
 		function updateStickyNav() {
 			const currentScrollY = Math.max(0, window.scrollY);
 			const delta = currentScrollY - lastScrollY;
-			if (document.body.classList.contains('mobile-offcanvas-open')) {
+			const searchOpen = document.body.classList.contains('site-search-open');
+			if (document.body.classList.contains('mobile-offcanvas-open') || searchOpen) {
+				if (searchOpen) {
+					stickyNav.classList.remove('is-scroll-hidden');
+				}
 				lastScrollY = currentScrollY;
 				ticking = false;
 				return;

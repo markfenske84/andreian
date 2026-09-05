@@ -40,3 +40,20 @@ function andreian_excerpt_more() {
 	return '…';
 }
 add_filter( 'excerpt_more', 'andreian_excerpt_more' );
+
+/**
+ * Show every page number when there are 10 or fewer pages.
+ *
+ * @param array $args Pagination arguments.
+ * @return array
+ */
+function andreian_posts_pagination_args( $args ) {
+	global $wp_query;
+
+	if ( isset( $wp_query->max_num_pages ) && (int) $wp_query->max_num_pages <= 10 ) {
+		$args['show_all'] = true;
+	}
+
+	return $args;
+}
+add_filter( 'the_posts_pagination_args', 'andreian_posts_pagination_args' );

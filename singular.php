@@ -14,7 +14,7 @@ get_header();
 		?>
 		<div class="single-article__hero<?php echo esc_attr( $hero_class ); ?>">
 			<?php if ( $has_thumbnail ) : ?>
-				<figure class="single-article__featured-image">
+				<figure class="single-article__featured-image" style="--featured-position: <?php echo esc_attr( andreian_featured_image_object_position() ); ?>;">
 					<?php
 					the_post_thumbnail(
 						'andreian-feature',
@@ -50,6 +50,7 @@ get_header();
 						</div>
 						<?php get_template_part( 'src/components/recommended-posts' ); ?>
 					</article>
+					<?php comments_template(); ?>
 				</div>
 			</div>
 			<aside class="_sidebar post-sidebar" aria-label="<?php esc_attr_e( 'Post sidebar', 'andreian' ); ?>">

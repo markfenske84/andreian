@@ -49,6 +49,25 @@ function andreian_classic_editor_formats( $init ) {
 add_filter( 'tiny_mce_before_init', 'andreian_classic_editor_formats' );
 
 /**
+ * Restore inset padding inside TinyMCE.
+ *
+ * Theme styles zero body margin, and wp-autoresize zeros padding with !important.
+ *
+ * @param array $init TinyMCE settings.
+ * @return array
+ */
+function andreian_classic_editor_content_style( $init ) {
+	$padding = 'body.mce-content-body,body.wp-autoresize{margin:0!important;padding:1.25rem 1.5rem!important;box-sizing:border-box;}';
+
+	$init['content_style'] = trim(
+		( isset( $init['content_style'] ) ? (string) $init['content_style'] . ' ' : '' ) . $padding
+	);
+
+	return $init;
+}
+add_filter( 'tiny_mce_before_init', 'andreian_classic_editor_content_style' );
+
+/**
  * Add the Formats dropdown to the Classic Editor toolbar.
  *
  * @param array $buttons Toolbar buttons.

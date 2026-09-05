@@ -155,34 +155,38 @@ function andreian_render_toc_list( $headings ) {
 		return '';
 	}
 
-	$html       = '<ol class="andreian-toc__list">';
-	$prev_level = (int) $headings[0]['level'];
+	$html  = '<ol class="andreian-toc__list">';
+	$stack = array( (int) $headings[0]['level'] );
 
 	foreach ( $headings as $index => $heading ) {
 		$level = (int) $heading['level'];
 
 		if ( $index > 0 ) {
-			if ( $level > $prev_level ) {
-				for ( $open = $prev_level; $open < $level; $open++ ) {
-					$html .= '<ol>';
-				}
-			} elseif ( $level < $prev_level ) {
-				for ( $close = $level; $close < $prev_level; $close++ ) {
-					$html .= '</li></ol>';
-				}
-				$html .= '</li>';
+			$current = (int) $stack[ count( $stack ) - 1 ];
+
+			if ( $level > $current ) {
+				$html   .= '<ol>';
+				$stack[] = $level;
 			} else {
+				while ( count( $stack ) > 1 && $level < $stack[ count( $stack ) - 1 ] ) {
+					$html .= '</li></ol>';
+					array_pop( $stack );
+				}
+
 				$html .= '</li>';
+
+				if ( $level < $stack[ count( $stack ) - 1 ] ) {
+					$stack[ count( $stack ) - 1 ] = $level;
+				}
 			}
 		}
 
-		$html      .= '<li><a href="#' . esc_attr( $heading['id'] ) . '">' . esc_html( $heading['label'] ) . '</a>';
-		$prev_level = $level;
+		$html .= '<li><a href="#' . esc_attr( $heading['id'] ) . '">' . esc_html( $heading['label'] ) . '</a>';
 	}
 
-	$first_level = (int) $headings[0]['level'];
-	for ( $close = $first_level; $close < $prev_level; $close++ ) {
+	while ( count( $stack ) > 1 ) {
 		$html .= '</li></ol>';
+		array_pop( $stack );
 	}
 
 	$html .= '</li></ol>';

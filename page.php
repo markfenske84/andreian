@@ -15,6 +15,7 @@ get_header();
 					<?php the_content(); ?>
 				</div>
 			</article>
+			<?php comments_template(); ?>
 		</div>
 	<?php endwhile; ?>
 <?php endif; ?>

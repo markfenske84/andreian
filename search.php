@@ -6,7 +6,7 @@
 get_header();
 ?>
 
-<section id="search-template" class="_container _archive">
+<section id="search-template" class="_container">
 	<div class="_posts">
 		<div class="_inner archive-post-list" itemscope itemtype="https://schema.org/ItemList">
 			<meta itemprop="numberOfItems" content="<?php echo esc_attr( $wp_query->post_count ); ?>">
@@ -35,12 +35,6 @@ get_header();
 			</div>
 		<?php endif; ?>
 	</div>
-
-	<?php if ( is_active_sidebar( 'sidebar' ) ) : ?>
-		<div class="_sidebar">
-			<?php dynamic_sidebar( 'sidebar' ); ?>
-		</div>
-	<?php endif; ?>
 </section>
 
 <?php get_footer(); ?>

@@ -36,8 +36,12 @@
 		border-top: 0;
 	}
 
-	.andreian-card__image-link {
+	&:not(.category-post-grid) .andreian-card__image-link {
 		margin-bottom: 0;
+	}
+
+	> .andreian-card--no-image {
+		grid-template-columns: 1fr;
 	}
 }
 
@@ -64,7 +68,7 @@
 	}
 
 	.andreian-card__image-link {
-		margin-bottom: 1.75rem;
+		margin-bottom: 0.75rem;
 
 		img {
 			aspect-ratio: 16 / 9;
@@ -103,6 +107,7 @@
 	.nav-links {
 		display: flex;
 		flex-wrap: wrap;
+		justify-content: center;
 		gap: 0.5rem;
 	}
 

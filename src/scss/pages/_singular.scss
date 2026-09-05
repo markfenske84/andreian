@@ -7,6 +7,7 @@
 		min-height: calc(100dvh - var(--admin-bar-height, 0px) - var(--header-height, 0px));
 		display: flex;
 		align-items: flex-end;
+		overflow: hidden;
 		color: #fff;
 	}
 
@@ -26,12 +27,16 @@
 	width: 100%;
 	height: 100%;
 	overflow: hidden;
+	pointer-events: none;
 
 	img {
+		position: absolute;
+		inset: 0;
 		width: 100%;
 		height: 100%;
+		max-width: none;
 		object-fit: cover;
-		object-position: top center;
+		object-position: var(--featured-position, top center);
 	}
 }
 
@@ -44,6 +49,7 @@
 .single-article__hero {
 	.entry-header {
 		max-width: min(900px, 100%);
+		margin-bottom: 0;
 	}
 
 	.entry-title {
@@ -99,7 +105,7 @@
 }
 
 #singular-template {
-	padding-top: clamp(2rem, 4vw, 3rem);
+	padding-top: clamp(2rem, 5vw, 3.5rem);
 
 	.entry-header {
 		margin: 0 0 2.5rem;
@@ -164,16 +170,24 @@
 
 @include breakpoint('lg') {
 	.single-article__hero--has-image {
+		display: block;
 		aspect-ratio: auto;
 		min-height: 0;
+		height: auto;
 	}
 
 	.single-article__hero--has-image::after {
 		background: rgb(0 0 0 / 55%);
 	}
 
-	.single-article__hero-inner {
+	.single-article__hero-inner,
+	.single-article__hero:not(.single-article__hero--has-image) .single-article__hero-inner {
 		padding-block: 1.5rem;
+	}
+
+	.single-article__hero .post-breadcrumbs,
+	.single-article__hero .entry-meta {
+		line-height: 1.2;
 	}
 
 	.single-article__hero .entry-title {
@@ -185,11 +199,15 @@
 		max-width: 100%;
 		font-size: clamp(0.95rem, 3.2vw, 1.15rem);
 	}
+
+	#singular-template {
+		padding-top: 1.5rem;
+	}
 }
 
 @include breakpoint('sm') {
 	#singular-template {
-		padding-top: 1.75rem;
+		padding-top: 1.5rem;
 
 		.entry-header {
 			margin-bottom: 2rem;

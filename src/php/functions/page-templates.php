@@ -17,13 +17,13 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function andreian_get_registered_page_templates() {
 	return array(
-		'src/templates/template-page-builder.php' => __( 'Page Builder (Full Width)', 'andreian' ),
+		'src/templates/template-page-builder.php' => __( 'Page Builder', 'andreian' ),
 		'src/templates/template-sidebar.php'      => __( 'Sidebar', 'andreian' ),
 	);
 }
 
 /**
- * Slug for the full-width page builder template.
+ * Slug for the page builder template.
  *
  * @return string
  */
@@ -32,7 +32,7 @@ function andreian_get_page_builder_template_slug() {
 }
 
 /**
- * Whether the given page uses the page builder (full-width) template.
+ * Whether the given page uses the page builder template.
  *
  * @param int|null $post_id Post ID.
  * @return bool

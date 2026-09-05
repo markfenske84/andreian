@@ -1,3 +1,39 @@
 .error404 {
-	padding-block: calc(var(--container-gutter) * 4);
+	display: flex;
+	flex-direction: column;
+	min-height: 100dvh;
+
+	#content {
+		display: flex;
+		flex: 1 1 auto;
+		align-items: center;
+		justify-content: center;
+		padding-block: clamp(2.5rem, 6vw, 4rem);
+	}
+
+	.site-footer {
+		margin-top: 0;
+	}
+}
+
+.admin-bar.error404 {
+	min-height: calc(100dvh - var(--admin-bar-height, 32px));
+}
+
+.error404-content {
+	width: 100%;
+	text-align: center;
+}
+
+#post-not-found {
+	padding-inline: var(--container-gutter, 1rem);
+
+	h1,
+	p {
+		margin-bottom: 0;
+	}
+
+	h1 {
+		margin-bottom: 0.65rem;
+	}
 }

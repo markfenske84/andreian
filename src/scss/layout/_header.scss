@@ -228,7 +228,7 @@
 
 	.site-wordmark {
 		font-family: $font-family-heading;
-		font-size: clamp(0.72rem, 2.8vw, 0.9rem);
+		font-size: clamp(1rem, 4vw, 1.2rem);
 		font-weight: 500;
 		line-height: 1;
 		letter-spacing: $font-heading-letter-spacing;
@@ -283,7 +283,8 @@ body.mobile-offcanvas-open {
 	}
 
 	.site-header__navigation-inner {
-		grid-template-columns: auto minmax(0, 1fr) 42px;
+		grid-template-columns: auto minmax(0, 1fr) auto auto;
+		gap: 0.35rem;
 		min-height: 44px;
 	}
 
@@ -292,9 +293,9 @@ body.mobile-offcanvas-open {
 	}
 
 	.site-header__navigation .site-header__tools {
-		grid-column: 2;
-		justify-self: center;
-		justify-content: center;
+		grid-column: 3;
+		justify-self: end;
+		justify-content: flex-end;
 		flex-wrap: nowrap;
 	}
 
@@ -305,7 +306,7 @@ body.mobile-offcanvas-open {
 
 	.site-header__navigation-inner > .mobile-offcanvas-toggle {
 		display: block;
-		grid-column: 3;
+		grid-column: 4;
 		justify-self: end;
 		margin: 0;
 		border: 0;

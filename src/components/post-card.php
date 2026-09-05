@@ -28,6 +28,9 @@ if ( $is_primary_featured ) {
 	$card_class .= ' andreian-card--featured';
 }
 $thumbnail_id  = get_post_thumbnail_id( $post_id );
+if ( ! $thumbnail_id ) {
+	$card_class .= ' andreian-card--no-image';
+}
 $categories    = get_the_category( $post_id );
 
 $categories = array_values(
@@ -128,10 +131,8 @@ if ( $priority ) {
 			<time datetime="<?php echo esc_attr( andreian_get_post_datetime( $post_id ) ); ?>">
 				<?php echo esc_html( andreian_get_post_display_date( $post_id ) ); ?>
 			</time>
-			<?php if ( 'archive-grid' !== $layout ) : ?>
-				<span aria-hidden="true">·</span>
-				<span><?php echo esc_html( andreian_get_reading_time( $post_id ) ); ?></span>
-			<?php endif; ?>
+			<span aria-hidden="true">·</span>
+			<span><?php echo esc_html( andreian_get_reading_time( $post_id ) ); ?></span>
 		</div>
 
 		<?php if ( $show_excerpt ) : ?>

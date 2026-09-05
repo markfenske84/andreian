@@ -17,13 +17,5 @@ function andreian_enqueue_page_layout_editor_assets() {
 		andreian_asset_version( $script_path ),
 		true
 	);
-
-	wp_localize_script(
-		'andreian-page-layout',
-		'andreianPageLayout',
-		array(
-			'builderTemplate' => 'src/templates/template-page-builder.php',
-		)
-	);
 }
 add_action( 'enqueue_block_editor_assets', 'andreian_enqueue_page_layout_editor_assets' );

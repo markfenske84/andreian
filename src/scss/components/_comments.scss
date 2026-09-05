@@ -1,0 +1,252 @@
+.comments-area {
+	margin-top: clamp(3rem, 6vw, 4.5rem);
+	padding-top: 2rem;
+	border-top: 2px solid $color-text;
+}
+
+.comments-title,
+.comment-reply-title {
+	margin: 0 0 1.5rem;
+	font-size: clamp(1.35rem, 2.5vw, 1.75rem);
+	text-transform: uppercase;
+}
+
+.comment-list,
+.comment-list .children {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.comment-list .children {
+	margin-left: 4rem;
+}
+
+.comment-list .comment,
+.comment-list .pingback,
+.comment-list .trackback {
+	margin: 0;
+	padding: 1.5rem 0;
+	border-bottom: 1px solid $color-rule;
+}
+
+.comment-author {
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+	font-family: $font-family-heading;
+	font-weight: 700;
+
+	.avatar {
+		flex-shrink: 0;
+		width: 48px;
+		height: 48px;
+		border-radius: 50%;
+	}
+
+	.says {
+		display: none;
+	}
+}
+
+.comment-metadata {
+	margin: 0.35rem 0 0.85rem 4rem;
+	font-family: $font-family-meta;
+	font-size: 0.72rem;
+	text-transform: uppercase;
+	color: $color-muted;
+
+	a {
+		color: inherit;
+		@include link-hover-opacity;
+	}
+
+	.edit-link {
+		margin-left: 0.5rem;
+	}
+}
+
+.comment-awaiting-moderation {
+	display: block;
+	margin: 0 0 0.75rem 4rem;
+	font-family: $font-family-meta;
+	font-size: 0.85rem;
+	color: $color-muted;
+}
+
+.comment-content {
+	margin-left: 4rem;
+	font-size: 1.05rem;
+	line-height: 1.65;
+
+	> *:last-child {
+		margin-bottom: 0;
+	}
+
+	a {
+		@include link-hover-opacity;
+	}
+}
+
+.reply {
+	margin-left: 4rem;
+	font-family: $font-family-meta;
+	font-size: 0.72rem;
+	text-transform: uppercase;
+
+	a {
+		@include link-hover-opacity;
+	}
+}
+
+.bypostauthor > .comment-body .comment-author .fn::after {
+	content: 'Author';
+	margin-left: 0.5rem;
+	color: $color-muted;
+	font-family: $font-family-meta;
+	font-size: 0.72rem;
+	font-weight: 400;
+	letter-spacing: 0;
+	text-transform: uppercase;
+}
+
+.pingback .comment-metadata,
+.trackback .comment-metadata,
+.pingback .comment-content,
+.trackback .comment-content,
+.pingback .reply,
+.trackback .reply {
+	margin-left: 0;
+}
+
+.comments-pagination {
+	margin-top: 1.5rem;
+
+	.nav-links {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 0.5rem;
+	}
+
+	.page-numbers {
+		padding: 0.35rem 0.65rem;
+		border: 1px solid $color-rule;
+		text-decoration: none;
+		transition: $link-transition-interactive;
+		@include link-hover-opacity;
+
+		&:hover,
+		&:focus-visible {
+			border-color: $color-text;
+		}
+	}
+
+	.current {
+		color: $color-background;
+		background: $color-text;
+	}
+}
+
+.no-comments {
+	margin: 0 0 1.5rem;
+	color: $color-muted;
+}
+
+.comment-respond {
+	margin-top: 2rem;
+}
+
+.comment-list + .comment-respond,
+.comments-pagination + .comment-respond,
+.no-comments + .comment-respond {
+	padding-top: 2rem;
+	border-top: 1px solid $color-rule;
+}
+
+.comment-form {
+	display: grid;
+	gap: 1rem;
+
+	p {
+		margin: 0;
+	}
+
+	label {
+		display: block;
+		margin-bottom: 0.35rem;
+		font-family: $font-family-meta;
+		font-size: 0.72rem;
+		font-weight: 700;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+	}
+
+	input[type='text'],
+	input[type='email'],
+	input[type='url'],
+	textarea {
+		width: 100%;
+		padding: 0.65rem 0.75rem;
+		border: 1px solid $color-rule;
+		border-radius: 0;
+		background: $color-background;
+		color: $color-text;
+
+		&:focus {
+			outline: 2px solid $color-text;
+			outline-offset: 2px;
+		}
+	}
+
+	textarea {
+		min-height: 10rem;
+		resize: vertical;
+	}
+
+	.comment-notes,
+	.logged-in-as,
+	.comment-form-cookies-consent {
+		font-family: $font-family-meta;
+		font-size: 0.85rem;
+		color: $color-muted;
+	}
+
+	.logged-in-as a {
+		@include link-hover-opacity;
+	}
+
+	.comment-form-cookies-consent {
+		display: flex;
+		align-items: flex-start;
+		gap: 0.5rem;
+
+		label {
+			margin: 0;
+			font-weight: 400;
+			letter-spacing: 0;
+			text-transform: none;
+		}
+
+		input {
+			margin-top: 0.2rem;
+		}
+	}
+
+	.form-submit {
+		margin-top: 0.5rem;
+	}
+}
+
+@include breakpoint('sm') {
+	.comment-list .children {
+		margin-left: 1.25rem;
+	}
+
+	.comment-metadata,
+	.comment-awaiting-moderation,
+	.comment-content,
+	.reply {
+		margin-left: 0;
+	}
+}
