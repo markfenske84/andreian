@@ -50,7 +50,7 @@ function andreian_get_random_post_menu_link() {
 		'<li class="menu-item andreian-random-post-menu-item"><a href="%1$s">%2$s<span>%3$s</span></a></li>',
 		esc_url( andreian_get_random_post_url() ),
 		$icon ? $icon : '',
-		esc_html__( 'Random', 'andreian' )
+		esc_html__( 'Random Entry', 'andreian' )
 	);
 }
 

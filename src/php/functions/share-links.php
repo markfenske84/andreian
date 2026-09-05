@@ -71,15 +71,19 @@ function andreian_render_share_link( $platform, $context = 'share-link' ) {
 		return '';
 	}
 
-	$class = $platform['class'];
-	$rel   = ! empty( $platform['external'] ) ? 'nofollow noopener' : '';
-	$target = ! empty( $platform['external'] ) ? '_blank' : '_self';
+	$class   = $platform['class'];
+	$is_mail = 0 === stripos( $platform['url'], 'mailto:' );
+	$rel     = ! empty( $platform['external'] ) ? 'nofollow noopener' : '';
+	$target  = ! empty( $platform['external'] ) ? '_blank' : '';
+	$href    = $is_mail
+		? esc_attr( esc_url( $platform['url'], array( 'mailto' ), 'db' ) )
+		: esc_url( $platform['url'] );
 
 	ob_start();
 	?>
 	<a
 		class="<?php echo esc_attr( $class ); ?>"
-		href="<?php echo esc_url( $platform['url'] ); ?>"
+		href="<?php echo $href; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped above. ?>"
 		<?php if ( $target ) : ?>
 			target="<?php echo esc_attr( $target ); ?>"
 		<?php endif; ?>

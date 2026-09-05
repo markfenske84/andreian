@@ -48,6 +48,9 @@ get_header();
 						<div class="entry-content">
 							<?php the_content(); ?>
 						</div>
+						<?php if ( is_singular( 'post' ) ) : ?>
+							<?php get_template_part( 'src/components/post-share' ); ?>
+						<?php endif; ?>
 						<?php get_template_part( 'src/components/recommended-posts' ); ?>
 					</article>
 					<?php comments_template(); ?>

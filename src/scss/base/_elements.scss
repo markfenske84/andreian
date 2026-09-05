@@ -100,7 +100,7 @@ button[type='submit'] {
 
 ._archive {
 	display: grid;
-	grid-template-columns: minmax(0, 1fr) 280px;
+	grid-template-columns: minmax(0, 1fr) 320px;
 	gap: calc(var(--container-gutter) * 2);
 
 	@include breakpoint('lg') {
