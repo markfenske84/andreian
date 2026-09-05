@@ -18,7 +18,7 @@ $is_category_archive = is_category();
 			<?php endif; ?>
 			<?php the_archive_description( '<div class="archive-description">', '</div>' ); ?>
 		</header>
-		<div class="_inner archive-post-list<?php echo $is_category_archive ? ' category-post-grid' : ''; ?>" role="list" itemscope itemtype="https://schema.org/ItemList">
+		<div class="_inner archive-post-list<?php echo $is_category_archive ? ' category-post-grid' : ''; ?>" itemscope itemtype="https://schema.org/ItemList">
 			<meta itemprop="numberOfItems" content="<?php echo esc_attr( $wp_query->post_count ); ?>">
 			<?php if ( have_posts() ) : ?>
 				<?php while ( have_posts() ) : the_post(); ?>

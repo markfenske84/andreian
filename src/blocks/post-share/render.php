@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @return string
  */
 function andreian_render_post_share_block() {
-	if ( ! is_singular( 'post' ) || ! get_the_ID() ) {
+	if ( ! is_singular() || ! get_the_ID() ) {
 		return '';
 	}
 

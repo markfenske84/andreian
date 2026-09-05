@@ -36,12 +36,18 @@ function initRandomSlideshow( slideshow ) {
 			const isActive = index === currentIndex;
 			slide.classList.toggle( 'is-active', isActive );
 			slide.setAttribute( 'aria-hidden', isActive ? 'false' : 'true' );
+			slide.toggleAttribute( 'inert', ! isActive );
 		} );
 
 		dots.forEach( function ( dot, index ) {
 			const isActive = index === currentIndex;
 			dot.classList.toggle( 'is-active', isActive );
-			dot.setAttribute( 'aria-selected', isActive ? 'true' : 'false' );
+
+			if ( isActive ) {
+				dot.setAttribute( 'aria-current', 'true' );
+			} else {
+				dot.removeAttribute( 'aria-current' );
+			}
 		} );
 
 		if ( liveRegion ) {

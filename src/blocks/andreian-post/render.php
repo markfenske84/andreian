@@ -243,7 +243,6 @@ function andreian_render_post_block( $attributes, $content, $block ) {
 			? array( 'class' => 'andreian-post-collection andreian-post-collection--sidebar' )
 			: array(
 				'class' => 'andreian-posts andreian-posts--' . $layout,
-				'role'  => 'list',
 			)
 	);
 
@@ -251,7 +250,7 @@ function andreian_render_post_block( $attributes, $content, $block ) {
 	?>
 	<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php echo $has_sidebar ? '' : ' itemscope itemtype="https://schema.org/ItemList"'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 		<?php if ( $has_sidebar ) : ?>
-			<div class="andreian-posts andreian-posts--<?php echo esc_attr( $main_layout_class ); ?>" role="list" itemscope itemtype="https://schema.org/ItemList">
+			<div class="andreian-posts andreian-posts--<?php echo esc_attr( $main_layout_class ); ?>" itemscope itemtype="https://schema.org/ItemList">
 		<?php endif; ?>
 		<meta itemprop="numberOfItems" content="<?php echo esc_attr( $query->post_count ); ?>">
 		<?php
@@ -270,7 +269,7 @@ function andreian_render_post_block( $attributes, $content, $block ) {
 					'layout'       => $main_layout_class,
 					'position'     => $position,
 					'priority'     => $prioritize && 1 === $position,
-					'show_excerpt' => 'full' === $layout || ! empty( $attributes['showExcerpt'] ),
+					'show_excerpt' => 'full' === $layout || ( 'hero-tiles' === $main_layout_class && 1 === $position ) || ! empty( $attributes['showExcerpt'] ),
 					'item_list'    => true,
 					'image_size'   => $image_size,
 				)

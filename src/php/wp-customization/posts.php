@@ -32,11 +32,11 @@ function andreian_excerpt( $limit = 150 ) {
 }
 
 /**
- * Remove the default WordPress excerpt ellipsis.
+ * Trailing mark for trimmed excerpts.
  *
  * @return string
  */
 function andreian_excerpt_more() {
-	return '';
+	return '…';
 }
 add_filter( 'excerpt_more', 'andreian_excerpt_more' );

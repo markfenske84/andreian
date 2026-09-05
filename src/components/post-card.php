@@ -59,15 +59,13 @@ if ( $current_category_id ) {
 $primary_cat   = ! empty( $categories ) ? $categories[0] : null;
 $title         = get_the_title( $post_id );
 $permalink     = get_permalink( $post_id );
-$image_alt     = $thumbnail_id ? get_post_meta( $thumbnail_id, '_wp_attachment_image_alt', true ) : '';
-$image_alt     = $image_alt ? $image_alt : $title;
 $image_sizes   = 'full' === $layout
 	? '(max-width: 1200px) 100vw, 1200px'
 	: ( 'list' === $layout
 		? '(max-width: 640px) 100vw, (max-width: 1200px) 38vw, 380px'
 		: '(max-width: 640px) 100vw, (max-width: 960px) 50vw, 25vw' );
 $image_attrs   = array(
-	'alt'      => $image_alt,
+	'alt'      => '',
 	'decoding' => 'async',
 	'loading'  => $priority ? 'eager' : 'lazy',
 	'sizes'    => $image_sizes,
@@ -80,26 +78,33 @@ if ( $priority ) {
 <article
 	class="<?php echo esc_attr( $card_class ); ?>"
 	<?php if ( $item_list ) : ?>
-		role="listitem" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"
+		itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"
 	<?php endif; ?>>
 	<?php if ( $item_list ) : ?>
 		<meta itemprop="position" content="<?php echo esc_attr( $position ); ?>">
 	<?php endif; ?>
 
 	<?php if ( $thumbnail_id ) : ?>
-		<a class="andreian-card__image-link" href="<?php echo esc_url( $permalink ); ?>" tabindex="-1" aria-hidden="true">
+		<div class="andreian-card__image-link">
 			<?php echo wp_get_attachment_image( $thumbnail_id, $image_size, false, $image_attrs ); ?>
-		</a>
+		</div>
 	<?php endif; ?>
 
 	<div class="andreian-card__content">
 		<?php if ( $show_all_categories && $categories ) : ?>
-			<div class="andreian-card__categories">
-				<?php foreach ( $categories as $category ) : ?>
-					<a class="andreian-card__category" href="<?php echo esc_url( get_category_link( $category->term_id ) ); ?>">
-						<?php echo esc_html( $category->name ); ?>
-					</a>
-				<?php endforeach; ?>
+			<div class="andreian-card__categories"><?php
+				foreach ( $categories as $index => $category ) {
+					if ( $index ) {
+						echo '<span aria-hidden="true">, </span>';
+					}
+
+					printf(
+						'<a class="andreian-card__category" href="%s">%s</a>',
+						esc_url( get_category_link( $category->term_id ) ),
+						esc_html( $category->name )
+					);
+				}
+				?>
 			</div>
 		<?php elseif ( $primary_cat ) : ?>
 			<a class="andreian-card__category" href="<?php echo esc_url( get_category_link( $primary_cat ) ); ?>">
@@ -130,7 +135,13 @@ if ( $priority ) {
 		</div>
 
 		<?php if ( $show_excerpt ) : ?>
-			<p class="andreian-card__excerpt"><?php echo esc_html( get_the_excerpt( $post_id ) ); ?></p>
+			<?php
+			$excerpt = trim( (string) get_the_excerpt( $post_id ) );
+			if ( $excerpt && ! preg_match( '/(\.\.\.|…)$/u', $excerpt ) ) {
+				$excerpt .= '…';
+			}
+			?>
+			<p class="andreian-card__excerpt"><?php echo esc_html( $excerpt ); ?></p>
 		<?php endif; ?>
 
 		<?php if ( $show_share ) : ?>

@@ -9,19 +9,28 @@
 	top: calc(var(--admin-bar-height, 0px) + var(--nav-bar-height, 46px) + 1.5rem);
 }
 
-.widget-title {
+.widget-title,
+.andreian-toc__summary,
+.post-share__title {
 	margin: 0 0 0.75rem;
 	padding-block: 0.55rem;
-	border-block: 1px solid $color-text;
+	border-top: 2px solid $color-text;
+	border-bottom: 1px solid $color-text;
 	font-family: $font-family-heading;
 	font-size: 1rem;
 	font-weight: 700;
+	line-height: 1.12;
 	letter-spacing: $font-heading-letter-spacing;
 	text-transform: uppercase;
 }
 
 .widget {
 	margin-bottom: 2rem;
+
+	&:empty {
+		display: none;
+		margin: 0;
+	}
 }
 
 .andreian-toc {
@@ -33,14 +42,7 @@
 	}
 
 	&__summary {
-		margin: 0 0 0.75rem;
-		padding-block: 0.55rem;
-		border-block: 1px solid $color-text;
-		font-family: $font-family-heading;
-		font-size: 1rem;
-		font-weight: 700;
-		letter-spacing: $font-heading-letter-spacing;
-		text-transform: uppercase;
+		display: block;
 		cursor: pointer;
 		list-style: none;
 
@@ -49,17 +51,52 @@
 		}
 	}
 
-	&__list {
+	&__list,
+	&__list ol {
+		display: flex;
+		flex-direction: column;
+		gap: 0.45rem;
 		margin: 0;
-		padding: 0.35rem 0 0 1.15rem;
+		padding: 0;
+		list-style: none;
 		color: $color-text;
 		font-size: 0.85rem;
 		line-height: 1.45;
 	}
 
+	&__list {
+		counter-reset: toc-section;
+	}
+
+	&__list li {
+		margin: 0;
+		padding: 0;
+	}
+
+	&__list > li {
+		counter-increment: toc-section;
+		counter-reset: toc-sub;
+	}
+
+	&__list > li > a::before {
+		content: counter(toc-section) '. ';
+	}
+
 	&__list ol {
-		margin: 0.35rem 0 0;
+		margin-top: 0.45rem;
 		padding-left: 1.1rem;
+	}
+
+	&__list ol > li {
+		counter-increment: toc-sub;
+	}
+
+	&__list > li:first-child ol > li > a::before {
+		content: counter(toc-section) '.' counter(toc-sub, lower-alpha) ' ';
+	}
+
+	&__list > li:not(:first-child) ol > li > a::before {
+		content: counter(toc-section) '.' counter(toc-sub) ' ';
 	}
 
 	&__list a {
@@ -72,15 +109,6 @@
 	padding-bottom: 1rem;
 	border-bottom: 1px solid $color-rule;
 	font-family: $font-family-meta;
-
-	&__title {
-		margin: 0;
-		padding-block: 0.55rem;
-		border-block: 1px solid $color-text;
-		font-size: 1rem;
-		letter-spacing: $font-heading-letter-spacing;
-		text-transform: uppercase;
-	}
 
 	&__list {
 		margin: 0;
@@ -114,7 +142,6 @@
 			display: flex;
 			flex-wrap: wrap;
 			gap: 0.5rem 1rem;
-			padding-top: 0.75rem;
 		}
 
 		&__list a,

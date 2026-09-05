@@ -22,9 +22,11 @@ get_header();
 					</article>
 				</div>
 			</div>
-			<div class="_sidebar">
-				<?php dynamic_sidebar( 'sidebar' ); ?>
-			</div>
+			<aside class="_sidebar post-sidebar" aria-label="<?php esc_attr_e( 'Page sidebar', 'andreian' ); ?>">
+				<div class="post-sidebar__inner">
+					<?php dynamic_sidebar( 'sidebar' ); ?>
+				</div>
+			</aside>
 		<?php endwhile; ?>
 	<?php endif; ?>
 </div>

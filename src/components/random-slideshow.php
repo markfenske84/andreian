@@ -52,24 +52,25 @@ $slideshow_id = wp_unique_id( 'andreian-random-slideshow-' );
 					class="andreian-card andreian-card--slideshow andreian-random-slideshow__slide<?php echo $is_active ? ' is-active' : ''; ?>"
 					id="<?php echo esc_attr( $slideshow_id . '-slide-' . $position ); ?>"
 					aria-hidden="<?php echo $is_active ? 'false' : 'true'; ?>"
+					<?php echo $is_active ? '' : 'inert'; ?>
 					aria-roledescription="<?php esc_attr_e( 'slide', 'andreian' ); ?>"
 					aria-label="<?php echo esc_attr( sprintf( __( '%1$d of %2$d', 'andreian' ), $position, $slide_count ) ); ?>">
 					<?php if ( $thumbnail_id ) : ?>
-						<a class="andreian-card__image-link" href="<?php the_permalink(); ?>" tabindex="-1" aria-hidden="true">
+						<div class="andreian-card__image-link">
 							<?php
 							echo wp_get_attachment_image(
 								$thumbnail_id,
 								'andreian-card',
 								false,
 								array(
-									'alt'      => get_the_title( $post_id ),
+									'alt'      => '',
 									'decoding' => 'async',
 									'loading'  => $is_active ? 'eager' : 'lazy',
 									'sizes'    => '(max-width: 960px) 100vw, 300px',
 								)
 							);
 							?>
-						</a>
+						</div>
 					<?php endif; ?>
 
 					<div class="andreian-card__content">
@@ -108,14 +109,12 @@ $slideshow_id = wp_unique_id( 'andreian-random-slideshow-' );
 				<span aria-hidden="true">&larr;</span>
 			</button>
 
-			<div class="andreian-random-slideshow__dots" role="tablist" aria-label="<?php esc_attr_e( 'Slide navigation', 'andreian' ); ?>">
+			<div class="andreian-random-slideshow__dots">
 				<?php for ( $index = 1; $index <= $slide_count; $index++ ) : ?>
 					<button
 						class="andreian-random-slideshow__dot<?php echo 1 === $index ? ' is-active' : ''; ?>"
 						type="button"
-						role="tab"
-						aria-selected="<?php echo 1 === $index ? 'true' : 'false'; ?>"
-						aria-controls="<?php echo esc_attr( $slideshow_id . '-slide-' . $index ); ?>"
+						<?php echo 1 === $index ? 'aria-current="true"' : ''; ?>
 						data-slide-index="<?php echo esc_attr( $index - 1 ); ?>">
 						<span class="sr-only"><?php echo esc_html( sprintf( __( 'Slide %d', 'andreian' ), $index ) ); ?></span>
 					</button>

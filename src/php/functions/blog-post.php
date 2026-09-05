@@ -40,36 +40,10 @@ function andreian_singular_has_sidebar() {
 	}
 
 	if ( is_singular( 'page' ) ) {
-		if ( function_exists( 'andreian_page_uses_builder_template' ) && andreian_page_uses_builder_template() ) {
-			return false;
-		}
-
-		$template = get_page_template_slug();
-
-		if ( 'src/templates/template-sidebar.php' === $template ) {
-			return false;
-		}
-
-		return true;
+		return 'src/templates/template-sidebar.php' === get_page_template_slug();
 	}
 
 	return false;
-}
-
-function andreian_get_blog_archive_link() {
-	$posts_page_id = (int) get_option( 'page_for_posts' );
-
-	if ( $posts_page_id ) {
-		return array(
-			'url'   => get_permalink( $posts_page_id ),
-			'label' => get_the_title( $posts_page_id ) ?: __( 'Blog', 'andreian' ),
-		);
-	}
-
-	return array(
-		'url'   => get_post_type_archive_link( 'post' ) ?: home_url( '/' ),
-		'label' => __( 'Blog', 'andreian' ),
-	);
 }
 
 function andreian_is_post_updated( $post_id = null ) {
@@ -126,12 +100,6 @@ function andreian_get_breadcrumb_items() {
 	if ( ! is_singular( 'post' ) ) {
 		return $items;
 	}
-
-	$blog    = andreian_get_blog_archive_link();
-	$items[] = array(
-		'label' => $blog['label'],
-		'url'   => $blog['url'],
-	);
 
 	$categories = get_the_category();
 	if ( ! empty( $categories ) ) {
