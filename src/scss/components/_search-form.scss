@@ -11,27 +11,14 @@
 		width: 100%;
 		padding: 0.35rem 0;
 		border: 0;
-		border-bottom: 1px solid transparent;
 		background: transparent;
 
 		&:focus {
-			border-bottom-color: $color-text;
 			outline: 0;
 		}
 	}
 
 	.search-submit {
-		padding: 0.35rem 0.55rem;
-		border: 1px solid $color-text;
-		background: $color-background;
-		cursor: pointer;
-		font-size: 0.75rem;
-		transition: $link-transition-interactive;
-		@include link-hover-opacity(1);
-
-		&:hover,
-		&:focus-visible {
-			background: $color-rule-light;
-		}
+		padding: 0.35rem 0.75rem;
 	}
 }

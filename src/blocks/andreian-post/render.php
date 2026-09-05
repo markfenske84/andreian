@@ -297,7 +297,7 @@ function andreian_render_post_block( $attributes, $content, $block ) {
 
 			if ( $archive_url && ! is_wp_error( $archive_url ) ) {
 				printf(
-					'<p class="andreian-posts__archive-link"><a href="%1$s">%2$s</a></p>',
+					'<p class="andreian-posts__archive-link"><a class="button" href="%1$s">%2$s</a></p>',
 					esc_url( $archive_url ),
 					esc_html( $archive_label )
 				);

@@ -36,6 +36,15 @@
 						&copy; <?php echo esc_html( gmdate( 'Y' ) ); ?> <?php echo esc_html( get_bloginfo( 'name' ) ); ?>
 					</p>
 				</div>
+				<p class="site-footer__disclosure">
+					<?php
+					printf(
+						/* translators: %s: site name */
+						esc_html__( '%s takes part in affiliate marketing programs, which means we may earn a commission on any products purchased through our links. We only recommend products we believe in. Those purchases help support this site and the free writing published here.', 'andreian' ),
+						esc_html( get_bloginfo( 'name' ) )
+					);
+					?>
+				</p>
 			</div>
 		</footer>
 

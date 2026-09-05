@@ -7,6 +7,7 @@
 	padding: 0;
 	border: 0;
 	background: transparent;
+	color: $color-text;
 	text-decoration: none;
 	cursor: pointer;
 	@include link-hover-opacity;
@@ -17,6 +18,15 @@
 		width: 1.5rem;
 		height: 1.5rem;
 		overflow: visible;
+	}
+
+	svg :is(path, circle, rect) {
+		fill: currentColor;
+	}
+
+	&--facebook svg path:last-of-type,
+	&--telegram svg path {
+		fill: $color-background;
 	}
 }
 
@@ -31,14 +41,4 @@
 
 .andreian-card__share {
 	align-items: center;
-}
-
-[data-theme='dark'] {
-	.share-link--x svg path,
-	.share-link--email svg path,
-	.share-link--copy svg path,
-	.post-share__copy svg path,
-	.andreian-card__share-link.share-link--x svg path {
-		fill: #fff;
-	}
 }

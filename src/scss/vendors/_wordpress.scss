@@ -1,3 +1,31 @@
+iframe[src*='youtube.com'],
+iframe[src*='youtube-nocookie.com'],
+iframe[src*='youtu.be'],
+iframe[src*='vimeo.com'],
+iframe[src*='dailymotion.com'] {
+	aspect-ratio: 16 / 9;
+	width: 100%;
+	height: auto;
+	border: 0;
+}
+
+.wp-block-embed.is-type-video {
+	.wp-block-embed__wrapper {
+		aspect-ratio: 16 / 9;
+
+		&::before {
+			display: none;
+		}
+	}
+
+	iframe {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+	}
+}
+
 .wp-block-image {
 	&.has-andreian-monotone-normal img {
 		filter: brightness(0);

@@ -6,6 +6,7 @@
 
 html {
 	scroll-behavior: smooth;
+	scroll-padding-top: calc(var(--admin-bar-height, 0px) + var(--nav-bar-height, 46px) + 1rem);
 	-webkit-text-size-adjust: 100%;
 }
 
@@ -32,8 +33,7 @@ iframe {
 
 a {
 	color: inherit;
-	text-underline-offset: 0.18em;
-	text-decoration-thickness: 1px;
+	text-decoration: none;
 
 	&:focus-visible {
 		outline: 2px solid $color-text;
@@ -50,6 +50,16 @@ textarea {
 
 button {
 	color: inherit;
+}
+
+.button,
+.wp-block-button__link,
+.wp-element-button,
+.search-submit,
+input[type='submit'],
+input[type='button'],
+button[type='submit'] {
+	@include theme-button;
 }
 
 ::selection {

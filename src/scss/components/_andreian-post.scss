@@ -23,11 +23,6 @@
 		width: 100%;
 		aspect-ratio: 4 / 3;
 		object-fit: cover;
-		transition: opacity 0.2s ease;
-	}
-
-	&__image-link:hover img {
-		opacity: 0.88;
 	}
 
 	&__category {
@@ -58,7 +53,7 @@
 
 		a {
 			text-decoration: none;
-			@include link-hover-opacity(0.88);
+			@include link-hover-opacity;
 		}
 	}
 
@@ -551,24 +546,14 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-	.andreian-card__image-link img,
 	.andreian-random-slideshow__slide {
 		transition: none;
 	}
 }
 
 .andreian-posts__archive-link {
+	grid-column: 1 / -1;
 	margin: 1.5rem 0 0;
 	padding-inline: var(--container-gutter, 1rem);
 	text-align: center;
-
-	a {
-		font-family: $font-family-meta;
-		font-size: 0.85rem;
-		font-weight: 700;
-		letter-spacing: 0.06em;
-		text-decoration: none;
-		text-transform: uppercase;
-		@include link-hover-opacity;
-	}
 }

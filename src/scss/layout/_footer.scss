@@ -38,6 +38,14 @@
 	color: $color-muted;
 }
 
+.site-footer__disclosure {
+	margin: 1.25rem 0 0;
+	max-width: 42rem;
+	font-size: 0.75rem;
+	line-height: 1.5;
+	color: $color-muted;
+}
+
 @include breakpoint('md') {
 	.site-footer__wordmark {
 		font-size: clamp(1.05rem, 5vw, 1.7rem);

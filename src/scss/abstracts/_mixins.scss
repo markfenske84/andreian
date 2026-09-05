@@ -28,16 +28,27 @@
 	}
 }
 
-@mixin link-hover-prose {
-	text-decoration: underline;
-	text-decoration-color: color-mix(in srgb, currentColor 28%, transparent);
-	text-decoration-thickness: 1px;
-	text-underline-offset: 0.18em;
-	transition: $link-transition-interactive;
+@mixin theme-button {
+	display: inline-block;
+	padding: 0.5rem 1.1rem;
+	border: 2pt solid $color-text;
+	border-radius: 0;
+	background: $color-background;
+	box-shadow: none;
+	color: $color-text;
+	font-family: $font-family-heading;
+	font-size: 0.875rem;
+	font-weight: 700;
+	letter-spacing: $font-heading-letter-spacing;
+	line-height: 1.2;
+	text-transform: uppercase;
+	text-decoration: none;
+	cursor: pointer;
+	transition: $link-transition-interactive, color 0.2s ease;
 
 	&:hover,
 	&:focus-visible {
-		opacity: $link-opacity-hover;
-		text-decoration-color: currentColor;
+		background: $color-text;
+		color: $color-background;
 	}
 }

@@ -54,17 +54,26 @@ document.addEventListener('DOMContentLoaded', function () {
 	const closeToggle = mobileOffcanvas
 		? mobileOffcanvas.querySelector('.mobile-offcanvas-toggle')
 		: null;
-	const searchOverlay = document.querySelector('#site-search-overlay');
+	const searchPanel = document.querySelector('#site-search-panel');
 	const searchToggle = document.querySelector('.site-search-toggle');
-	const searchClose = searchOverlay
-		? searchOverlay.querySelector('.site-search-overlay__close')
-		: null;
-	const searchField = searchOverlay
-		? searchOverlay.querySelector('.search-field')
-		: null;
-	const searchPageRegions = document.querySelectorAll(
-		'.site-header, #content, .site-footer, #mobile-offcanvas'
-	);
+	const searchField = searchPanel ? searchPanel.querySelector('.search-field') : null;
+	let syncNavHeight = function () {};
+
+	function syncAdminBarHeight() {
+		const adminBar = document.getElementById('wpadminbar');
+		const height = adminBar ? Math.round(adminBar.getBoundingClientRect().height) : 0;
+		document.documentElement.style.setProperty('--admin-bar-height', height + 'px');
+	}
+
+	syncAdminBarHeight();
+	window.addEventListener('resize', syncAdminBarHeight);
+
+	if (typeof ResizeObserver !== 'undefined') {
+		const adminBar = document.getElementById('wpadminbar');
+		if (adminBar) {
+			new ResizeObserver(syncAdminBarHeight).observe(adminBar);
+		}
+	}
 
 	function prefersReducedMotion() {
 		return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -127,76 +136,47 @@ document.addEventListener('DOMContentLoaded', function () {
 		});
 	}
 
-	function setSearchState(isOpen) {
-		if (!searchOverlay || !searchToggle) {
+	function setSearchState(isOpen, options) {
+		if (!searchPanel || !searchToggle) {
 			return;
 		}
 
-		searchOverlay.hidden = !isOpen;
+		const restoreFocus = !options || options.restoreFocus !== false;
+		searchPanel.classList.toggle('is-open', isOpen);
+		searchPanel.setAttribute('aria-hidden', String(!isOpen));
+		searchPanel.toggleAttribute('inert', !isOpen);
 		document.body.classList.toggle('site-search-open', isOpen);
 		searchToggle.setAttribute('aria-expanded', String(isOpen));
-		searchPageRegions.forEach(function (region) {
-			region.toggleAttribute('inert', isOpen);
-		});
+		searchToggle.setAttribute(
+			'aria-label',
+			isOpen
+				? searchToggle.getAttribute('data-close-label') || 'Close search'
+				: searchToggle.getAttribute('data-open-label') || 'Open search'
+		);
 
 		if (isOpen && searchField) {
 			searchField.focus();
-		} else if (!isOpen) {
+		} else if (!isOpen && restoreFocus) {
 			searchToggle.focus();
 		}
+
+		syncNavHeight();
 	}
 
 	if (searchToggle) {
 		searchToggle.addEventListener('click', function () {
-			setSearchState(true);
-		});
-	}
-
-	if (searchClose) {
-		searchClose.addEventListener('click', function () {
-			setSearchState(false);
+			setSearchState(!searchPanel.classList.contains('is-open'), { restoreFocus: false });
 		});
 	}
 
 	document.addEventListener('click', function (event) {
-		if (!mobileOffcanvas || mobileOffcanvas.hidden) {
-			if (
-				searchOverlay &&
-				!searchOverlay.hidden &&
-				(event.target === searchOverlay ||
-					event.target === searchOverlay.querySelector('.site-search-overlay__inner'))
-			) {
-				setSearchState(false);
-			}
-			return;
-		}
-		if (
-			event.target === mobileOffcanvas
-		) {
+		if (mobileOffcanvas && !mobileOffcanvas.hidden && event.target === mobileOffcanvas) {
 			setMenuState(false);
 		}
 	});
 
 	document.addEventListener('keydown', function (event) {
-		if (event.key === 'Tab' && searchOverlay && !searchOverlay.hidden) {
-			const focusable = Array.from(
-				searchOverlay.querySelectorAll(
-					'button:not([disabled]), input:not([disabled]), a[href]'
-				)
-			);
-			const first = focusable[0];
-			const last = focusable[focusable.length - 1];
-
-			if (event.shiftKey && document.activeElement === first) {
-				event.preventDefault();
-				last.focus();
-			} else if (!event.shiftKey && document.activeElement === last) {
-				event.preventDefault();
-				first.focus();
-			}
-		}
-
-		if (event.key === 'Escape' && searchOverlay && !searchOverlay.hidden) {
+		if (event.key === 'Escape' && searchPanel && searchPanel.classList.contains('is-open')) {
 			setSearchState(false);
 			return;
 		}
@@ -224,7 +204,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			return parseFloat(value) || 0;
 		}
 
-		function syncNavHeight() {
+		syncNavHeight = function () {
 			const height = stickyNav.offsetHeight;
 			spacer.style.height = height + 'px';
 			document.documentElement.style.setProperty('--nav-bar-height', height + 'px');
@@ -232,16 +212,12 @@ document.addEventListener('DOMContentLoaded', function () {
 				'--header-height',
 				headerBrand.offsetHeight + height + 'px'
 			);
-		}
+		};
 
 		function updateStickyNav() {
 			const currentScrollY = Math.max(0, window.scrollY);
 			const delta = currentScrollY - lastScrollY;
-			const overlaysOpen =
-				document.body.classList.contains('site-search-open') ||
-				document.body.classList.contains('mobile-offcanvas-open');
-
-			if (overlaysOpen) {
+			if (document.body.classList.contains('mobile-offcanvas-open')) {
 				lastScrollY = currentScrollY;
 				ticking = false;
 				return;
@@ -286,5 +262,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
 		syncNavHeight();
 		updateStickyNav();
+
+		if (typeof ResizeObserver !== 'undefined') {
+			new ResizeObserver(function () {
+				syncNavHeight();
+			}).observe(stickyNav);
+		}
 	}
 });

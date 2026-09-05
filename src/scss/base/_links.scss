@@ -1,12 +1,26 @@
 .entry-content,
 .widget {
-	a {
-		@include link-hover-prose;
+	a:not(.button):not(.wp-block-button__link):not(.wp-element-button):not(:has(img)):not(:has(picture)) {
+		@include link-hover-opacity;
 	}
 }
 
 .site-wordmark,
 .site-footer__wordmark {
-	@include link-hover-opacity(0.88);
+	@include link-hover-opacity;
 	text-decoration: none;
+}
+
+a:has(> img),
+a:has(> picture) {
+	opacity: 1;
+
+	&:hover,
+	&:focus-visible {
+		opacity: 1;
+	}
+
+	img {
+		opacity: 1;
+	}
 }

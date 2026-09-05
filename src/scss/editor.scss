@@ -32,6 +32,14 @@
 	max-width: none;
 }
 
+.editor-styles-wrapper {
+	.button,
+	.wp-block-button__link,
+	.wp-element-button {
+		@include theme-button;
+	}
+}
+
 .editor-styles-wrapper.andreian-layout-standard {
 	.is-root-container,
 	.block-editor-block-list__layout.is-root-container,

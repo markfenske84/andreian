@@ -52,12 +52,17 @@
 				<button
 					class="site-search-toggle"
 					type="button"
-					aria-controls="site-search-overlay"
+					aria-controls="site-search-panel"
 					aria-expanded="false"
-					aria-label="<?php esc_attr_e( 'Open search', 'andreian' ); ?>">
-					<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">
+					aria-label="<?php esc_attr_e( 'Open search', 'andreian' ); ?>"
+					data-open-label="<?php esc_attr_e( 'Open search', 'andreian' ); ?>"
+					data-close-label="<?php esc_attr_e( 'Close search', 'andreian' ); ?>">
+					<svg class="site-search-toggle__icon site-search-toggle__icon--search" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">
 						<circle cx="11" cy="11" r="7"></circle>
 						<path d="m16.5 16.5 4 4"></path>
+					</svg>
+					<svg class="site-search-toggle__icon site-search-toggle__icon--close" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">
+						<path d="M6 6l12 12M18 6L6 18"></path>
 					</svg>
 				</button>
 
@@ -107,27 +112,14 @@
 					<span class="line-bar"></span>
 			</button>
 		</div>
-	</div>
-</header>
 
-<div
-	id="site-search-overlay"
-	class="site-search-overlay"
-	role="dialog"
-	aria-modal="true"
-	aria-labelledby="site-search-title"
-	hidden>
-	<div class="site-search-overlay__inner">
-		<button class="site-search-overlay__close" type="button" aria-label="<?php esc_attr_e( 'Close search', 'andreian' ); ?>">
-			<span aria-hidden="true"></span>
-			<span aria-hidden="true"></span>
-		</button>
-		<div class="site-search-overlay__content">
-			<h2 id="site-search-title"><?php esc_html_e( 'Search', 'andreian' ); ?></h2>
-			<?php get_search_form(); ?>
+		<div id="site-search-panel" class="site-search-panel" aria-hidden="true" inert>
+			<div class="site-search-panel__inner _container">
+				<?php get_search_form(); ?>
+			</div>
 		</div>
 	</div>
-</div>
+</header>
 
 <div id="mobile-offcanvas" class="mobile-offcanvas" hidden>
 	<div class="mobile-offcanvas__inner">
