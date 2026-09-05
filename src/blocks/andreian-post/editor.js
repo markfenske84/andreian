@@ -3,13 +3,15 @@
 	const { InspectorControls, useBlockProps } = wp.blockEditor;
 	const {
 		Button,
+		Modal,
 		PanelBody,
 		RangeControl,
 		SelectControl,
+		Spinner,
 		TextControl,
 		ToggleControl,
 	} = wp.components;
-	const { createElement: el, Fragment } = wp.element;
+	const { createElement: el, Fragment, useState } = wp.element;
 	const { useSelect } = wp.data;
 	const { __ } = wp.i18n;
 	const ServerSideRender = wp.serverSideRender;
@@ -29,6 +31,7 @@
 		layout: { type: 'string', default: 'grid' },
 		orderBy: { type: 'string', default: 'date' },
 		order: { type: 'string', default: 'DESC' },
+		selectedPostIds: { type: 'array', default: [] },
 		offset: { type: 'number', default: 0 },
 		excludePostIds: { type: 'array', default: [] },
 		prioritizeFirstImage: { type: 'boolean', default: false },
@@ -42,6 +45,30 @@
 		archiveLinkLabel: { type: 'string', default: 'See more' },
 		archiveLinkUrl: { type: 'string', default: '' },
 	};
+
+	function getSlotCount( settings ) {
+		if ( settings.layout === 'full' ) {
+			return 1;
+		}
+
+		if ( settings.layout === 'hero-tiles' ) {
+			return 8;
+		}
+
+		return Math.min( 15, Math.max( 1, parseInt( settings.postsToShow, 10 ) || 9 ) );
+	}
+
+	function normalizeSelectedPostIds( ids, count ) {
+		const source = Array.isArray( ids ) ? ids : [];
+		const next = [];
+
+		for ( let index = 0; index < count; index++ ) {
+			const id = parseInt( source[ index ], 10 );
+			next.push( Number.isInteger( id ) && id > 0 ? id : 0 );
+		}
+
+		return next;
+	}
 
 	function LayoutPreview( props ) {
 		return el(
@@ -71,12 +98,190 @@
 		);
 	}
 
+	function CustomSlotPicker( props ) {
+		const settings = props.settings;
+		const setAttributes = props.setAttributes;
+		const slotCount = getSlotCount( settings );
+		const selectedIds = normalizeSelectedPostIds( settings.selectedPostIds, slotCount );
+		const [ activeSlot, setActiveSlot ] = useState( null );
+		const [ search, setSearch ] = useState( '' );
+		const selectedPosts = useSelect(
+			function ( select ) {
+				return selectedIds.map( function ( postId ) {
+					if ( ! postId ) {
+						return null;
+					}
+
+					const post = select( 'core' ).getEntityRecord( 'postType', 'post', postId );
+					const media =
+						post && post.featured_media
+							? select( 'core' ).getMedia( post.featured_media )
+							: null;
+
+					return {
+						id: postId,
+						title: post && post.title ? post.title.rendered : '',
+						image:
+							media && media.media_details && media.media_details.sizes && media.media_details.sizes.medium
+								? media.media_details.sizes.medium.source_url
+								: media
+									? media.source_url
+									: '',
+					};
+				} );
+			},
+			[ selectedIds.join( ',' ) ]
+		);
+		const searchResults = useSelect(
+			function ( select ) {
+				if ( activeSlot === null ) {
+					return null;
+				}
+
+				return select( 'core' ).getEntityRecords( 'postType', 'post', {
+					per_page: 20,
+					status: 'publish',
+					search: search,
+					orderby: search ? 'relevance' : 'date',
+					order: 'desc',
+				} );
+			},
+			[ activeSlot, search ]
+		);
+
+		function assignPost( postId ) {
+			const next = selectedIds.slice();
+			next[ activeSlot ] = postId;
+			setAttributes( { selectedPostIds: next } );
+			setActiveSlot( null );
+			setSearch( '' );
+		}
+
+		return el(
+			Fragment,
+			null,
+			el(
+				'p',
+				{ className: 'andreian-custom-slots__help' },
+				__( 'Click a tile to choose the post for that spot.', 'andreian' )
+			),
+			el(
+				'div',
+				{
+					className:
+						'andreian-posts andreian-posts--' +
+						settings.layout +
+						' andreian-custom-slots',
+				},
+				selectedIds.map( function ( postId, index ) {
+					const post = selectedPosts[ index ];
+
+					return el(
+						'button',
+						{
+							key: 'slot-' + index,
+							type: 'button',
+							className:
+								'andreian-card andreian-card--' +
+								settings.layout +
+								' andreian-custom-slot' +
+								( postId ? '' : ' is-empty' ),
+							onClick: function () {
+								setActiveSlot( index );
+								setSearch( '' );
+							},
+						},
+						post && post.image
+							? el(
+									'span',
+									{ className: 'andreian-card__image-link' },
+									el( 'img', { src: post.image, alt: '' } )
+							  )
+							: el( 'span', { className: 'andreian-custom-slot__image' } ),
+						el(
+							'span',
+							{ className: 'andreian-card__content' },
+							el(
+								'span',
+								{ className: 'andreian-custom-slot__label' },
+								__( 'Slot', 'andreian' ) + ' ' + ( index + 1 )
+							),
+							el(
+								'span',
+								{ className: 'andreian-card__title' },
+								post && post.title
+									? post.title.replace( /<[^>]+>/g, '' )
+									: __( 'Choose post', 'andreian' )
+							)
+						)
+					);
+				} )
+			),
+			activeSlot !== null
+				? el(
+						Modal,
+						{
+							title:
+								__( 'Choose a post for slot', 'andreian' ) +
+								' ' +
+								( activeSlot + 1 ),
+							onRequestClose: function () {
+								setActiveSlot( null );
+								setSearch( '' );
+							},
+							className: 'andreian-custom-slot-modal',
+						},
+						el( TextControl, {
+							label: __( 'Search posts', 'andreian' ),
+							value: search,
+							onChange: setSearch,
+						} ),
+						searchResults === null
+							? el( Spinner )
+							: el(
+									'ul',
+									{ className: 'andreian-custom-slot-modal__list' },
+									searchResults.map( function ( post ) {
+										return el(
+											'li',
+											{ key: post.id },
+											el(
+												Button,
+												{
+													variant: 'tertiary',
+													onClick: function () {
+														assignPost( post.id );
+													},
+												},
+												post.title.rendered.replace( /<[^>]+>/g, '' )
+											)
+										);
+									} )
+							  ),
+						selectedIds[ activeSlot ]
+							? el(
+									Button,
+									{
+										variant: 'link',
+										onClick: function () {
+											assignPost( 0 );
+										},
+									},
+									__( 'Use automatic post for this slot', 'andreian' )
+							  )
+							: null
+				  )
+				: null
+		);
+	}
+
 	function Edit( props ) {
 		const blockProps = useBlockProps( {
 			className: 'andreian-post-editor',
 		} );
 		const settings = props.attributes;
 		const setAttributes = props.setAttributes;
+		const isCustom = settings.orderBy === 'custom';
 		const categories = useSelect( function ( select ) {
 			return select( 'core' ).getEntityRecords( 'taxonomy', 'category', {
 				per_page: 100,
@@ -110,6 +315,18 @@
 			} );
 		}
 
+		function syncCustomSlots( nextSettings ) {
+			const count = getSlotCount( nextSettings );
+			setAttributes(
+				Object.assign( {}, nextSettings, {
+					selectedPostIds: normalizeSelectedPostIds(
+						nextSettings.selectedPostIds || settings.selectedPostIds,
+						count
+					),
+				} )
+			);
+		}
+
 		return el(
 			Fragment,
 			null,
@@ -140,7 +357,12 @@
 						min: 1,
 						max: 15,
 						onChange: function ( value ) {
-							setAttributes( { postsToShow: value } );
+							const next = { postsToShow: value };
+							if ( isCustom ) {
+								syncCustomSlots( Object.assign( {}, settings, next ) );
+							} else {
+								setAttributes( next );
+							}
 						},
 					} ),
 					el( SelectControl, {
@@ -150,12 +372,19 @@
 							{ label: __( 'Date', 'andreian' ), value: 'date' },
 							{ label: __( 'Title', 'andreian' ), value: 'title' },
 							{ label: __( 'Random', 'andreian' ), value: 'rand' },
+							{ label: __( 'Custom', 'andreian' ), value: 'custom' },
 						],
 						onChange: function ( value ) {
-							setAttributes( { orderBy: value } );
+							if ( value === 'custom' ) {
+								syncCustomSlots(
+									Object.assign( {}, settings, { orderBy: value } )
+								);
+							} else {
+								setAttributes( { orderBy: value } );
+							}
 						},
 					} ),
-					settings.orderBy !== 'rand'
+					! isCustom && settings.orderBy !== 'rand'
 						? el( SelectControl, {
 								label: __( 'Order', 'andreian' ),
 								value: settings.order,
@@ -168,22 +397,26 @@
 								},
 						  } )
 						: null,
-					el( RangeControl, {
-						label: __( 'Skip posts', 'andreian' ),
-						help: __( 'Useful for avoiding repeats between homepage sections.', 'andreian' ),
-						value: settings.offset,
-						min: 0,
-						max: 40,
-						onChange: function ( value ) {
-							setAttributes( { offset: value } );
-						},
-					} ),
-					el( TextControl, {
-						label: __( 'Exclude post IDs', 'andreian' ),
-						help: __( 'Comma-separated IDs.', 'andreian' ),
-						value: ( settings.excludePostIds || [] ).join( ', ' ),
-						onChange: updateExcludedPosts,
-					} ),
+					! isCustom
+						? el( RangeControl, {
+								label: __( 'Skip posts', 'andreian' ),
+								help: __( 'Useful for avoiding repeats between homepage sections.', 'andreian' ),
+								value: settings.offset,
+								min: 0,
+								max: 40,
+								onChange: function ( value ) {
+									setAttributes( { offset: value } );
+								},
+						  } )
+						: null,
+					! isCustom
+						? el( TextControl, {
+								label: __( 'Exclude post IDs', 'andreian' ),
+								help: __( 'Comma-separated IDs.', 'andreian' ),
+								value: ( settings.excludePostIds || [] ).join( ', ' ),
+								onChange: updateExcludedPosts,
+						  } )
+						: null,
 					el( ToggleControl, {
 						label: __( 'Show excerpts', 'andreian' ),
 						checked: settings.showExcerpt,
@@ -245,7 +478,7 @@
 							setAttributes( { prioritizeFirstImage: value } );
 						},
 					} ),
-					settings.layout === 'list'
+					settings.layout === 'list' && ! isCustom
 						? el( ToggleControl, {
 								label: __( 'Exclude featured hero posts', 'andreian' ),
 								help: __(
@@ -305,20 +538,31 @@
 							label: layout.label,
 							selected: settings.layout === layout.value,
 							onClick: function () {
-								setAttributes( { layout: layout.value } );
+								if ( isCustom ) {
+									syncCustomSlots(
+										Object.assign( {}, settings, { layout: layout.value } )
+									);
+								} else {
+									setAttributes( { layout: layout.value } );
+								}
 							},
 						} );
 					} )
 				),
-				ServerSideRender
-					? el( ServerSideRender, {
-							block: 'andreian/post',
-							attributes: settings,
-							EmptyResponsePlaceholder: function () {
-								return el( 'p', null, __( 'No posts match this collection.', 'andreian' ) );
-							},
+				isCustom
+					? el( CustomSlotPicker, {
+							settings: settings,
+							setAttributes: setAttributes,
 					  } )
-					: null
+					: ServerSideRender
+						? el( ServerSideRender, {
+								block: 'andreian/post',
+								attributes: settings,
+								EmptyResponsePlaceholder: function () {
+									return el( 'p', null, __( 'No posts match this collection.', 'andreian' ) );
+								},
+						  } )
+						: null
 			)
 		);
 	}

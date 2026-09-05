@@ -20,7 +20,7 @@ function andreian_get_post_block_query_args( $attributes, $overrides = array() )
 	$category_slug = sanitize_title( $attributes['categorySlug'] ?? '' );
 	$offset        = min( 40, max( 0, (int) ( $attributes['offset'] ?? 0 ) ) );
 	$order_by      = $attributes['orderBy'] ?? 'date';
-	$order_by      = in_array( $order_by, array( 'date', 'title', 'rand' ), true ) ? $order_by : 'date';
+	$order_by      = in_array( $order_by, array( 'date', 'title', 'rand', 'custom' ), true ) ? $order_by : 'date';
 	$order         = isset( $attributes['order'] ) && 'ASC' === strtoupper( $attributes['order'] ) ? 'ASC' : 'DESC';
 	$excluded_ids  = array_filter( array_map( 'absint', $attributes['excludePostIds'] ?? array() ) );
 	$layout        = $attributes['layout'] ?? 'grid';
@@ -67,6 +67,65 @@ function andreian_get_post_block_query_args( $attributes, $overrides = array() )
 }
 
 /**
+ * Resolve positional custom post IDs, backfilling empty slots.
+ *
+ * @param array  $attributes Block attributes.
+ * @param string $layout     Collection layout.
+ * @return int[]
+ */
+function andreian_get_custom_collection_post_ids( $attributes, $layout ) {
+	$limit = min( 15, max( 1, (int) ( $attributes['postsToShow'] ?? 9 ) ) );
+
+	if ( 'full' === $layout ) {
+		$limit = 1;
+	} elseif ( 'hero-tiles' === $layout ) {
+		$limit = 8;
+	}
+
+	$selected = array_map( 'absint', (array) ( $attributes['selectedPostIds'] ?? array() ) );
+	$slots    = array();
+
+	for ( $index = 0; $index < $limit; $index++ ) {
+		$slots[] = isset( $selected[ $index ] ) ? $selected[ $index ] : 0;
+	}
+
+	$used = array_values( array_filter( $slots ) );
+	$needed = $limit - count( $used );
+
+	$backfill = array();
+	if ( $needed > 0 ) {
+		$backfill_query = new WP_Query(
+			array(
+				'post_type'              => 'post',
+				'post_status'            => 'publish',
+				'posts_per_page'         => $needed,
+				'orderby'                => 'date',
+				'order'                  => 'DESC',
+				'post__not_in'           => $used,
+				'ignore_sticky_posts'    => true,
+				'no_found_rows'          => true,
+				'update_post_meta_cache' => false,
+				'update_post_term_cache' => false,
+				'fields'                 => 'ids',
+			)
+		);
+		$backfill = $backfill_query->posts;
+	}
+
+	$backfill_index = 0;
+	foreach ( $slots as $index => $post_id ) {
+		if ( $post_id ) {
+			continue;
+		}
+
+		$slots[ $index ] = isset( $backfill[ $backfill_index ] ) ? (int) $backfill[ $backfill_index ] : 0;
+		++$backfill_index;
+	}
+
+	return array_values( array_filter( array_map( 'absint', $slots ) ) );
+}
+
+/**
  * Render a dynamic post collection.
  *
  * @param array    $attributes Block attributes.
@@ -85,8 +144,31 @@ function andreian_render_post_block( $attributes, $content, $block ) {
 	$random_sidebar_requested = 'list' === $layout && ! empty( $attributes['showRandomSidebar'] );
 
 	$query_args = andreian_get_post_block_query_args( array_merge( $attributes, array( 'layout' => $layout ) ) );
+	$is_custom  = 'custom' === ( $attributes['orderBy'] ?? 'date' );
 
-	if ( 'hero-tiles' === $layout && function_exists( 'andreian_get_hero_tiles_post_ids' ) ) {
+	if ( $is_custom ) {
+		$custom_ids = andreian_get_custom_collection_post_ids( $attributes, $layout );
+
+		if ( empty( $custom_ids ) ) {
+			if ( is_admin() || wp_is_json_request() ) {
+				return '<p class="andreian-posts__empty">' . esc_html__( 'Choose posts for this collection.', 'andreian' ) . '</p>';
+			}
+
+			return '';
+		}
+
+		$query_args = array_merge(
+			$query_args,
+			array(
+				'post__in'       => $custom_ids,
+				'orderby'        => 'post__in',
+				'posts_per_page' => count( $custom_ids ),
+				'offset'         => 0,
+				'post__not_in'   => array(),
+			)
+		);
+		unset( $query_args['category_name'], $query_args['cat'] );
+	} elseif ( 'hero-tiles' === $layout && function_exists( 'andreian_get_hero_tiles_post_ids' ) ) {
 		$hero_ids = andreian_get_hero_tiles_post_ids(
 			8,
 			$query_args['post__not_in'] ?? array()

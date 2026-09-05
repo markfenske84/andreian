@@ -4,6 +4,11 @@
 	border-left: 1px solid $color-rule;
 }
 
+.post-sidebar__inner {
+	position: sticky;
+	top: calc(var(--admin-bar-height, 0px) + var(--nav-bar-height, 46px) + 1.5rem);
+}
+
 .widget-title {
 	margin: 0 0 0.75rem;
 	padding-block: 0.55rem;
@@ -17,6 +22,50 @@
 
 .widget {
 	margin-bottom: 2rem;
+}
+
+.andreian-toc {
+	margin-bottom: 2rem;
+	font-family: $font-family-meta;
+
+	&__details {
+		margin: 0;
+	}
+
+	&__summary {
+		margin: 0 0 0.75rem;
+		padding-block: 0.55rem;
+		border-block: 1px solid $color-text;
+		font-family: $font-family-heading;
+		font-size: 1rem;
+		font-weight: 700;
+		letter-spacing: $font-heading-letter-spacing;
+		text-transform: uppercase;
+		cursor: pointer;
+		list-style: none;
+
+		&::-webkit-details-marker {
+			display: none;
+		}
+	}
+
+	&__list {
+		margin: 0;
+		padding: 0.35rem 0 0 1.15rem;
+		color: $color-text;
+		font-size: 0.85rem;
+		line-height: 1.45;
+	}
+
+	&__list ol {
+		margin: 0.35rem 0 0;
+		padding-left: 1.1rem;
+	}
+
+	&__list a {
+		text-decoration: none;
+		@include link-hover-opacity;
+	}
 }
 
 .post-share {
@@ -54,6 +103,10 @@
 		padding-left: 0;
 		border-top: 1px solid $color-rule;
 		border-left: 0;
+	}
+
+	.post-sidebar__inner {
+		position: static;
 	}
 
 	.post-share {

@@ -79,9 +79,9 @@ $slideshow_id = wp_unique_id( 'andreian-random-slideshow-' );
 							</a>
 						<?php endif; ?>
 
-						<h3 class="andreian-card__title">
+						<h2 class="andreian-card__title">
 							<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
-						</h3>
+						</h2>
 
 						<div class="andreian-card__meta">
 							<time datetime="<?php echo esc_attr( andreian_get_post_datetime( $post_id ) ); ?>">

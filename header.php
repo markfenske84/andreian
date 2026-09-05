@@ -132,7 +132,9 @@
 <div id="mobile-offcanvas" class="mobile-offcanvas" hidden>
 	<div class="mobile-offcanvas__inner">
 		<div class="mobile-offcanvas__header _flex -align-center -justify-between">
-			<span class="mobile-offcanvas__title"><?php echo esc_html( get_bloginfo( 'name' ) ); ?></span>
+			<a class="site-wordmark" href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
+				<?php echo esc_html( get_bloginfo( 'name' ) ?: __( 'The Andreia Philosophy', 'andreian' ) ); ?>
+			</a>
 			<button class="mobile-offcanvas-toggle _close" type="button" aria-controls="mobile-offcanvas" aria-expanded="true" aria-label="<?php esc_attr_e( 'Close navigation', 'andreian' ); ?>">
 				<span class="line-bar"></span>
 				<span class="line-bar"></span>

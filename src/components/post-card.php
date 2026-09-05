@@ -20,6 +20,13 @@ $show_share    = ! empty( $args['show_share_links'] );
 $current_category_id = isset( $args['current_category_id'] ) ? (int) $args['current_category_id'] : 0;
 $item_list     = ! empty( $args['item_list'] );
 $image_size    = isset( $args['image_size'] ) ? $args['image_size'] : 'large';
+$heading       = isset( $args['heading'] ) ? strtolower( (string) $args['heading'] ) : 'h2';
+$heading       = in_array( $heading, array( 'h2', 'h3' ), true ) ? $heading : 'h2';
+$is_primary_featured = ( 'hero-tiles' === $layout && 1 === $position ) || 'full' === $layout;
+$card_class    = 'andreian-card andreian-card--' . $layout;
+if ( $is_primary_featured ) {
+	$card_class .= ' andreian-card--featured';
+}
 $thumbnail_id  = get_post_thumbnail_id( $post_id );
 $categories    = get_the_category( $post_id );
 
@@ -71,7 +78,7 @@ if ( $priority ) {
 }
 ?>
 <article
-	class="andreian-card andreian-card--<?php echo esc_attr( $layout ); ?>"
+	class="<?php echo esc_attr( $card_class ); ?>"
 	<?php if ( $item_list ) : ?>
 		role="listitem" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"
 	<?php endif; ?>>
@@ -100,19 +107,11 @@ if ( $priority ) {
 			</a>
 		<?php endif; ?>
 
-		<?php if ( 'archive-grid' === $layout ) : ?>
-			<h2 class="andreian-card__title">
-				<a href="<?php echo esc_url( $permalink ); ?>" itemprop="url">
-					<span itemprop="name"><?php echo esc_html( $title ); ?></span>
-				</a>
-			</h2>
-		<?php else : ?>
-			<h3 class="andreian-card__title">
-				<a href="<?php echo esc_url( $permalink ); ?>"<?php echo $item_list ? ' itemprop="url"' : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
-					<span<?php echo $item_list ? ' itemprop="name"' : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>><?php echo esc_html( $title ); ?></span>
-				</a>
-			</h3>
-		<?php endif; ?>
+		<<?php echo esc_attr( $heading ); ?> class="andreian-card__title">
+			<a href="<?php echo esc_url( $permalink ); ?>"<?php echo $item_list ? ' itemprop="url"' : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+				<span<?php echo $item_list ? ' itemprop="name"' : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>><?php echo esc_html( $title ); ?></span>
+			</a>
+		</<?php echo esc_attr( $heading ); ?>>
 
 		<div class="andreian-card__meta">
 			<?php if ( $show_author ) : ?>

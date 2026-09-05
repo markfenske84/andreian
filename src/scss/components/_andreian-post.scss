@@ -7,12 +7,15 @@
 .andreian-card {
 	min-width: 0;
 	margin: 0;
+	container-type: inline-size;
 
 	&__image-link {
+		--image-radius: #{$image-rounded-border-radius};
+		--image-gutter: var(--container-gutter, 1rem);
 		display: block;
 		margin-bottom: 0.75rem;
 		overflow: hidden;
-		border-radius: $image-rounded-border-radius;
+		border-radius: var(--image-radius);
 		background: #f2f2f2;
 	}
 
@@ -94,6 +97,15 @@
 
 	.andreian-card__image-link img {
 		aspect-ratio: 4 / 5;
+	}
+}
+
+@supports (border-radius: calc(progress(1px, 0px, 2px) * 1px)) {
+	.andreian-card__image-link {
+		border-radius: calc(
+			#{'progress((100vi - 100cqi) / 2, 0px, var(--image-gutter))'} *
+				var(--image-radius)
+		);
 	}
 }
 
@@ -181,18 +193,14 @@
 	.andreian-card:nth-of-type(8) {
 		grid-area: eighth;
 	}
-
-	.andreian-card:not(:first-of-type) .andreian-card__title {
-		font-size: clamp(1rem, 1.8vw, 1.35rem);
-	}
 }
 
 .andreian-posts--category-tiles {
 	grid-template-columns: repeat(3, minmax(0, 1fr));
+}
 
-	.andreian-card__title {
-		font-size: clamp(1rem, 1.8vw, 1.35rem);
-	}
+.andreian-card:not(.andreian-card--featured) .andreian-card__title {
+	font-size: clamp(1.35rem, 2.5vw, 1.75rem);
 }
 
 .andreian-post-collection--sidebar {
@@ -262,7 +270,7 @@
 		}
 
 		.andreian-card__title {
-			font-size: clamp(1.25rem, 2.2vw, 1.65rem);
+			font-size: clamp(1.35rem, 2.5vw, 1.75rem);
 		}
 	}
 
@@ -327,6 +335,74 @@
 	border: 1px dashed $color-rule;
 	color: $color-muted;
 	text-align: center;
+}
+
+.andreian-custom-slots__help {
+	margin: 0 0 1rem;
+	color: $color-muted;
+	font-size: 0.85rem;
+}
+
+.andreian-custom-slot {
+	display: block;
+	width: 100%;
+	padding: 0;
+	border: 0;
+	background: transparent;
+	color: inherit;
+	font: inherit;
+	text-align: left;
+	cursor: pointer;
+
+	&.is-empty {
+		min-height: 8rem;
+		padding: 1rem;
+		border: 1px dashed $color-rule;
+	}
+
+	&__image {
+		display: block;
+		margin-bottom: 0.75rem;
+		aspect-ratio: 4 / 3;
+		background: $color-rule-light;
+		border-radius: $image-rounded-border-radius;
+	}
+
+	&__label {
+		display: block;
+		margin-bottom: 0.25rem;
+		color: $color-muted;
+		font-family: $font-family-meta;
+		font-size: 0.7rem;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+	}
+
+	.andreian-card__title {
+		pointer-events: none;
+	}
+}
+
+.andreian-custom-slot-modal__list {
+	margin: 1rem 0 0;
+	padding: 0;
+	max-height: 22rem;
+	overflow: auto;
+	list-style: none;
+
+	li {
+		margin: 0;
+		border-bottom: 1px solid $color-rule-light;
+	}
+
+	.components-button {
+		width: 100%;
+		justify-content: flex-start;
+		height: auto;
+		padding: 0.7rem 0.25rem;
+		white-space: normal;
+		text-align: left;
+	}
 }
 
 .andreian-post-editor__heading {
@@ -417,6 +493,25 @@
 	.andreian-layout-picker {
 		grid-template-columns: repeat(3, minmax(90px, 1fr));
 	}
+
+	.andreian-card__content {
+		padding-inline: var(--container-gutter, 1rem);
+	}
+
+	.andreian-posts--list .andreian-card__content {
+		padding-inline: 0 var(--container-gutter, 1rem);
+	}
+
+	.andreian-card__image-link img,
+	.andreian-posts--grid .andreian-card__image-link img,
+	.andreian-posts--hero-tiles .andreian-card:first-of-type .andreian-card__image-link img,
+	.andreian-posts--full .andreian-card__image-link img {
+		aspect-ratio: 16 / 9;
+	}
+
+	.andreian-card:not(.andreian-card--featured) .andreian-card__title {
+		font-size: clamp(1.8rem, 3.5vw, 2.75rem);
+	}
 }
 
 @include breakpoint('md') {
@@ -442,6 +537,14 @@
 		grid-template-columns: 1fr;
 	}
 
+	.andreian-posts--list .andreian-card__content {
+		padding-inline: var(--container-gutter, 1rem);
+	}
+
+	.andreian-card__image-link {
+		border-radius: 0;
+	}
+
 	.andreian-layout-picker {
 		grid-template-columns: repeat(2, minmax(90px, 1fr));
 	}
@@ -456,6 +559,7 @@
 
 .andreian-posts__archive-link {
 	margin: 1.5rem 0 0;
+	padding-inline: var(--container-gutter, 1rem);
 	text-align: center;
 
 	a {

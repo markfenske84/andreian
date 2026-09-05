@@ -15,6 +15,7 @@
 	font-weight: 500;
 	letter-spacing: $font-heading-letter-spacing;
 	text-transform: uppercase;
+	white-space: nowrap;
 }
 
 .footer-main {
@@ -35,6 +36,12 @@
 	margin: 0;
 	font-size: 0.75rem;
 	color: $color-muted;
+}
+
+@include breakpoint('md') {
+	.site-footer__wordmark {
+		font-size: clamp(1.05rem, 5vw, 1.7rem);
+	}
 }
 
 @include breakpoint('sm') {

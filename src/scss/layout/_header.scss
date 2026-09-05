@@ -19,6 +19,7 @@
 	line-height: 1;
 	letter-spacing: $font-heading-letter-spacing;
 	text-transform: uppercase;
+	white-space: nowrap;
 	transform: translateY(-5px);
 }
 
@@ -208,12 +209,15 @@ body.site-search-open {
 	background: rgba(0, 0, 0, 0.4);
 	opacity: 0;
 	pointer-events: none;
-	transition: opacity 0.2s ease;
+	transition: opacity 0.3s ease;
 
 	&.open {
-		display: block;
 		opacity: 1;
 		pointer-events: auto;
+
+		.mobile-offcanvas__inner {
+			transform: translateX(0);
+		}
 	}
 
 	&__inner {
@@ -223,21 +227,58 @@ body.site-search-open {
 		background: $color-background;
 		padding: var(--container-gutter);
 		overflow-y: auto;
+		transform: translateX(100%);
+		transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 	}
 
 	&__header {
+		align-items: center;
+		gap: 1.25rem;
 		padding-bottom: 1rem;
 		border-bottom: 1px solid $color-rule;
 	}
 
-	&__title {
+	.site-wordmark {
 		font-family: $font-family-heading;
-		font-weight: 700;
+		font-size: clamp(0.72rem, 2.8vw, 0.9rem);
+		font-weight: 500;
+		line-height: 1;
+		letter-spacing: $font-heading-letter-spacing;
+		text-transform: uppercase;
+		white-space: nowrap;
+	}
+
+	.mobile-offcanvas-toggle._close {
+		position: relative;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 1.1rem;
+		height: 1.1rem;
+		padding: 0;
+		flex-shrink: 0;
+
+		.line-bar {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			width: 11px;
+			height: 1.5px;
+			margin: 0;
+		}
+
+		.line-bar:first-child {
+			transform: translate(-50%, -50%) rotate(45deg);
+		}
+
+		.line-bar:last-child {
+			transform: translate(-50%, -50%) rotate(-45deg);
+		}
 	}
 }
 
 .mobile-offcanvas .mobile-offcanvas-toggle {
-	display: block;
+	display: flex;
 }
 
 body.mobile-offcanvas-open {
@@ -249,7 +290,7 @@ body.mobile-offcanvas-open {
 	top: 32px;
 }
 
-@include breakpoint('md') {
+@include breakpoint('lg') {
 	.site-header__navigation .primary-navigation {
 		display: none;
 	}
@@ -281,10 +322,12 @@ body.mobile-offcanvas-open {
 		cursor: pointer;
 	}
 
-	.site-wordmark {
-		font-size: clamp(1.7rem, 8vw, 2.65rem);
+	.site-wordmark-heading {
+		font-size: clamp(1.05rem, 5vw, 1.7rem);
 	}
+}
 
+@include breakpoint('md') {
 	.site-search-overlay__content .search-form {
 		grid-template-columns: 1fr;
 	}
@@ -303,6 +346,7 @@ body.mobile-offcanvas-open {
 
 @media (prefers-reduced-motion: reduce) {
 	.mobile-offcanvas,
+	.mobile-offcanvas__inner,
 	.site-header__navigation {
 		transition: none;
 	}

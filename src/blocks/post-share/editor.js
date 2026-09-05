@@ -5,15 +5,16 @@
 	const { __ } = wp.i18n;
 
 	registerBlockType( 'andreian/post-share', {
-		title: __( 'Post Share', 'andreian' ),
-		description: __( 'Displays sharing links for the current post.', 'andreian' ),
+		title: __( 'Andreian Share Links', 'andreian' ),
+		description: __( 'Displays social sharing icons for the current post.', 'andreian' ),
 		icon: 'share',
 		category: 'widgets',
+		keywords: [ 'share', 'social', 'facebook', 'sidebar' ],
 		edit: function () {
 			return el(
 				'div',
 				useBlockProps(),
-				el( 'strong', null, __( 'Post Share', 'andreian' ) ),
+				el( 'strong', null, __( 'Andreian Share Links', 'andreian' ) ),
 				el(
 					'p',
 					null,

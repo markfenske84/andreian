@@ -19,7 +19,7 @@ $query = new WP_Query(
 	array(
 		'post_type'              => 'post',
 		'post_status'            => 'publish',
-		'posts_per_page'         => 4,
+		'posts_per_page'         => 3,
 		'post__not_in'           => array( $post_id ),
 		'cat'                    => $cat_id,
 		'orderby'                => 'date',
@@ -49,6 +49,7 @@ if ( ! $query->have_posts() ) {
 					'post_id'    => get_the_ID(),
 					'layout'     => 'grid',
 					'image_size' => 'andreian-card',
+					'heading'    => 'h3',
 				)
 			);
 		endwhile;

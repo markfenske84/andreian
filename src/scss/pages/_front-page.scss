@@ -32,12 +32,12 @@
 	margin-inline: auto;
 }
 
-@include breakpoint('md') {
+@include breakpoint('lg') {
 	.andreian-home {
-		padding-top: 1.5rem;
+		padding-top: 0;
 	}
 
-	.editorial-section {
-		margin-top: 3.5rem;
+	.editorial-section .section-title {
+		padding-inline: var(--container-gutter, 1rem);
 	}
 }

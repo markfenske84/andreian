@@ -1,3 +1,17 @@
+.andreian-random-post-menu-item > a {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4rem;
+}
+
+.andreian-random-post-menu-item__icon,
+.andreian-random-post-menu-item__icon svg {
+	display: block;
+	width: 0.95rem;
+	height: 0.95rem;
+	flex-shrink: 0;
+}
+
 #main-header-menu,
 #mobile-header-menu,
 #footer-menu {
@@ -123,6 +137,12 @@
 	a {
 		display: block;
 		padding-block: 0.8rem;
+	}
+
+	.andreian-random-post-menu-item > a {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4rem;
 	}
 
 	.sub-menu {

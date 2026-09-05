@@ -39,6 +39,22 @@ function andreian_get_random_post_url() {
 }
 
 /**
+ * Markup for the Random menu link, including icon.
+ *
+ * @return string
+ */
+function andreian_get_random_post_menu_link() {
+	$icon = svg( 'ico-random', 'andreian-random-post-menu-item__icon' );
+
+	return sprintf(
+		'<li class="menu-item andreian-random-post-menu-item"><a href="%1$s">%2$s<span>%3$s</span></a></li>',
+		esc_url( andreian_get_random_post_url() ),
+		$icon ? $icon : '',
+		esc_html__( 'Random', 'andreian' )
+	);
+}
+
+/**
  * Append Random to the assigned primary menu.
  *
  * @param string $items Rendered menu items.
@@ -50,11 +66,7 @@ function andreian_add_random_post_menu_item( $items, $args ) {
 		return $items;
 	}
 
-	$items .= sprintf(
-		'<li class="menu-item andreian-random-post-menu-item"><a href="%1$s">%2$s</a></li>',
-		esc_url( andreian_get_random_post_url() ),
-		esc_html__( 'Random', 'andreian' )
-	);
+	$items .= andreian_get_random_post_menu_link();
 
 	return $items;
 }

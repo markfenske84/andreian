@@ -27,10 +27,9 @@
 
 		const postType = editor.getCurrentPostType();
 		const template = editor.getEditedPostAttribute( 'template' ) || '';
-		const isBuilderTemplate = postType === 'page' && template === BUILDER_TEMPLATE;
-		// Pages always use full-width editor canvas so custom blocks are not
-		// constrained to the blog column measure. Standard width applies to posts only.
-		const useBuilderLayout = postType === 'page' || isBuilderTemplate;
+		// Only the Page Builder template is full width. Default and Sidebar
+		// pages use the site container, matching the front end.
+		const useBuilderLayout = postType === 'page' && template === BUILDER_TEMPLATE;
 
 		wrapper.classList.toggle( 'andreian-layout-builder', useBuilderLayout );
 		wrapper.classList.toggle( 'andreian-layout-standard', ! useBuilderLayout );

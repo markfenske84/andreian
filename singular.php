@@ -48,13 +48,14 @@ get_header();
 						<div class="entry-content">
 							<?php the_content(); ?>
 						</div>
-						<?php get_template_part( 'src/components/author-bio' ); ?>
 						<?php get_template_part( 'src/components/recommended-posts' ); ?>
 					</article>
 				</div>
 			</div>
 			<aside class="_sidebar post-sidebar" aria-label="<?php esc_attr_e( 'Post sidebar', 'andreian' ); ?>">
-				<?php dynamic_sidebar( 'sidebar' ); ?>
+				<div class="post-sidebar__inner">
+					<?php dynamic_sidebar( 'sidebar' ); ?>
+				</div>
 			</aside>
 		</section>
 	<?php endwhile; ?>

@@ -37,7 +37,11 @@ h4 {
 }
 
 .entry-content {
-	font-size: 1.0625rem;
+	font-size: 1.125rem;
+
+	@include breakpoint('lg') {
+		font-size: 1rem;
+	}
 
 	h2,
 	h3,

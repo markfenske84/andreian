@@ -1,0 +1,21 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "andreian/table-of-contents",
+	"version": "1.0.0",
+	"title": "Andreian Table of Contents",
+	"category": "widgets",
+	"icon": "list-view",
+	"description": "Jump links for h2 and h3 headings in the current content.",
+	"keywords": [
+		"toc",
+		"contents",
+		"headings",
+		"sidebar"
+	],
+	"textdomain": "andreian",
+	"supports": {
+		"html": false,
+		"multiple": true
+	}
+}

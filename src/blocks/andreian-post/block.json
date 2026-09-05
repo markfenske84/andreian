@@ -33,6 +33,13 @@
 			"type": "string",
 			"default": "DESC"
 		},
+		"selectedPostIds": {
+			"type": "array",
+			"default": [],
+			"items": {
+				"type": "number"
+			}
+		},
 		"offset": {
 			"type": "number",
 			"default": 0

@@ -3,12 +3,19 @@
 	"apiVersion": 3,
 	"name": "andreian/post-share",
 	"version": "1.0.0",
-	"title": "Post Share",
+	"title": "Andreian Share Links",
 	"category": "widgets",
 	"icon": "share",
-	"description": "Display sharing links for the current post.",
+	"description": "Display social sharing icons for the current post.",
+	"keywords": [
+		"share",
+		"social",
+		"facebook",
+		"sidebar"
+	],
 	"textdomain": "andreian",
 	"supports": {
-		"html": false
+		"html": false,
+		"multiple": false
 	}
 }

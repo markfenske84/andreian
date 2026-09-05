@@ -12,15 +12,31 @@
 	&__list {
 		display: flex;
 		flex-wrap: wrap;
-		gap: 0.55rem 1rem;
+		column-gap: 0;
+		row-gap: 0.35rem;
 		margin: 0;
 		padding: 0;
 		list-style: none;
 	}
 
-	&__item:not(:last-child)::after {
+	&__item {
+		display: flex;
+		align-items: center;
+		font-size: 0;
+	}
+
+	&__item > *,
+	&__item::before {
+		font-size: 0.72rem;
+	}
+
+	&__item:not(:first-child)::before {
 		content: '·';
-		margin-left: 1rem;
+		display: inline-block;
+		width: auto;
+		margin: 0;
+		padding-inline: 0.5rem;
+		text-align: center;
 	}
 
 	a {
@@ -59,15 +75,32 @@
 	&__list {
 		display: flex;
 		flex-wrap: wrap;
-		gap: 0.45rem;
+		align-items: center;
+		column-gap: 0;
+		row-gap: 0.35rem;
 		margin: 0;
 		padding: 0;
 		list-style: none;
 	}
 
-	&__item:not(:last-child)::after {
+	&__item {
+		display: flex;
+		align-items: center;
+		font-size: 0;
+	}
+
+	&__item > *,
+	&__item::before {
+		font-size: 0.72rem;
+	}
+
+	&__item:not(:first-child)::before {
 		content: '/';
-		margin-left: 0.45rem;
+		display: inline-block;
+		width: 1.35em;
+		margin: 0;
+		text-align: center;
+		transform: translateX(-0.08em);
 		color: $color-muted;
 	}
 
