@@ -12,31 +12,15 @@ jobs:
 
     - name: Deploy to Cloudways
       env:
-        CLOUDWAYS_EMAIL: ${{ secrets.CLOUDWAYS_USERNAME }}
         CLOUDWAYS_API_KEY: ${{ secrets.CLOUDWAYS_API_TOKEN }}
         APP_ID: ${{ secrets.CLOUDWAYS_APP_ID }}
         SERVER_ID: ${{ secrets.CLOUDWAYS_SERVER_ID }}
       run: |
-        echo "Getting OAuth access token..."
-        ACCESS_TOKEN_RESPONSE=$(curl -s -X POST "https://api.cloudways.com/api/v1/oauth/access_token" \
-          -H "Content-Type: application/json" \
-          -d "{\"email\":\"${CLOUDWAYS_EMAIL}\",\"api_key\":\"${CLOUDWAYS_API_KEY}\"}")
-
-        ACCESS_TOKEN=$(echo $ACCESS_TOKEN_RESPONSE | jq -r '.access_token')
-
-        if [ "$ACCESS_TOKEN" = "null" ] || [ -z "$ACCESS_TOKEN" ]; then
-          echo "Failed to obtain access token"
-          echo "Response: $ACCESS_TOKEN_RESPONSE"
-          exit 1
-        fi
-
-        echo "Access token obtained successfully"
-
         echo "Triggering git pull on Cloudways..."
         GIT_PULL_RESPONSE=$(curl -s -X POST "https://api.cloudways.com/api/v1/git/pull" \
-          -H "Authorization: Bearer ${ACCESS_TOKEN}" \
+          -H "Authorization: Bearer ${CLOUDWAYS_API_KEY}" \
           -H "Content-Type: application/json" \
-          -d "{\"server_id\":\"${SERVER_ID}\",\"app_id\":\"${APP_ID}\",\"branch_name\":\"main\",\"deploy_path\":\"wp-content/themes/avl-child\"}")
+          -d "{\"server_id\":\"${SERVER_ID}\",\"app_id\":\"${APP_ID}\",\"branch_name\":\"main\",\"deploy_path\":\"wp-content/themes/andreian\"}")
 
         echo "Git pull response: $GIT_PULL_RESPONSE"
 
