@@ -12,9 +12,9 @@
 <div class="wp-block-group alignwide andreian-home">
 	<!-- wp:group {"className":"editorial-section editorial-section--lead","layout":{"type":"constrained"}} -->
 	<div class="wp-block-group editorial-section editorial-section--lead">
-		<!-- wp:heading {"className":"sr-only"} -->
-		<h2 class="wp-block-heading sr-only">Featured stories</h2>
-		<!-- /wp:heading -->
+		<!-- wp:paragraph {"anchor":"featured-stories","className":"sr-only"} -->
+		<p class="wp-block-heading sr-only" id="featured-stories">Featured stories</p>
+		<!-- /wp:paragraph -->
 		<!-- wp:andreian/post {"postsToShow":8,"layout":"hero-tiles","prioritizeFirstImage":true} /-->
 	</div>
 	<!-- /wp:group -->

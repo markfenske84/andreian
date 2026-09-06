@@ -270,6 +270,7 @@ function andreian_render_post_block( $attributes, $content, $block ) {
 					'position'     => $position,
 					'priority'     => $prioritize && 1 === $position,
 					'show_excerpt' => 'full' === $layout || ( 'hero-tiles' === $main_layout_class && 1 === $position ) || ! empty( $attributes['showExcerpt'] ),
+					'heading'      => ( 'hero-tiles' === $main_layout_class && 1 === $position ) ? 'h1' : 'h2',
 					'item_list'    => true,
 					'image_size'   => $image_size,
 				)

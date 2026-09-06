@@ -21,7 +21,7 @@ $current_category_id = isset( $args['current_category_id'] ) ? (int) $args['curr
 $item_list     = ! empty( $args['item_list'] );
 $image_size    = isset( $args['image_size'] ) ? $args['image_size'] : 'large';
 $heading       = isset( $args['heading'] ) ? strtolower( (string) $args['heading'] ) : 'h2';
-$heading       = in_array( $heading, array( 'h2', 'h3' ), true ) ? $heading : 'h2';
+$heading       = in_array( $heading, array( 'h1', 'h2', 'h3' ), true ) ? $heading : 'h2';
 $is_primary_featured = ( 'hero-tiles' === $layout && 1 === $position ) || 'full' === $layout;
 $card_class    = 'andreian-card andreian-card--' . $layout;
 if ( $is_primary_featured ) {
