@@ -179,7 +179,9 @@ include_once 'blocks/andreian-post.php';
 include_once 'blocks/post-share.php';
 include_once 'blocks/social-links.php';
 include_once 'blocks/table-of-contents.php';
+include_once 'blocks/quote-styles.php';
 include_once 'shortcodes/social-links.php';
+include_once 'shortcodes/blockquote.php';
 
 /**
  * Preload the heading font used by the masthead and first viewport.

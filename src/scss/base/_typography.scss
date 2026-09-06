@@ -48,50 +48,6 @@ h4 {
 	h4 {
 		margin-top: calc(var(--container-gutter) * 2.5);
 	}
-
-	blockquote {
-		max-width: none;
-		width: 100%;
-		margin: calc(var(--container-gutter) * 2) 0;
-		padding: clamp(2rem, 5vw, 3rem) clamp(1.5rem, 4vw, 2.5rem);
-		border: 0;
-		background: $color-text;
-		color: $color-background;
-		font-family: $font-family-heading;
-		font-size: clamp(1.25rem, 2.5vw, 1.65rem);
-		font-weight: 500;
-		line-height: 1.45;
-		letter-spacing: $font-heading-letter-spacing;
-		text-align: center;
-	}
-
-	blockquote.inline-quote {
-		width: auto;
-		margin-inline: 0;
-		padding: 0 0 0 1.25rem;
-		border-left: 3px solid $color-text;
-		background: transparent;
-		color: inherit;
-		font-size: 1.35rem;
-		text-align: left;
-	}
-
-	blockquote cite,
-	blockquote .wp-block-quote__citation {
-		display: block;
-		margin-top: 1.25rem;
-		font-family: $font-family-heading;
-		font-size: clamp(1rem, 2vw, 1.2rem);
-		font-style: normal;
-		font-weight: 700;
-		text-align: center;
-	}
-
-	blockquote.inline-quote cite {
-		margin-top: 0.75rem;
-		font-size: 0.95rem;
-		text-align: left;
-	}
 }
 
 .entry-title {

@@ -69,10 +69,21 @@ document.addEventListener('DOMContentLoaded', function () {
 	const closeToggle = mobileOffcanvas
 		? mobileOffcanvas.querySelector('.mobile-offcanvas-toggle')
 		: null;
+	const skipToNav = document.querySelector('.accessibility-navigation a[href="#site-navigation"]');
+	const primaryNav = document.querySelector('#site-navigation');
 	const searchPanel = document.querySelector('#site-search-panel');
 	const searchToggle = document.querySelector('.site-search-toggle');
 	const searchField = searchPanel ? searchPanel.querySelector('.search-field') : null;
 	let syncNavHeight = function () {};
+
+	if (skipToNav && primaryNav && openToggle) {
+		skipToNav.addEventListener('click', function (event) {
+			if (window.getComputedStyle(primaryNav).display === 'none') {
+				event.preventDefault();
+				openToggle.focus();
+			}
+		});
+	}
 
 	function syncAdminBarHeight() {
 		const adminBar = document.getElementById('wpadminbar');

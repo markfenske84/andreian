@@ -78,16 +78,6 @@
 	}
 }
 
-.pk-content-block.pk-block-bg.pk-block-bg-light {
-	padding: 2rem clamp(1rem, 2vw, 2rem);
-	background-color: black;
-	color: white;
-	margin-bottom: 1rem;
-	font-weight: 500;
-	font-size: 1.25rem;
-	text-transform: uppercase;
-}
-
 .single-article__hero--has-image {
 	.post-breadcrumbs,
 	.post-breadcrumbs a,
@@ -119,6 +109,11 @@
 
 	.post-share {
 		margin-top: 2rem;
+	}
+
+	.entry-content figure,
+	.entry-content .wp-caption {
+		max-width: 100%;
 	}
 
 	.entry-content > figure,
@@ -225,26 +220,24 @@
 			font: inherit;
 		}
 
-		.entry-content > figure,
-		.entry-content > .wp-caption,
+		.entry-content figure,
+		.entry-content .wp-caption,
 		.entry-content > p:has(> img),
 		.entry-content > p:has(> a > img) {
-			width: calc(100% + (var(--container-gutter, 1rem) * 2)) !important;
-			max-width: none;
-			margin-inline: calc(var(--container-gutter, 1rem) * -1);
+			width: 100% !important;
+			max-width: 100%;
+			margin-inline: 0;
 		}
 
-		.entry-content > figure img,
-		.entry-content > .wp-caption img,
-		.entry-content > p:has(> img) img,
-		.entry-content > p:has(> a > img) img {
-			border-radius: 0;
+		.entry-content img {
+			width: 100%;
+			max-width: 100%;
+			height: auto;
 		}
 
 		.entry-content figcaption,
 		.entry-content .wp-caption-text {
 			margin-top: var(--container-gutter, 1rem);
-			padding-inline: var(--container-gutter, 1rem);
 		}
 	}
 }

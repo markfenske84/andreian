@@ -36,6 +36,24 @@ function andreian_classic_editor_formats( $init ) {
 			'classes' => 'inline-quote',
 			'wrapper' => true,
 		),
+		array(
+			'title'   => __( 'Framed Quote', 'andreian' ),
+			'block'   => 'blockquote',
+			'classes' => 'framed-quote',
+			'wrapper' => true,
+		),
+		array(
+			'title'   => __( 'Shadow Quote', 'andreian' ),
+			'block'   => 'blockquote',
+			'classes' => 'shadow-quote',
+			'wrapper' => true,
+		),
+		array(
+			'title'   => __( 'Rule Quote', 'andreian' ),
+			'block'   => 'blockquote',
+			'classes' => 'rule-quote',
+			'wrapper' => true,
+		),
 	);
 
 	if ( isset( $init['style_formats_merge'] ) ) {

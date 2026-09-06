@@ -1,0 +1,53 @@
+.back-to-top {
+	position: fixed;
+	left: max(0.85rem, env(safe-area-inset-left, 0px));
+	bottom: max(1.15rem, env(safe-area-inset-bottom, 0px));
+	z-index: 25;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 2.75rem;
+	height: 2.75rem;
+	padding: 0;
+	border: 2pt solid $color-text;
+	background: $color-background;
+	color: $color-text;
+	cursor: pointer;
+	transform: translateX(calc(-100% - 1.25rem));
+	opacity: 0;
+	visibility: hidden;
+	pointer-events: none;
+	transition:
+		transform 0.35s ease,
+		opacity 0.28s ease,
+		visibility 0.35s,
+		background-color 0.2s ease,
+		color 0.2s ease;
+
+	svg {
+		display: block;
+	}
+
+	&:hover,
+	&:focus-visible {
+		background: $color-text;
+		color: $color-background;
+	}
+
+	&.is-visible {
+		transform: translateX(0);
+		opacity: 1;
+		visibility: visible;
+		pointer-events: auto;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.back-to-top {
+		transition: opacity 0.01ms, visibility 0.01ms, background-color 0.2s ease, color 0.2s ease;
+
+		&:not(.is-visible) {
+			transform: translateX(0);
+		}
+	}
+}

@@ -48,6 +48,12 @@
 			</div>
 		</footer>
 
+		<button class="back-to-top" type="button" aria-label="<?php esc_attr_e( 'Back to top', 'andreian' ); ?>" aria-hidden="true" tabindex="-1">
+			<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">
+				<path d="m5 16 7-8 7 8" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="square" stroke-linejoin="miter"></path>
+			</svg>
+		</button>
+
 		<?php wp_footer(); ?>
 	</body>
 </html>

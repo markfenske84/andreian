@@ -27,6 +27,7 @@
 
 <header id="main-header" class="site-header">
 	<div class="accessibility-navigation">
+		<a href="#site-navigation" class="sr-only"><?php esc_html_e( 'Skip to Navigation', 'andreian' ); ?></a>
 		<a href="#content" class="sr-only"><?php esc_html_e( 'Skip to Content', 'andreian' ); ?></a>
 	</div>
 
@@ -80,7 +81,7 @@
 				</button>
 			</div>
 
-			<nav class="primary-navigation" aria-label="<?php esc_attr_e( 'Primary navigation', 'andreian' ); ?>">
+			<nav id="site-navigation" class="primary-navigation" tabindex="-1" aria-label="<?php esc_attr_e( 'Primary navigation', 'andreian' ); ?>">
 				<?php
 				wp_nav_menu(
 					array(
