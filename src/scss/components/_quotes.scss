@@ -1,122 +1,46 @@
 .entry-content,
 body.mce-content-body {
 	blockquote,
-	blockquote.pullquote,
-	.wp-block-quote.is-style-pullquote,
-	.pk-content-block.pk-block-bg {
+	.wp-block-quote,
+	.pk-content-block {
 		max-width: none;
 		width: 100%;
-		margin: calc(var(--container-gutter) * 2) 0;
-		padding: clamp(2rem, 5vw, 3rem) clamp(1.5rem, 4vw, 2.5rem);
+		margin: 0 0 1.125rem;
+		padding: clamp(0.35rem, 1.2vw, 0.75rem) 0 clamp(0.35rem, 1.2vw, 0.75rem) clamp(0.85rem, 2.5vw, 1.5rem);
 		border: 0;
-		background: $color-text;
-		color: $color-background;
+		background: transparent;
+		box-shadow: none;
+		color: $color-text;
 		font-family: $font-family-heading;
-		font-size: clamp(1.25rem, 2.5vw, 1.65rem);
+		font-size: clamp(1.15rem, 2.2vw, 1.65rem);
 		font-weight: 500;
+		font-style: normal;
 		line-height: 1.45;
 		letter-spacing: $font-heading-letter-spacing;
-		text-align: center;
-	}
-
-	blockquote.inline-quote,
-	.wp-block-quote.is-style-inline-quote {
-		width: auto;
-		margin-inline: 0;
-		padding: 0 0 0 1.25rem;
-		border-left: 3px solid $color-text;
-		background: transparent;
-		color: inherit;
-		font-size: 1.35rem;
 		text-align: left;
+
+		@include breakpoint('lg') {
+			margin-bottom: 1rem;
+		}
 	}
 
-	blockquote.framed-quote,
-	.wp-block-quote.is-style-framed-quote,
-	.pk-content-block.pk-block-border-all {
-		max-width: none;
-		width: 100%;
-		margin: calc(var(--container-gutter) * 2) 0;
-		padding: clamp(1.25rem, 3vw, 1.75rem) clamp(1.35rem, 3vw, 2rem);
-		border: 1px solid $color-text;
-		background: transparent;
-		color: inherit;
-		box-shadow: none;
-		font-family: $font-family-body;
-		font-size: 1.05rem;
-		font-weight: 500;
-		font-style: italic;
-		line-height: 1.65;
-		letter-spacing: 0;
-		text-align: left;
+	blockquote p {
+		margin: 0 0 1em;
 	}
 
-	blockquote.shadow-quote,
-	.wp-block-quote.is-style-shadow-quote,
-	.pk-content-block.pk-block-shadows {
-		max-width: none;
-		width: 100%;
-		margin: calc(var(--container-gutter) * 2) 0;
-		padding: clamp(1.25rem, 3vw, 1.75rem) clamp(1.35rem, 3vw, 2rem);
-		border: 0;
-		background: $color-rule-light;
-		color: inherit;
-		box-shadow: 0 12px 32px rgb(0 0 0 / 10%);
-		font-family: $font-family-body;
-		font-size: 1.05rem;
-		font-weight: 500;
-		font-style: normal;
-		line-height: 1.6;
-		letter-spacing: 0;
-		text-align: left;
-	}
-
-	blockquote.rule-quote,
-	.wp-block-quote.is-style-rule-quote,
-	.pk-content-block.pk-block-border-bottom {
-		max-width: none;
-		width: 100%;
-		margin: calc(var(--container-gutter) * 2) 0;
-		padding: 0 0 1.1rem;
-		border: 0;
-		border-bottom: 2px solid $color-text;
-		background: transparent;
-		color: inherit;
-		box-shadow: none;
-		font-family: $font-family-heading;
-		font-size: clamp(1.15rem, 2.2vw, 1.45rem);
-		font-weight: 500;
-		font-style: normal;
-		line-height: 1.4;
-		letter-spacing: $font-heading-letter-spacing;
-		text-align: center;
+	blockquote p:last-child {
+		margin-bottom: 0;
 	}
 
 	blockquote cite,
 	blockquote .wp-block-quote__citation {
 		display: block;
-		margin-top: 1.25rem;
+		margin-top: 0.75rem;
 		font-family: $font-family-heading;
-		font-size: clamp(1rem, 2vw, 1.2rem);
+		font-size: 0.95rem;
 		font-style: normal;
 		font-weight: 700;
 		letter-spacing: $font-heading-letter-spacing;
-		text-align: center;
-	}
-
-	blockquote.inline-quote cite,
-	.wp-block-quote.is-style-inline-quote cite {
-		margin-top: 0.75rem;
-		font-size: 0.95rem;
-		text-align: left;
-	}
-
-	blockquote.framed-quote cite,
-	blockquote.shadow-quote cite,
-	.wp-block-quote.is-style-framed-quote cite,
-	.wp-block-quote.is-style-shadow-quote cite {
-		margin-top: 1rem;
-		font-size: 0.95rem;
 		text-align: left;
 	}
 }
