@@ -1,0 +1,50 @@
+name: Deploy to Cloudways
+on:
+  push:
+    branches:
+     - main
+  workflow_dispatch:
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Deploy to Cloudways
+      env:
+        CLOUDWAYS_EMAIL: ${{ secrets.CLOUDWAYS_USERNAME }}
+        CLOUDWAYS_API_KEY: ${{ secrets.CLOUDWAYS_API_TOKEN }}
+        APP_ID: ${{ secrets.CLOUDWAYS_APP_ID }}
+        SERVER_ID: ${{ secrets.CLOUDWAYS_SERVER_ID }}
+      run: |
+        echo "Getting OAuth access token..."
+        ACCESS_TOKEN_RESPONSE=$(curl -s -X POST "https://api.cloudways.com/api/v1/oauth/access_token" \
+          -H "Content-Type: application/json" \
+          -d "{\"email\":\"${CLOUDWAYS_EMAIL}\",\"api_key\":\"${CLOUDWAYS_API_KEY}\"}")
+
+        ACCESS_TOKEN=$(echo $ACCESS_TOKEN_RESPONSE | jq -r '.access_token')
+
+        if [ "$ACCESS_TOKEN" = "null" ] || [ -z "$ACCESS_TOKEN" ]; then
+          echo "Failed to obtain access token"
+          echo "Response: $ACCESS_TOKEN_RESPONSE"
+          exit 1
+        fi
+
+        echo "Access token obtained successfully"
+
+        echo "Triggering git pull on Cloudways..."
+        GIT_PULL_RESPONSE=$(curl -s -X POST "https://api.cloudways.com/api/v1/git/pull" \
+          -H "Authorization: Bearer ${ACCESS_TOKEN}" \
+          -H "Content-Type: application/json" \
+          -d "{\"server_id\":\"${SERVER_ID}\",\"app_id\":\"${APP_ID}\",\"branch_name\":\"main\",\"deploy_path\":\"wp-content/themes/avl-child\"}")
+
+        echo "Git pull response: $GIT_PULL_RESPONSE"
+
+        if echo "$GIT_PULL_RESPONSE" | jq -e '.operation_id' > /dev/null; then
+          echo "Git pull triggered successfully"
+          OPERATION_ID=$(echo $GIT_PULL_RESPONSE | jq -r '.operation_id')
+          echo "Operation ID: $OPERATION_ID"
+        else
+          echo "Failed to trigger git pull"
+          exit 1
+        fi
