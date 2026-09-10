@@ -226,6 +226,16 @@
 		border-bottom: 1px solid $color-rule;
 	}
 
+	&__cta {
+		margin-top: 1rem;
+		padding-top: 1rem;
+		border-top: 1px solid $color-rule-light;
+	}
+
+	&__cta-inner {
+		margin: 0;
+	}
+
 	.site-wordmark {
 		font-family: $font-family-heading;
 		font-size: clamp(1rem, 4vw, 1.2rem);

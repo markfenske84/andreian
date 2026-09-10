@@ -19,6 +19,14 @@
 	}
 }
 
+body.mobile-offcanvas-open {
+	.andreian-toc-drawer__tab,
+	.andreian-toc-drawer__backdrop,
+	.andreian-toc-drawer__panel {
+		z-index: 19;
+	}
+}
+
 @include breakpoint('lg') {
 	.andreian-toc-drawer {
 		display: block;

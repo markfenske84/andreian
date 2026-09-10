@@ -145,6 +145,9 @@
 			);
 			?>
 		</nav>
+		<div class="mobile-offcanvas__cta">
+			<?php andreian_render_convertkit_cta( 'mobile-offcanvas__cta-inner' ); ?>
+		</div>
 	</div>
 </div>
 
