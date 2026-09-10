@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	const stickyNav = document.querySelector('.site-header__navigation');
 	const tocs = Array.from(document.querySelectorAll('.andreian-toc'));
 	const drawer = document.querySelector('[data-andreian-toc-drawer]');
+	const entryContent = document.querySelector('.single-article .entry-content');
 
 	if (!tocs.length) {
 		return;
@@ -197,6 +198,20 @@ document.addEventListener('DOMContentLoaded', function () {
 		setActiveSection(active.id);
 	}
 
+	function updateDrawerVisibility() {
+		if (!drawer || !entryContent) {
+			return;
+		}
+
+		const pastContent = entryContent.getBoundingClientRect().bottom <= getScrollOffset();
+
+		drawer.classList.toggle('is-past-content', pastContent);
+
+		if (pastContent && drawer.classList.contains('is-open')) {
+			setDrawerOpen(false);
+		}
+	}
+
 	let ticking = false;
 
 	function onScroll() {
@@ -208,10 +223,12 @@ document.addEventListener('DOMContentLoaded', function () {
 		window.requestAnimationFrame(function () {
 			ticking = false;
 			updateActiveSection();
+			updateDrawerVisibility();
 		});
 	}
 
 	updateActiveSection();
+	updateDrawerVisibility();
 	window.addEventListener('scroll', onScroll, { passive: true });
 	window.addEventListener('resize', onScroll, { passive: true });
 });

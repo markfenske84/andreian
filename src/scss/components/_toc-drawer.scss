@@ -49,7 +49,14 @@ body.mobile-offcanvas-open {
 		background: $color-background;
 		color: $color-text;
 		cursor: pointer;
-		transition: background-color 0.2s ease, color 0.2s ease;
+		opacity: 1;
+		visibility: visible;
+		pointer-events: auto;
+		transition:
+			background-color 0.2s ease,
+			color 0.2s ease,
+			opacity 0.28s ease,
+			visibility 0.28s ease;
 
 		&:hover,
 		&:focus-visible {
@@ -68,6 +75,12 @@ body.mobile-offcanvas-open {
 
 	.andreian-toc-drawer.is-open .andreian-toc-drawer__icon {
 		transform: rotate(-90deg);
+	}
+
+	.andreian-toc-drawer.is-past-content .andreian-toc-drawer__tab {
+		opacity: 0;
+		visibility: hidden;
+		pointer-events: none;
 	}
 
 	.andreian-toc-drawer__backdrop {
