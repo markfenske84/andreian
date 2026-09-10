@@ -23,7 +23,10 @@ if ( '' === $list ) {
 
 <nav class="andreian-toc" aria-label="<?php esc_attr_e( 'Table of contents', 'andreian' ); ?>">
 	<details class="andreian-toc__details" open>
-		<summary class="andreian-toc__summary"><?php esc_html_e( 'Contents', 'andreian' ); ?></summary>
+		<summary class="andreian-toc__summary">
+			<?php esc_html_e( 'Contents', 'andreian' ); ?>
+			<?php echo svg( 'ico-chevron-up', 'andreian-toc__icon' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Theme SVG asset. ?>
+		</summary>
 		<?php echo $list; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Built with escaped labels and IDs. ?>
 	</details>
 </nav>

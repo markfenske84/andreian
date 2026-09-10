@@ -7,6 +7,14 @@
 .post-sidebar__inner {
 	position: sticky;
 	top: calc(var(--admin-bar-height, 0px) + var(--nav-bar-height, 46px) + 1.5rem);
+	max-height: calc(100vh - var(--admin-bar-height, 0px) - var(--nav-bar-height, 46px) - 3rem);
+	overflow-y: auto;
+	overscroll-behavior: contain;
+	scrollbar-width: none;
+
+	&::-webkit-scrollbar {
+		display: none;
+	}
 }
 
 .widget-title,
@@ -42,13 +50,30 @@
 	}
 
 	&__summary {
-		display: block;
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding-inline: 0.15rem 0.35rem;
 		cursor: pointer;
 		list-style: none;
 
 		&::-webkit-details-marker {
 			display: none;
 		}
+	}
+
+	&__icon {
+		flex-shrink: 0;
+		width: 0.875rem;
+		height: 0.875rem;
+		margin-left: auto;
+		align-self: center;
+		transform-origin: center;
+		transition: transform 0.2s ease;
+	}
+
+	&__details:not([open]) .andreian-toc__icon {
+		transform: rotate(180deg);
 	}
 
 	&__list,
@@ -101,7 +126,15 @@
 
 	&__list a {
 		text-decoration: none;
+		transition: color 0.2s ease, opacity 0.2s ease;
 		@include link-hover-opacity;
+
+		&.is-active,
+		&.is-active:hover,
+		&.is-active:focus-visible {
+			color: $color-accent-hover;
+			opacity: 1;
+		}
 	}
 }
 

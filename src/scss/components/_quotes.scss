@@ -6,18 +6,19 @@ body.mce-content-body {
 		max-width: none;
 		width: 100%;
 		margin: 0 0 1.125rem;
-		padding: clamp(0.35rem, 1.2vw, 0.75rem) 0 clamp(0.35rem, 1.2vw, 0.75rem) clamp(0.85rem, 2.5vw, 1.5rem);
+		padding-block: clamp(0.35rem, 1.2vw, 0.75rem);
+		padding-inline: 0;
 		border: 0;
 		background: transparent;
 		box-shadow: none;
-		color: $color-text;
+		color: $color-accent;
 		font-family: $font-family-heading;
 		font-size: clamp(1.15rem, 2.2vw, 1.65rem);
 		font-weight: 500;
 		font-style: normal;
 		line-height: 1.45;
 		letter-spacing: $font-heading-letter-spacing;
-		text-align: left;
+		text-align: center;
 
 		@include breakpoint('lg') {
 			margin-bottom: 1rem;
@@ -41,6 +42,6 @@ body.mce-content-body {
 		font-style: normal;
 		font-weight: 700;
 		letter-spacing: $font-heading-letter-spacing;
-		text-align: left;
+		text-align: center;
 	}
 }

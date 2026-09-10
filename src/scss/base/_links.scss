@@ -1,4 +1,41 @@
-.entry-content,
+$inline-text-link: 'a:not(.button):not(.wp-block-button__link):not(.wp-element-button):not(:has(img)):not(:has(picture))';
+
+.entry-content {
+	#{$inline-text-link} {
+		color: $color-accent;
+		opacity: 1;
+		transition: color 0.2s ease;
+
+		&:hover,
+		&:focus-visible {
+			color: $color-accent-hover;
+			opacity: 1;
+		}
+	}
+
+	.andreian-card #{$inline-text-link},
+	.andreian-card__category {
+		color: $color-text;
+		@include link-hover-opacity;
+
+		&:hover,
+		&:focus-visible {
+			color: $color-text;
+		}
+	}
+}
+
+.andreian-card #{$inline-text-link},
+a.andreian-card__category {
+	color: $color-text;
+	@include link-hover-opacity;
+
+	&:hover,
+	&:focus-visible {
+		color: $color-text;
+	}
+}
+
 .widget {
 	a:not(.button):not(.wp-block-button__link):not(.wp-element-button):not(:has(img)):not(:has(picture)) {
 		@include link-hover-opacity;

@@ -49,6 +49,7 @@ get_header();
 							<?php the_content(); ?>
 						</div>
 						<?php if ( is_singular( 'post' ) ) : ?>
+							<?php get_template_part( 'src/components/post-cta' ); ?>
 							<?php get_template_part( 'src/components/post-share' ); ?>
 						<?php endif; ?>
 						<?php get_template_part( 'src/components/recommended-posts' ); ?>

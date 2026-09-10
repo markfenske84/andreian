@@ -47,9 +47,11 @@ function andreian_singular_has_sidebar() {
 }
 
 function andreian_is_post_updated( $post_id = null ) {
-	$post_id = $post_id ?: get_the_ID();
+	$post_id   = $post_id ?: get_the_ID();
+	$published = (int) get_the_time( 'U', $post_id );
+	$modified  = (int) get_the_modified_time( 'U', $post_id );
 
-	return get_the_modified_time( 'U', $post_id ) !== get_the_time( 'U', $post_id );
+	return $modified > $published;
 }
 
 function andreian_get_post_date_label( $post_id = null ) {

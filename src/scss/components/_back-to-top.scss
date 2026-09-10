@@ -1,6 +1,6 @@
 .back-to-top {
 	position: fixed;
-	left: max(0.85rem, env(safe-area-inset-left, 0px));
+	right: max(0.85rem, env(safe-area-inset-right, 0px));
 	bottom: max(1.15rem, env(safe-area-inset-bottom, 0px));
 	z-index: 25;
 	display: inline-flex;
@@ -13,7 +13,7 @@
 	background: $color-background;
 	color: $color-text;
 	cursor: pointer;
-	transform: translateX(calc(-100% - 1.25rem));
+	transform: translateX(calc(100% + 1.25rem));
 	opacity: 0;
 	visibility: hidden;
 	pointer-events: none;
@@ -24,8 +24,10 @@
 		background-color 0.2s ease,
 		color 0.2s ease;
 
-	svg {
+	&__icon {
 		display: block;
+		width: 1.25rem;
+		height: 1.25rem;
 	}
 
 	&:hover,
