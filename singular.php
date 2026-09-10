@@ -66,4 +66,8 @@ get_header();
 	<?php endwhile; ?>
 <?php endif; ?>
 
+<?php if ( is_singular( 'post' ) ) : ?>
+	<?php get_template_part( 'src/components/table-of-contents-drawer' ); ?>
+<?php endif; ?>
+
 <?php get_footer(); ?>

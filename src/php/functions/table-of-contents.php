@@ -195,6 +195,18 @@ function andreian_render_toc_list( $headings ) {
 }
 
 /**
+ * Whether a post has enough headings for a table of contents.
+ *
+ * @param int|null $post_id Post ID.
+ * @return bool
+ */
+function andreian_post_has_toc( $post_id = null ) {
+	$post_id = $post_id ?: get_the_ID();
+
+	return count( andreian_get_post_toc_headings( $post_id ) ) > 3;
+}
+
+/**
  * Headings for the current post body.
  *
  * @param int $post_id Post ID.
