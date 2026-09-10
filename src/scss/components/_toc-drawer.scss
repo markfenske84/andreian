@@ -49,14 +49,16 @@ body.mobile-offcanvas-open {
 		background: $color-background;
 		color: $color-text;
 		cursor: pointer;
+		transform: translateX(0);
 		opacity: 1;
 		visibility: visible;
 		pointer-events: auto;
 		transition:
-			background-color 0.2s ease,
-			color 0.2s ease,
+			transform 0.35s ease,
 			opacity 0.28s ease,
-			visibility 0.28s ease;
+			visibility 0.35s,
+			background-color 0.2s ease,
+			color 0.2s ease;
 
 		&:hover,
 		&:focus-visible {
@@ -78,6 +80,7 @@ body.mobile-offcanvas-open {
 	}
 
 	.andreian-toc-drawer.is-past-content .andreian-toc-drawer__tab {
+		transform: translateX(calc(-100% - 1.25rem));
 		opacity: 0;
 		visibility: hidden;
 		pointer-events: none;
@@ -144,6 +147,14 @@ body.mobile-offcanvas-open {
 
 @media (prefers-reduced-motion: reduce) {
 	@include breakpoint('lg') {
+		.andreian-toc-drawer__tab {
+			transition: opacity 0.01ms, visibility 0.01ms, background-color 0.2s ease, color 0.2s ease;
+		}
+
+		.andreian-toc-drawer.is-past-content .andreian-toc-drawer__tab {
+			transform: translateX(0);
+		}
+
 		.andreian-toc-drawer__backdrop,
 		.andreian-toc-drawer__panel,
 		.andreian-toc-drawer__icon {
