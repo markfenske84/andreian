@@ -322,36 +322,47 @@
 
 	&__button {
 		display: inline-flex;
+		flex-shrink: 0;
 		align-items: center;
 		justify-content: center;
 		width: 2rem;
 		height: 2rem;
 		padding: 0;
-		border: 1px solid $color-rule;
+		border: 2px solid $color-text;
 		background: transparent;
 		color: $color-text;
 		cursor: pointer;
 		@include link-hover-opacity;
 
-		&:hover,
-		&:focus-visible {
-			border-color: $color-text;
+		&--prev .andreian-random-slideshow__icon {
+			transform: rotate(-90deg);
 		}
+
+		&--next .andreian-random-slideshow__icon {
+			transform: rotate(90deg);
+		}
+	}
+
+	&__icon {
+		display: block;
+		width: 0.875rem;
+		height: 0.875rem;
 	}
 
 	&__dots {
 		display: flex;
 		flex: 1;
 		align-items: center;
-		justify-content: space-between;
+		justify-content: center;
+		gap: 0.7rem;
 	}
 
 	&__dot {
 		position: relative;
-		width: 0.55rem;
-		height: 0.55rem;
+		width: 0.7rem;
+		height: 0.7rem;
 		padding: 0;
-		border: 1px solid $color-text;
+		border: 2px solid $color-text;
 		border-radius: 50%;
 		background: transparent;
 		cursor: pointer;
@@ -550,6 +561,11 @@
 
 	.andreian-random-slideshow__title {
 		text-align: center;
+	}
+
+	.andreian-random-slideshow__dot {
+		width: 0.85rem;
+		height: 0.85rem;
 	}
 
 	.andreian-posts--list .andreian-card__content {

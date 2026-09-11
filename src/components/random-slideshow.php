@@ -106,7 +106,7 @@ $slideshow_id = wp_unique_id( 'andreian-random-slideshow-' );
 				type="button"
 				aria-controls="<?php echo esc_attr( $slideshow_id ); ?>"
 				aria-label="<?php esc_attr_e( 'Previous slide', 'andreian' ); ?>">
-				<span aria-hidden="true">&larr;</span>
+				<?php echo svg( 'ico-chevron-up', 'andreian-random-slideshow__icon' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Theme SVG asset. ?>
 			</button>
 
 			<div class="andreian-random-slideshow__dots">
@@ -126,7 +126,7 @@ $slideshow_id = wp_unique_id( 'andreian-random-slideshow-' );
 				type="button"
 				aria-controls="<?php echo esc_attr( $slideshow_id ); ?>"
 				aria-label="<?php esc_attr_e( 'Next slide', 'andreian' ); ?>">
-				<span aria-hidden="true">&rarr;</span>
+				<?php echo svg( 'ico-chevron-up', 'andreian-random-slideshow__icon' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Theme SVG asset. ?>
 			</button>
 		</div>
 	<?php endif; ?>
