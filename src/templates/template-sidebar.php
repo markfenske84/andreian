@@ -23,11 +23,15 @@ get_header();
 					<?php comments_template(); ?>
 				</div>
 			</div>
-			<aside class="_sidebar post-sidebar" aria-label="<?php esc_attr_e( 'Page sidebar', 'andreian' ); ?>">
-				<div class="post-sidebar__inner">
-					<?php dynamic_sidebar( 'sidebar' ); ?>
-				</div>
-			</aside>
+			<?php
+			get_template_part(
+				'src/components/post-sidebar',
+				null,
+				array(
+					'label' => __( 'Page sidebar', 'andreian' ),
+				)
+			);
+			?>
 		<?php endwhile; ?>
 	<?php endif; ?>
 </div>

@@ -57,17 +57,19 @@ get_header();
 					<?php comments_template(); ?>
 				</div>
 			</div>
-			<aside class="_sidebar post-sidebar" aria-label="<?php esc_attr_e( 'Post sidebar', 'andreian' ); ?>">
-				<div class="post-sidebar__inner">
-					<?php dynamic_sidebar( 'sidebar' ); ?>
-				</div>
-			</aside>
+			<?php
+			get_template_part(
+				'src/components/post-sidebar',
+				null,
+				array(
+					'drawer' => true,
+				)
+			);
+			?>
 		</section>
 	<?php endwhile; ?>
 <?php endif; ?>
 
-<?php if ( is_singular( 'post' ) ) : ?>
-	<?php get_template_part( 'src/components/table-of-contents-drawer' ); ?>
-<?php endif; ?>
+<?php get_template_part( 'src/components/sidebar-drawer' ); ?>
 
 <?php get_footer(); ?>

@@ -26,6 +26,49 @@ iframe[src*='dailymotion.com'] {
 	}
 }
 
+.alignleft {
+	float: left;
+	margin: 0.5em 1.5em 1em 0;
+}
+
+.alignright {
+	float: right;
+	margin: 0.5em 0 1em 1.5em;
+}
+
+.aligncenter {
+	clear: both;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+}
+
+.wp-caption.aligncenter,
+figure.aligncenter,
+.wp-block-image.aligncenter {
+	display: table;
+	max-width: 100%;
+}
+
+img.aligncenter,
+.aligncenter img {
+	display: block;
+	width: auto;
+	max-width: 100%;
+	height: auto;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+a:has(> img.aligncenter) {
+	display: block;
+	width: fit-content;
+	max-width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
 .wp-block-image {
 	&.has-andreian-monotone-normal img {
 		filter: brightness(0);

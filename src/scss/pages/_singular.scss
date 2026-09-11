@@ -105,6 +105,7 @@
 .single-article {
 	.entry-content {
 		line-height: 1.65;
+		overflow-x: clip;
 	}
 
 	.post-cta {
@@ -116,7 +117,8 @@
 	}
 
 	.entry-content figure,
-	.entry-content .wp-caption {
+	.entry-content .wp-caption,
+	.entry-content a:has(> img) {
 		max-width: 100%;
 	}
 
@@ -127,15 +129,17 @@
 		container-type: inline-size;
 	}
 
-	.entry-content > figure img,
-	.entry-content > .wp-caption img,
-	.entry-content > p:has(> img) img,
-	.entry-content > p:has(> a > img) img {
+	.entry-content img {
 		--image-radius: #{$image-rounded-border-radius};
 		--image-gutter: var(--container-gutter, 1rem);
-		width: 100%;
+		max-width: 100%;
 		height: auto;
 		border-radius: var(--image-radius);
+	}
+
+	.entry-content > figure img,
+	.entry-content > .wp-caption img {
+		width: 100%;
 	}
 
 	@supports (border-radius: calc(progress(1px, 0px, 2px) * 1px)) {
@@ -228,13 +232,10 @@
 		.entry-content .wp-caption,
 		.entry-content > p:has(> img),
 		.entry-content > p:has(> a > img) {
-			width: 100% !important;
 			max-width: 100%;
-			margin-inline: 0;
 		}
 
 		.entry-content img {
-			width: 100%;
 			max-width: 100%;
 			height: auto;
 		}

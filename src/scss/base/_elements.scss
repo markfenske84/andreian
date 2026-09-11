@@ -104,8 +104,14 @@ button[type='submit'] {
 	gap: calc(var(--container-gutter) * 2);
 
 	@include breakpoint('lg') {
-		grid-template-columns: 1fr;
+		grid-template-columns: minmax(0, 1fr);
 	}
+}
+
+._posts,
+._inner {
+	min-width: 0;
+	max-width: 100%;
 }
 
 .-content-width {

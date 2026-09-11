@@ -1,16 +1,10 @@
 document.addEventListener('DOMContentLoaded', function () {
 	const stickyNav = document.querySelector('.site-header__navigation');
 	const tocs = Array.from(document.querySelectorAll('.andreian-toc'));
-	const drawer = document.querySelector('[data-andreian-toc-drawer]');
+	const drawer = document.querySelector('[data-andreian-sidebar-drawer]');
+	const sidebar = document.getElementById('andreian-post-sidebar');
 	const entryContent = document.querySelector('.single-article .entry-content');
-
-	if (!tocs.length) {
-		return;
-	}
-
-	const links = tocs.flatMap(function (toc) {
-		return Array.from(toc.querySelectorAll('a[href*="#"]'));
-	});
+	const mobileQuery = window.matchMedia('(max-width: 992px)');
 
 	function headingFromHash(href) {
 		if (!href) {
@@ -65,12 +59,15 @@ document.addEventListener('DOMContentLoaded', function () {
 			return;
 		}
 
-		const tab = drawer.querySelector('.andreian-toc-drawer__tab');
-		const panel = drawer.querySelector('.andreian-toc-drawer__panel');
-		const backdrop = drawer.querySelector('.andreian-toc-drawer__backdrop');
+		const tab = drawer.querySelector('.andreian-sidebar-drawer__tab');
+		const backdrop = drawer.querySelector('.andreian-sidebar-drawer__backdrop');
+
+		if (!mobileQuery.matches) {
+			isOpen = false;
+		}
 
 		drawer.classList.toggle('is-open', isOpen);
-		document.body.classList.toggle('andreian-toc-drawer-open', isOpen);
+		document.body.classList.toggle('andreian-sidebar-drawer-open', isOpen);
 
 		if (tab) {
 			tab.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
@@ -80,18 +77,34 @@ document.addEventListener('DOMContentLoaded', function () {
 			);
 		}
 
-		if (panel) {
-			panel.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
-		}
-
 		if (backdrop) {
 			backdrop.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
+		}
+
+		if (sidebar) {
+			if (mobileQuery.matches) {
+				sidebar.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
+				sidebar.toggleAttribute('inert', !isOpen);
+
+				if (isOpen) {
+					sidebar.setAttribute('role', 'dialog');
+					sidebar.setAttribute('aria-modal', 'true');
+				} else {
+					sidebar.removeAttribute('role');
+					sidebar.removeAttribute('aria-modal');
+				}
+			} else {
+				sidebar.removeAttribute('aria-hidden');
+				sidebar.removeAttribute('inert');
+				sidebar.removeAttribute('role');
+				sidebar.removeAttribute('aria-modal');
+			}
 		}
 	}
 
 	if (drawer) {
-		const tab = drawer.querySelector('.andreian-toc-drawer__tab');
-		const backdrop = drawer.querySelector('.andreian-toc-drawer__backdrop');
+		const tab = drawer.querySelector('.andreian-sidebar-drawer__tab');
+		const backdrop = drawer.querySelector('.andreian-sidebar-drawer__backdrop');
 
 		if (tab) {
 			tab.addEventListener('click', function () {
@@ -110,6 +123,18 @@ document.addEventListener('DOMContentLoaded', function () {
 				setDrawerOpen(false);
 			}
 		});
+
+		setDrawerOpen(false);
+
+		if (typeof mobileQuery.addEventListener === 'function') {
+			mobileQuery.addEventListener('change', function () {
+				setDrawerOpen(false);
+			});
+		} else if (typeof mobileQuery.addListener === 'function') {
+			mobileQuery.addListener(function () {
+				setDrawerOpen(false);
+			});
+		}
 	}
 
 	document.addEventListener('click', function (event) {
@@ -120,9 +145,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
 		const href = link.getAttribute('href');
 		const target = headingFromHash(href);
-		const drawerLink = link.closest('.andreian-toc--drawer');
+		const inMobileDrawer = Boolean(drawer && mobileQuery.matches && link.closest('#andreian-post-sidebar'));
 
-		if (drawerLink) {
+		if (inMobileDrawer) {
 			event.preventDefault();
 			setDrawerOpen(false);
 			scrollToHeading(target, href);
@@ -134,6 +159,34 @@ document.addEventListener('DOMContentLoaded', function () {
 		}
 
 		stickyNav.classList.remove('is-scroll-hidden');
+	});
+
+	function updateDrawerVisibility() {
+		if (!drawer || !entryContent) {
+			return;
+		}
+
+		const pastContent = entryContent.getBoundingClientRect().bottom <= getScrollOffset();
+
+		drawer.classList.toggle('is-past-content', pastContent);
+
+		if (pastContent && drawer.classList.contains('is-open')) {
+			setDrawerOpen(false);
+		}
+	}
+
+	if (!tocs.length) {
+		if (drawer) {
+			updateDrawerVisibility();
+			window.addEventListener('scroll', updateDrawerVisibility, { passive: true });
+			window.addEventListener('resize', updateDrawerVisibility, { passive: true });
+		}
+
+		return;
+	}
+
+	const links = tocs.flatMap(function (toc) {
+		return Array.from(toc.querySelectorAll('a[href*="#"]'));
 	});
 
 	const sections = [];
@@ -148,10 +201,6 @@ document.addEventListener('DOMContentLoaded', function () {
 		seenTargets.add(target);
 		sections.push({ target: target, id: target.id });
 	});
-
-	if (!sections.length) {
-		return;
-	}
 
 	function setActiveSection(activeId) {
 		links.forEach(function (link) {
@@ -169,13 +218,13 @@ document.addEventListener('DOMContentLoaded', function () {
 				return id === activeId;
 			})
 			.forEach(function (activeLink) {
-				const sidebar = activeLink.closest('.post-sidebar__inner');
-				if (!sidebar || !sidebar.offsetParent) {
+				const sidebarInner = activeLink.closest('.post-sidebar__inner');
+				if (!sidebarInner || !sidebarInner.offsetParent) {
 					return;
 				}
 
 				const linkRect = activeLink.getBoundingClientRect();
-				const sidebarRect = sidebar.getBoundingClientRect();
+				const sidebarRect = sidebarInner.getBoundingClientRect();
 
 				if (linkRect.top < sidebarRect.top || linkRect.bottom > sidebarRect.bottom) {
 					activeLink.scrollIntoView({ block: 'nearest', behavior: 'auto' });
@@ -184,6 +233,10 @@ document.addEventListener('DOMContentLoaded', function () {
 	}
 
 	function updateActiveSection() {
+		if (!sections.length) {
+			return;
+		}
+
 		const offset = getScrollOffset();
 		let active = sections[0];
 
@@ -196,20 +249,6 @@ document.addEventListener('DOMContentLoaded', function () {
 		}
 
 		setActiveSection(active.id);
-	}
-
-	function updateDrawerVisibility() {
-		if (!drawer || !entryContent) {
-			return;
-		}
-
-		const pastContent = entryContent.getBoundingClientRect().bottom <= getScrollOffset();
-
-		drawer.classList.toggle('is-past-content', pastContent);
-
-		if (pastContent && drawer.classList.contains('is-open')) {
-			setDrawerOpen(false);
-		}
 	}
 
 	let ticking = false;

@@ -159,8 +159,8 @@
 }
 
 @include breakpoint('lg') {
-	.post-sidebar,
-	._archive > ._sidebar {
+	.post-sidebar:not(.post-sidebar--drawer),
+	._archive > ._sidebar:not(.post-sidebar--drawer) {
 		display: none;
 	}
 
