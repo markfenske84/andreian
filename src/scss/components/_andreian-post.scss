@@ -278,6 +278,7 @@
 
 	&__viewport {
 		overflow: hidden;
+		touch-action: pan-y;
 	}
 
 	&__track {
