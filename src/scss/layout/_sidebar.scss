@@ -158,6 +158,37 @@
 	}
 }
 
+._sidebar,
+.andreian-post-collection__sidebar-widgets {
+	.formkit-form {
+		max-width: 100% !important;
+
+		[data-style='minimal'] {
+			padding: 1.25rem 0.75rem !important;
+		}
+
+		.formkit-fields {
+			margin-left: 0 !important;
+			margin-right: 0 !important;
+		}
+
+		.formkit-field,
+		.formkit-submit {
+			flex: 1 1 100% !important;
+			min-width: 0 !important;
+			max-width: 100%;
+			margin-left: 0 !important;
+			margin-right: 0 !important;
+		}
+
+		.formkit-input {
+			width: 100% !important;
+			min-width: 0 !important;
+			max-width: 100%;
+		}
+	}
+}
+
 @include breakpoint('lg') {
 	.post-sidebar:not(.post-sidebar--drawer),
 	._archive > ._sidebar:not(.post-sidebar--drawer) {
