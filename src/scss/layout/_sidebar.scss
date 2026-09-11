@@ -77,7 +77,7 @@
 	}
 
 	&__list,
-	&__list ol {
+	&__list ul {
 		display: flex;
 		flex-direction: column;
 		gap: 0.45rem;
@@ -89,39 +89,14 @@
 		line-height: 1.45;
 	}
 
-	&__list {
-		counter-reset: toc-section;
-	}
-
 	&__list li {
 		margin: 0;
 		padding: 0;
 	}
 
-	&__list > li {
-		counter-increment: toc-section;
-		counter-reset: toc-sub;
-	}
-
-	&__list > li > a::before {
-		content: counter(toc-section) '. ';
-	}
-
-	&__list ol {
+	&__list ul {
 		margin-top: 0.45rem;
 		padding-left: 1.1rem;
-	}
-
-	&__list ol > li {
-		counter-increment: toc-sub;
-	}
-
-	&__list > li:first-child ol > li > a::before {
-		content: counter(toc-section) '.' counter(toc-sub, lower-alpha) ' ';
-	}
-
-	&__list > li:not(:first-child) ol > li > a::before {
-		content: counter(toc-section) '.' counter(toc-sub) ' ';
 	}
 
 	&__list a {

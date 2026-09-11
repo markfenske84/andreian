@@ -155,7 +155,7 @@ function andreian_render_toc_list( $headings ) {
 		return '';
 	}
 
-	$html  = '<ol class="andreian-toc__list">';
+	$html  = '<ul class="andreian-toc__list">';
 	$stack = array( (int) $headings[0]['level'] );
 
 	foreach ( $headings as $index => $heading ) {
@@ -165,11 +165,11 @@ function andreian_render_toc_list( $headings ) {
 			$current = (int) $stack[ count( $stack ) - 1 ];
 
 			if ( $level > $current ) {
-				$html   .= '<ol>';
+				$html   .= '<ul>';
 				$stack[] = $level;
 			} else {
 				while ( count( $stack ) > 1 && $level < $stack[ count( $stack ) - 1 ] ) {
-					$html .= '</li></ol>';
+					$html .= '</li></ul>';
 					array_pop( $stack );
 				}
 
@@ -185,11 +185,11 @@ function andreian_render_toc_list( $headings ) {
 	}
 
 	while ( count( $stack ) > 1 ) {
-		$html .= '</li></ol>';
+		$html .= '</li></ul>';
 		array_pop( $stack );
 	}
 
-	$html .= '</li></ol>';
+	$html .= '</li></ul>';
 
 	return $html;
 }
