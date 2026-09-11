@@ -231,9 +231,31 @@ document.addEventListener('DOMContentLoaded', function () {
 		let ticking = false;
 		const scrollDelta = 6;
 
-		function adminBarOffset() {
-			const value = getComputedStyle(stickyNav).getPropertyValue('--admin-bar-height').trim();
-			return parseFloat(value) || 0;
+		function stickyTopOffset() {
+			let offset = 0;
+			const adminBar = document.getElementById('wpadminbar');
+
+			if (adminBar) {
+				const rect = adminBar.getBoundingClientRect();
+				// WordPress uses position:absolute below 600px, so the bar
+				// scrolls away. Only offset by the portion still covering the top.
+				if (rect.bottom > 0 && rect.top < 1) {
+					offset = Math.round(rect.bottom);
+				}
+			}
+
+			if (window.visualViewport) {
+				offset += Math.max(0, window.visualViewport.offsetTop);
+			}
+
+			return offset;
+		}
+
+		function syncStickyTop() {
+			document.documentElement.style.setProperty(
+				'--nav-sticky-top',
+				stickyTopOffset() + 'px'
+			);
 		}
 
 		syncNavHeight = function () {
@@ -251,6 +273,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			const currentScrollY = Math.max(0, window.scrollY);
 			const delta = currentScrollY - lastScrollY;
 			const searchOpen = document.body.classList.contains('site-search-open');
+			syncStickyTop();
 			if (document.body.classList.contains('mobile-offcanvas-open') || searchOpen) {
 				if (searchOpen) {
 					stickyNav.classList.remove('is-scroll-hidden');
@@ -260,7 +283,7 @@ document.addEventListener('DOMContentLoaded', function () {
 				return;
 			}
 
-			const pastBrand = headerBrand.getBoundingClientRect().bottom <= adminBarOffset();
+			const pastBrand = headerBrand.getBoundingClientRect().bottom <= stickyTopOffset();
 
 			if (!pastBrand) {
 				stickyNav.classList.remove('is-stuck', 'is-scroll-hidden');
@@ -296,6 +319,15 @@ document.addEventListener('DOMContentLoaded', function () {
 			syncNavHeight();
 			updateStickyNav();
 		});
+
+		if (window.visualViewport) {
+			window.visualViewport.addEventListener('resize', function () {
+				syncStickyTop();
+			});
+			window.visualViewport.addEventListener('scroll', function () {
+				syncStickyTop();
+			});
+		}
 
 		syncNavHeight();
 		updateStickyNav();

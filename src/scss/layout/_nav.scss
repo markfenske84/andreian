@@ -105,7 +105,10 @@
 	gap: 0;
 	margin-top: 1rem;
 	font-family: $font-family-heading;
+	font-size: 0.875rem;
 	font-weight: 700;
+	letter-spacing: $font-heading-letter-spacing;
+	text-transform: uppercase;
 
 	> .menu-item > a {
 		@include link-hover-opacity;

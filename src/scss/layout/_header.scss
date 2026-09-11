@@ -47,13 +47,25 @@
 
 	&.is-stuck {
 		position: fixed;
-		top: var(--admin-bar-height, 0px);
+		top: var(--nav-sticky-top, var(--admin-bar-height, 0px));
 		left: 0;
 		right: 0;
 		width: 100%;
 		border-top: 0;
 		border-bottom: 1px solid $color-rule;
 		box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+
+		// Cover iOS overscroll / URL-bar gaps above the fixed bar.
+		&::before {
+			content: '';
+			position: absolute;
+			left: 0;
+			right: 0;
+			bottom: 100%;
+			height: 100vh;
+			background: $color-background;
+			pointer-events: none;
+		}
 	}
 
 	&.is-scroll-hidden {
@@ -221,7 +233,7 @@
 
 	&__header {
 		align-items: center;
-		gap: 1.25rem;
+		gap: 0.75rem;
 		padding-bottom: 1rem;
 		border-bottom: 1px solid $color-rule;
 	}
@@ -238,12 +250,13 @@
 
 	.site-wordmark {
 		font-family: $font-family-heading;
-		font-size: clamp(1rem, 4vw, 1.2rem);
+		font-size: clamp(1rem, 3.6vw, 1.05rem);
 		font-weight: 500;
 		line-height: 1;
 		letter-spacing: $font-heading-letter-spacing;
 		text-transform: uppercase;
 		white-space: nowrap;
+		min-width: 0;
 	}
 
 	.mobile-offcanvas-toggle._close {
