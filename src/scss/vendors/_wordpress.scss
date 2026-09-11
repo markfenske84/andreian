@@ -47,8 +47,11 @@ iframe[src*='dailymotion.com'] {
 .wp-caption.aligncenter,
 figure.aligncenter,
 .wp-block-image.aligncenter {
-	display: table;
+	display: block;
+	width: fit-content;
 	max-width: 100%;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 img.aligncenter,

@@ -105,7 +105,6 @@
 .single-article {
 	.entry-content {
 		line-height: 1.65;
-		overflow-x: clip;
 	}
 
 	.post-cta {
@@ -119,7 +118,8 @@
 	.entry-content figure,
 	.entry-content .wp-caption,
 	.entry-content a:has(> img) {
-		max-width: 100%;
+		min-width: 0;
+		max-width: 100% !important;
 	}
 
 	.entry-content > figure,
@@ -132,7 +132,7 @@
 	.entry-content img {
 		--image-radius: #{$image-rounded-border-radius};
 		--image-gutter: var(--container-gutter, 1rem);
-		max-width: 100%;
+		max-width: 100% !important;
 		height: auto;
 		border-radius: var(--image-radius);
 	}
@@ -231,12 +231,13 @@
 		.entry-content figure,
 		.entry-content .wp-caption,
 		.entry-content > p:has(> img),
-		.entry-content > p:has(> a > img) {
-			max-width: 100%;
+		.entry-content > p:has(> a > img),
+		.entry-content a:has(> img) {
+			max-width: 100% !important;
 		}
 
 		.entry-content img {
-			max-width: 100%;
+			max-width: 100% !important;
 			height: auto;
 		}
 
