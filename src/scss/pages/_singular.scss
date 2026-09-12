@@ -155,13 +155,7 @@
 	}
 
 	.entry-content > p:first-child::first-letter {
-		float: left;
-		margin: 0.08em 0.08em 0 0;
-		font-family: $font-family-heading;
-		font-size: 3.8em;
-		font-weight: 700;
-		line-height: 0.82;
-		letter-spacing: $font-heading-letter-spacing;
+		@include drop-cap-letter;
 	}
 }
 
@@ -223,9 +217,7 @@
 
 	.single-article {
 		.entry-content > p:first-child::first-letter {
-			float: none;
-			margin: 0;
-			font: inherit;
+			@include drop-cap-letter-reset;
 		}
 
 		.entry-content figure,

@@ -1,9 +1,13 @@
 $inline-text-link: 'a:not(.button):not(.wp-block-button__link):not(.wp-element-button):not(:has(img)):not(:has(picture))';
 
-.entry-content {
+.entry-content,
+body.mce-content-body,
+.editor-styles-wrapper {
 	#{$inline-text-link} {
 		color: $color-accent;
 		opacity: 1;
+		text-decoration: underline;
+		text-underline-offset: 0.15em;
 		transition: color 0.2s ease;
 
 		&:hover,
@@ -16,6 +20,7 @@ $inline-text-link: 'a:not(.button):not(.wp-block-button__link):not(.wp-element-b
 	.andreian-card #{$inline-text-link},
 	.andreian-card__category {
 		color: $color-text;
+		text-decoration: none;
 		@include link-hover-opacity;
 
 		&:hover,

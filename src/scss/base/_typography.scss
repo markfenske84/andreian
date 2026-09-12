@@ -65,3 +65,21 @@ h4 {
 	text-align: center;
 	text-transform: uppercase;
 }
+
+.entry-content p.drop-cap::first-letter,
+.entry-content p.has-drop-cap::first-letter,
+body.mce-content-body p.drop-cap::first-letter,
+.editor-styles-wrapper p.drop-cap::first-letter,
+.editor-styles-wrapper p.has-drop-cap::first-letter {
+	@include drop-cap-letter;
+}
+
+@include breakpoint('sm') {
+	.entry-content p.drop-cap::first-letter,
+	.entry-content p.has-drop-cap::first-letter,
+	body.mce-content-body p.drop-cap::first-letter,
+	.editor-styles-wrapper p.drop-cap::first-letter,
+	.editor-styles-wrapper p.has-drop-cap::first-letter {
+		@include drop-cap-letter-reset;
+	}
+}

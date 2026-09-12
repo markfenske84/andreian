@@ -44,4 +44,35 @@ body.mce-content-body {
 		letter-spacing: $font-heading-letter-spacing;
 		text-align: center;
 	}
+
+	.inline-quote,
+	.is-style-inline-quote {
+		padding-inline: 0.85rem 0;
+		border-left: 2px solid $color-accent;
+		font-size: clamp(1rem, 1.6vw, 1.2rem);
+		text-align: left;
+
+		cite,
+		.wp-block-quote__citation {
+			text-align: left;
+		}
+	}
+
+	.framed-quote,
+	.is-style-framed-quote {
+		padding: 1rem 1.25rem;
+		border: 1px solid $color-rule;
+	}
+
+	.shadow-quote,
+	.is-style-shadow-quote {
+		padding: 1rem 1.25rem;
+		box-shadow: 0 6px 18px rgb(0 0 0 / 0.08);
+	}
+
+	.rule-quote,
+	.is-style-rule-quote {
+		padding-block: 1rem;
+		border-block: 1px solid $color-rule;
+	}
 }

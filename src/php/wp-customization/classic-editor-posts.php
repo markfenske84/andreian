@@ -54,6 +54,11 @@ function andreian_classic_editor_formats( $init ) {
 			'classes' => 'rule-quote',
 			'wrapper' => true,
 		),
+		array(
+			'title'    => __( 'Drop Cap', 'andreian' ),
+			'selector' => 'p',
+			'classes'  => 'drop-cap',
+		),
 	);
 
 	if ( isset( $init['style_formats_merge'] ) ) {
