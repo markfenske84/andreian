@@ -37,3 +37,13 @@ function andreian_register_post_block() {
 	);
 }
 add_action( 'init', 'andreian_register_post_block' );
+
+/**
+ * Keep unsynced patterns as normal blocks so Andreian Post inspector stays visible.
+ */
+function andreian_disable_pattern_content_only( $settings ) {
+	$settings['disableContentOnlyForUnsyncedPatterns'] = true;
+
+	return $settings;
+}
+add_filter( 'block_editor_settings_all', 'andreian_disable_pattern_content_only' );

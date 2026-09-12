@@ -1,6 +1,6 @@
 ( function ( wp ) {
 	const { registerBlockType } = wp.blocks;
-	const { InspectorControls, useBlockProps } = wp.blockEditor;
+	const { InspectorControls, useBlockProps, useBlockEditingMode } = wp.blockEditor;
 	const {
 		Button,
 		Modal,
@@ -276,6 +276,7 @@
 	}
 
 	function Edit( props ) {
+		useBlockEditingMode( 'default' );
 		const blockProps = useBlockProps( {
 			className: 'andreian-post-editor',
 		} );
@@ -555,13 +556,24 @@
 							setAttributes: setAttributes,
 					  } )
 					: ServerSideRender
-						? el( ServerSideRender, {
-								block: 'andreian/post',
-								attributes: settings,
-								EmptyResponsePlaceholder: function () {
-									return el( 'p', null, __( 'No posts match this collection.', 'andreian' ) );
+						? el(
+								'div',
+								{
+									className: 'andreian-post-editor__preview',
+									onClickCapture: function ( event ) {
+										if ( event.target.closest( 'a[href]' ) ) {
+											event.preventDefault();
+										}
+									},
 								},
-						  } )
+								el( ServerSideRender, {
+									block: 'andreian/post',
+									attributes: settings,
+									EmptyResponsePlaceholder: function () {
+										return el( 'p', null, __( 'No posts match this collection.', 'andreian' ) );
+									},
+								} )
+						  )
 						: null
 			)
 		);
