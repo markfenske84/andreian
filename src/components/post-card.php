@@ -22,6 +22,7 @@ $image_size    = isset( $args['image_size'] ) ? $args['image_size'] : 'large';
 $heading       = isset( $args['heading'] ) ? strtolower( (string) $args['heading'] ) : 'h2';
 $heading       = in_array( $heading, array( 'h1', 'h2', 'h3' ), true ) ? $heading : 'h2';
 $is_primary_featured = ( 'hero-tiles' === $layout && 1 === $position ) || 'full' === $layout;
+$priority      = $priority || $is_primary_featured;
 $card_class    = 'andreian-card andreian-card--' . $layout;
 if ( $is_primary_featured ) {
 	$card_class .= ' andreian-card--featured';
@@ -61,8 +62,10 @@ if ( $current_category_id ) {
 $primary_cat   = ! empty( $categories ) ? $categories[0] : null;
 $title         = html_entity_decode( wp_strip_all_tags( get_the_title( $post_id ) ), ENT_QUOTES, 'UTF-8' );
 $permalink     = get_permalink( $post_id );
-$image_sizes   = 'full' === $layout
-	? '(max-width: 1200px) 100vw, 1200px'
+$image_sizes   = $is_primary_featured
+	? ( 'full' === $layout
+		? '(max-width: 1200px) 100vw, 1200px'
+		: '(max-width: 640px) 100vw, (max-width: 1200px) 58vw, 700px' )
 	: ( 'list' === $layout
 		? '(max-width: 640px) 100vw, (max-width: 1200px) 38vw, 380px'
 		: '(max-width: 640px) 100vw, (max-width: 960px) 50vw, 25vw' );

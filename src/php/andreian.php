@@ -176,6 +176,7 @@ include_once 'functions/share-links.php';
 include_once 'functions/page-templates.php';
 include_once 'functions/table-of-contents.php';
 include_once 'functions/strip-duplicate-featured-image.php';
+include_once 'functions/image-priority.php';
 include_once 'blocks/andreian-post.php';
 include_once 'blocks/post-share.php';
 include_once 'blocks/social-links.php';
