@@ -12,7 +12,6 @@ get_template_part(
 		'show_all_categories' => true,
 		'show_share_links'    => true,
 		'current_category_id' => get_queried_object_id(),
-		'item_list'           => true,
 		'image_size'          => 'andreian-feature',
 	)
 );

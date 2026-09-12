@@ -248,11 +248,10 @@ function andreian_render_post_block( $attributes, $content, $block ) {
 
 	ob_start();
 	?>
-	<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php echo $has_sidebar ? '' : ' itemscope itemtype="https://schema.org/ItemList"'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+	<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 		<?php if ( $has_sidebar ) : ?>
-			<div class="andreian-posts andreian-posts--<?php echo esc_attr( $main_layout_class ); ?>" itemscope itemtype="https://schema.org/ItemList">
+			<div class="andreian-posts andreian-posts--<?php echo esc_attr( $main_layout_class ); ?>">
 		<?php endif; ?>
-		<meta itemprop="numberOfItems" content="<?php echo esc_attr( $query->post_count ); ?>">
 		<?php
 		$position = 0;
 		while ( $query->have_posts() ) :
@@ -271,7 +270,6 @@ function andreian_render_post_block( $attributes, $content, $block ) {
 					'priority'     => $prioritize && 1 === $position,
 					'show_excerpt' => 'full' === $layout || ( 'hero-tiles' === $main_layout_class && 1 === $position ) || ! empty( $attributes['showExcerpt'] ),
 					'heading'      => ( 'hero-tiles' === $main_layout_class && 1 === $position ) ? 'h1' : 'h2',
-					'item_list'    => true,
 					'image_size'   => $image_size,
 				)
 			);

@@ -18,7 +18,6 @@ $show_all_categories = ! empty( $args['show_all_categories'] );
 $show_author   = ! empty( $args['show_author'] );
 $show_share    = ! empty( $args['show_share_links'] );
 $current_category_id = isset( $args['current_category_id'] ) ? (int) $args['current_category_id'] : 0;
-$item_list     = ! empty( $args['item_list'] );
 $image_size    = isset( $args['image_size'] ) ? $args['image_size'] : 'large';
 $heading       = isset( $args['heading'] ) ? strtolower( (string) $args['heading'] ) : 'h2';
 $heading       = in_array( $heading, array( 'h1', 'h2', 'h3' ), true ) ? $heading : 'h2';
@@ -78,14 +77,7 @@ if ( $priority ) {
 	$image_attrs['fetchpriority'] = 'high';
 }
 ?>
-<article
-	class="<?php echo esc_attr( $card_class ); ?>"
-	<?php if ( $item_list ) : ?>
-		itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"
-	<?php endif; ?>>
-	<?php if ( $item_list ) : ?>
-		<meta itemprop="position" content="<?php echo esc_attr( $position ); ?>">
-	<?php endif; ?>
+<article class="<?php echo esc_attr( $card_class ); ?>">
 
 	<?php if ( $thumbnail_id ) : ?>
 		<div class="andreian-card__image-link">
@@ -116,8 +108,8 @@ if ( $priority ) {
 		<?php endif; ?>
 
 		<<?php echo esc_attr( $heading ); ?> class="andreian-card__title">
-			<a href="<?php echo esc_url( $permalink ); ?>"<?php echo $item_list ? ' itemprop="url"' : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
-				<span<?php echo $item_list ? ' itemprop="name"' : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>><?php echo esc_html( $title ); ?></span>
+			<a href="<?php echo esc_url( $permalink ); ?>">
+				<span><?php echo esc_html( $title ); ?></span>
 			</a>
 		</<?php echo esc_attr( $heading ); ?>>
 
