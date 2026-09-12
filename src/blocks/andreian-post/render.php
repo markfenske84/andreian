@@ -25,12 +25,12 @@ function andreian_get_post_block_query_args( $attributes, $overrides = array() )
 	$excluded_ids  = array_filter( array_map( 'absint', $attributes['excludePostIds'] ?? array() ) );
 	$layout        = $attributes['layout'] ?? 'grid';
 
-	if ( ! empty( $attributes['excludeFeaturedPosts'] ) && function_exists( 'andreian_get_hero_tiles_post_ids' ) ) {
+	if ( ! empty( $attributes['excludeFeaturedPosts'] ) && function_exists( 'andreian_get_featured_homepage_ids' ) ) {
 		$excluded_ids = array_values(
 			array_unique(
 				array_merge(
 					$excluded_ids,
-					andreian_get_hero_tiles_post_ids( 8, $excluded_ids )
+					andreian_get_featured_homepage_ids()
 				)
 			)
 		);

@@ -494,7 +494,7 @@
 						? el( ToggleControl, {
 								label: __( 'Exclude featured hero posts', 'andreian' ),
 								help: __(
-									'Avoid repeating posts already shown in the homepage hero.',
+									'Skip posts pinned as Homepage Featured. Latest posts still appear here even if they backfill the hero.',
 									'andreian'
 								),
 								checked: settings.excludeFeaturedPosts,

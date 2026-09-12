@@ -113,10 +113,12 @@ function custom_admin_enqueue_scripts() {
             document.addEventListener("DOMContentLoaded", function() {
                 // Delegate click events for dynamic elements
                 document.body.addEventListener('click', function(e) {
-                    // Replace or set
-                    if (e.target.matches('.replace-featured-image, .set-featured-image')) {
+                    var setTrigger = e.target.closest && e.target.closest('.replace-featured-image, .set-featured-image');
+
+                    // Replace or set (thumbnail clicks land on the inner <img>)
+                    if (setTrigger) {
                         e.preventDefault();
-                        var post_id = e.target.getAttribute('data-post-id');
+                        var post_id = setTrigger.getAttribute('data-post-id');
 
                         var frame = wp.media({
                             title: 'Select or Upload Featured Image',
@@ -144,10 +146,12 @@ function custom_admin_enqueue_scripts() {
                         frame.open();
                     }
 
+                    var removeTrigger = e.target.closest && e.target.closest('.remove-featured-image');
+
                     // Remove
-                    if (e.target.matches('.remove-featured-image')) {
+                    if (removeTrigger) {
                         e.preventDefault();
-                        var post_id = e.target.getAttribute('data-post-id');
+                        var post_id = removeTrigger.getAttribute('data-post-id');
 
                         var data = new FormData();
                         data.append('action', 'remove_featured_image');
