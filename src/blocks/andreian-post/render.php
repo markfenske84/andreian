@@ -207,7 +207,16 @@ function andreian_render_post_block( $attributes, $content, $block ) {
 	$sidebar_posts_to_show = min( 15, max( 1, (int) ( $attributes['sidebarPostsToShow'] ?? 9 ) ) );
 	$sidebar_title         = isset( $attributes['sidebarTitle'] ) && '' !== trim( $attributes['sidebarTitle'] )
 		? $attributes['sidebarTitle']
-		: __( 'Random', 'andreian' );
+		: __( 'Updated', 'andreian' );
+
+	$sidebar_exclude = array_merge(
+		array_filter( array_map( 'absint', $attributes['excludePostIds'] ?? array() ) ),
+		$main_post_ids
+	);
+
+	if ( ! empty( $attributes['excludeFeaturedPosts'] ) && function_exists( 'andreian_get_featured_homepage_ids' ) ) {
+		$sidebar_exclude = array_merge( $sidebar_exclude, andreian_get_featured_homepage_ids() );
+	}
 
 	$random_query = null;
 	if ( $random_sidebar_requested ) {
@@ -216,13 +225,10 @@ function andreian_render_post_block( $attributes, $content, $block ) {
 				$attributes,
 				array(
 					'posts_per_page' => $sidebar_posts_to_show,
-					'orderby'        => 'rand',
+					'orderby'        => 'modified',
 					'order'          => 'DESC',
 					'offset'         => 0,
-					'post__not_in'   => array_merge(
-						array_filter( array_map( 'absint', $attributes['excludePostIds'] ?? array() ) ),
-						$main_post_ids
-					),
+					'post__not_in'   => array_values( array_unique( $sidebar_exclude ) ),
 				)
 			)
 		);

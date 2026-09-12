@@ -3,7 +3,7 @@
  * Title: Andreian Editorial Homepage
  * Slug: andreian/editorial-homepage
  * Categories: featured, posts
- * Description: Editorial homepage with lead, latest, random sidebar, and category sections.
+ * Description: Editorial homepage with lead, latest, updated sidebar, and category sections.
  * Inserter: true
  */
 ?>
@@ -24,7 +24,7 @@
 		<!-- wp:heading {"textAlign":"center","className":"section-title"} -->
 		<h2 class="wp-block-heading has-text-align-center section-title">Latest Entries</h2>
 		<!-- /wp:heading -->
-		<!-- wp:andreian/post {"postsToShow":10,"layout":"list","offset":0,"showExcerpt":true,"showRandomSidebar":true,"sidebarPostsToShow":9,"sidebarTitle":"Random","excludeFeaturedPosts":true} /-->
+		<!-- wp:andreian/post {"postsToShow":10,"layout":"list","offset":0,"showExcerpt":true,"showRandomSidebar":true,"sidebarPostsToShow":9,"sidebarTitle":"Updated","excludeFeaturedPosts":true} /-->
 	</div>
 	<!-- /wp:group -->
 

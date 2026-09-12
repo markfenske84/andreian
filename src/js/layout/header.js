@@ -192,7 +192,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			searchToggle.focus();
 		}
 
-		syncNavHeight();
+		window.requestAnimationFrame(syncNavHeight);
 	}
 
 	if (searchToggle) {
@@ -230,8 +230,11 @@ document.addEventListener('DOMContentLoaded', function () {
 		let lastScrollY = window.scrollY;
 		let ticking = false;
 		const scrollDelta = 6;
+		let cachedNavHeight = 0;
+		let cachedBrandHeight = 0;
+		let syncingNavHeight = false;
 
-		function stickyTopOffset() {
+		function readStickyTopOffset() {
 			let offset = 0;
 			const adminBar = document.getElementById('wpadminbar');
 
@@ -251,54 +254,71 @@ document.addEventListener('DOMContentLoaded', function () {
 			return offset;
 		}
 
-		function syncStickyTop() {
+		function writeStickyTop(offset) {
+			document.documentElement.style.setProperty('--nav-sticky-top', offset + 'px');
+		}
+
+		function readNavMetrics() {
+			const navInner = stickyNav.querySelector('.site-header__navigation-inner');
+			cachedNavHeight = (navInner && navInner.offsetHeight) || stickyNav.offsetHeight;
+			cachedBrandHeight = headerBrand.offsetHeight;
+		}
+
+		function writeNavMetrics() {
+			spacer.style.height = cachedNavHeight + 'px';
+			document.documentElement.style.setProperty('--nav-bar-height', cachedNavHeight + 'px');
 			document.documentElement.style.setProperty(
-				'--nav-sticky-top',
-				stickyTopOffset() + 'px'
+				'--header-height',
+				cachedBrandHeight + cachedNavHeight + 'px'
 			);
 		}
 
 		syncNavHeight = function () {
-			const navInner = stickyNav.querySelector('.site-header__navigation-inner');
-			const height = (navInner && navInner.offsetHeight) || stickyNav.offsetHeight;
-			spacer.style.height = height + 'px';
-			document.documentElement.style.setProperty('--nav-bar-height', height + 'px');
-			document.documentElement.style.setProperty(
-				'--header-height',
-				headerBrand.offsetHeight + height + 'px'
-			);
+			if (syncingNavHeight) {
+				return;
+			}
+
+			syncingNavHeight = true;
+			readNavMetrics();
+			writeNavMetrics();
+			syncingNavHeight = false;
 		};
+
+		function applyStickyNavState(stickyTop, brandBottom, delta, searchOpen, menuOpen) {
+			writeStickyTop(stickyTop);
+
+			if (menuOpen || searchOpen) {
+				if (searchOpen) {
+					stickyNav.classList.remove('is-scroll-hidden');
+				}
+				return;
+			}
+
+			if (brandBottom > stickyTop) {
+				stickyNav.classList.remove('is-stuck', 'is-scroll-hidden');
+				spacer.classList.remove('is-active');
+				return;
+			}
+
+			stickyNav.classList.add('is-stuck');
+			spacer.classList.add('is-active');
+
+			if (delta > scrollDelta) {
+				stickyNav.classList.add('is-scroll-hidden');
+			} else if (delta < -scrollDelta) {
+				stickyNav.classList.remove('is-scroll-hidden');
+			}
+		}
 
 		function updateStickyNav() {
 			const currentScrollY = Math.max(0, window.scrollY);
 			const delta = currentScrollY - lastScrollY;
 			const searchOpen = document.body.classList.contains('site-search-open');
-			syncStickyTop();
-			if (document.body.classList.contains('mobile-offcanvas-open') || searchOpen) {
-				if (searchOpen) {
-					stickyNav.classList.remove('is-scroll-hidden');
-				}
-				lastScrollY = currentScrollY;
-				ticking = false;
-				return;
-			}
+			const menuOpen = document.body.classList.contains('mobile-offcanvas-open');
+			const stickyTop = readStickyTopOffset();
+			const brandBottom = headerBrand.getBoundingClientRect().bottom;
 
-			const pastBrand = headerBrand.getBoundingClientRect().bottom <= stickyTopOffset();
-
-			if (!pastBrand) {
-				stickyNav.classList.remove('is-stuck', 'is-scroll-hidden');
-				spacer.classList.remove('is-active');
-			} else {
-				syncNavHeight();
-				stickyNav.classList.add('is-stuck');
-				spacer.classList.add('is-active');
-
-				if (delta > scrollDelta) {
-					stickyNav.classList.add('is-scroll-hidden');
-				} else if (delta < -scrollDelta) {
-					stickyNav.classList.remove('is-scroll-hidden');
-				}
-			}
+			applyStickyNavState(stickyTop, brandBottom, delta, searchOpen, menuOpen);
 
 			lastScrollY = currentScrollY;
 			ticking = false;
@@ -316,24 +336,40 @@ document.addEventListener('DOMContentLoaded', function () {
 		);
 
 		window.addEventListener('resize', function () {
-			syncNavHeight();
-			updateStickyNav();
+			const stickyTop = readStickyTopOffset();
+			const brandBottom = headerBrand.getBoundingClientRect().bottom;
+			readNavMetrics();
+			writeNavMetrics();
+			applyStickyNavState(
+				stickyTop,
+				brandBottom,
+				0,
+				document.body.classList.contains('site-search-open'),
+				document.body.classList.contains('mobile-offcanvas-open')
+			);
 		});
 
 		if (window.visualViewport) {
 			window.visualViewport.addEventListener('resize', function () {
-				syncStickyTop();
+				writeStickyTop(readStickyTopOffset());
 			});
 			window.visualViewport.addEventListener('scroll', function () {
-				syncStickyTop();
+				writeStickyTop(readStickyTopOffset());
 			});
 		}
 
-		syncNavHeight();
-		updateStickyNav();
+		const stickyTop = readStickyTopOffset();
+		const brandBottom = headerBrand.getBoundingClientRect().bottom;
+		readNavMetrics();
+		writeNavMetrics();
+		applyStickyNavState(stickyTop, brandBottom, 0, false, false);
 
 		if (typeof ResizeObserver !== 'undefined') {
 			new ResizeObserver(function () {
+				if (syncingNavHeight) {
+					return;
+				}
+
 				syncNavHeight();
 			}).observe(stickyNav);
 		}

@@ -202,34 +202,39 @@ document.addEventListener('DOMContentLoaded', function () {
 		sections.push({ target: target, id: target.id });
 	});
 
+	let lastActiveId = '';
+
 	function setActiveSection(activeId) {
+		let activeLink = null;
+
 		links.forEach(function (link) {
 			const href = link.getAttribute('href');
 			const hashIndex = href.indexOf('#');
 			const id = hashIndex === -1 ? '' : decodeURIComponent(href.slice(hashIndex + 1));
-			link.classList.toggle('is-active', id === activeId);
+			const isActive = id === activeId;
+			link.classList.toggle('is-active', isActive);
+			if (isActive && !activeLink) {
+				activeLink = link;
+			}
 		});
 
-		links
-			.filter(function (link) {
-				const href = link.getAttribute('href');
-				const hashIndex = href.indexOf('#');
-				const id = hashIndex === -1 ? '' : decodeURIComponent(href.slice(hashIndex + 1));
-				return id === activeId;
-			})
-			.forEach(function (activeLink) {
-				const sidebarInner = activeLink.closest('.post-sidebar__inner');
-				if (!sidebarInner || !sidebarInner.offsetParent) {
-					return;
-				}
+		if (!activeLink) {
+			return;
+		}
 
-				const linkRect = activeLink.getBoundingClientRect();
-				const sidebarRect = sidebarInner.getBoundingClientRect();
+		window.requestAnimationFrame(function () {
+			const sidebarInner = activeLink.closest('.post-sidebar__inner');
+			if (!sidebarInner || !sidebarInner.offsetParent) {
+				return;
+			}
 
-				if (linkRect.top < sidebarRect.top || linkRect.bottom > sidebarRect.bottom) {
-					activeLink.scrollIntoView({ block: 'nearest', behavior: 'auto' });
-				}
-			});
+			const linkRect = activeLink.getBoundingClientRect();
+			const sidebarRect = sidebarInner.getBoundingClientRect();
+
+			if (linkRect.top < sidebarRect.top || linkRect.bottom > sidebarRect.bottom) {
+				activeLink.scrollIntoView({ block: 'nearest', behavior: 'auto' });
+			}
+		});
 	}
 
 	function updateActiveSection() {
@@ -248,6 +253,11 @@ document.addEventListener('DOMContentLoaded', function () {
 			}
 		}
 
+		if (active.id === lastActiveId) {
+			return;
+		}
+
+		lastActiveId = active.id;
 		setActiveSection(active.id);
 	}
 

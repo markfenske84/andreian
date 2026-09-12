@@ -39,7 +39,7 @@
 		showSidebar: { type: 'boolean', default: false },
 		showRandomSidebar: { type: 'boolean', default: false },
 		sidebarPostsToShow: { type: 'number', default: 9 },
-		sidebarTitle: { type: 'string', default: 'Random' },
+		sidebarTitle: { type: 'string', default: 'Updated' },
 		excludeFeaturedPosts: { type: 'boolean', default: false },
 		showArchiveLink: { type: 'boolean', default: false },
 		archiveLinkLabel: { type: 'string', default: '' },
@@ -451,9 +451,9 @@
 						: null,
 					settings.layout === 'list'
 						? el( ToggleControl, {
-								label: __( 'Show Random sidebar', 'andreian' ),
+								label: __( 'Show sidebar slideshow', 'andreian' ),
 								help: __(
-									'Displays a random post slideshow with the Homepage Latest Sidebar widget area beneath it.',
+									'Displays recently updated posts in a slideshow, with the Homepage Latest Sidebar widget area beneath it.',
 									'andreian'
 								),
 								checked: settings.showRandomSidebar,
@@ -464,7 +464,7 @@
 						: null,
 					settings.layout === 'list' && settings.showRandomSidebar
 						? el( RangeControl, {
-								label: __( 'Random slides', 'andreian' ),
+								label: __( 'Sidebar slides', 'andreian' ),
 								value: settings.sidebarPostsToShow,
 								min: 1,
 								max: 15,
@@ -475,8 +475,8 @@
 						: null,
 					settings.layout === 'list' && settings.showRandomSidebar
 						? el( TextControl, {
-								label: __( 'Random sidebar title', 'andreian' ),
-								value: settings.sidebarTitle || 'Random',
+								label: __( 'Sidebar slideshow title', 'andreian' ),
+								value: settings.sidebarTitle || 'Updated',
 								onChange: function ( value ) {
 									setAttributes( { sidebarTitle: value } );
 								},
