@@ -85,7 +85,7 @@
 		},
 		"archiveLinkLabel": {
 			"type": "string",
-			"default": "See more"
+			"default": ""
 		},
 		"archiveLinkUrl": {
 			"type": "string",

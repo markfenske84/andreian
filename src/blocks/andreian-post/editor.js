@@ -42,7 +42,7 @@
 		sidebarTitle: { type: 'string', default: 'Random' },
 		excludeFeaturedPosts: { type: 'boolean', default: false },
 		showArchiveLink: { type: 'boolean', default: false },
-		archiveLinkLabel: { type: 'string', default: 'See more' },
+		archiveLinkLabel: { type: 'string', default: '' },
 		archiveLinkUrl: { type: 'string', default: '' },
 	};
 
@@ -515,7 +515,9 @@
 					settings.showArchiveLink
 						? el( TextControl, {
 								label: __( 'Archive link label', 'andreian' ),
-								value: settings.archiveLinkLabel || 'See more',
+								help: __( 'Leave blank to use “See More {category}”.', 'andreian' ),
+								placeholder: __( 'See More {category}', 'andreian' ),
+								value: settings.archiveLinkLabel || '',
 								onChange: function ( value ) {
 									setAttributes( { archiveLinkLabel: value } );
 								},

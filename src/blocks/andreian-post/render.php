@@ -278,20 +278,36 @@ function andreian_render_post_block( $attributes, $content, $block ) {
 
 		if ( ! empty( $attributes['showArchiveLink'] ) ) {
 			$category_slug = sanitize_title( $attributes['categorySlug'] ?? '' );
+			$category_id    = max( 0, (int) ( $attributes['categoryId'] ?? 0 ) );
 			$archive_url   = '';
+			$category      = null;
+
+			if ( $category_slug ) {
+				$category = get_category_by_slug( $category_slug );
+			} elseif ( $category_id ) {
+				$category = get_category( $category_id );
+			}
 
 			if ( ! empty( $attributes['archiveLinkUrl'] ) ) {
 				$archive_url = $attributes['archiveLinkUrl'];
-			} elseif ( $category_slug ) {
-				$category = get_category_by_slug( $category_slug );
-				if ( $category ) {
-					$archive_url = get_category_link( $category );
-				}
+			} elseif ( $category && ! is_wp_error( $category ) ) {
+				$archive_url = get_category_link( $category );
 			}
 
-			$archive_label = ! empty( $attributes['archiveLinkLabel'] )
-				? $attributes['archiveLinkLabel']
-				: __( 'See more', 'andreian' );
+			$custom_label     = trim( (string) ( $attributes['archiveLinkLabel'] ?? '' ) );
+			$is_default_label = '' === $custom_label || 0 === strcasecmp( $custom_label, 'See more' );
+
+			if ( ! $is_default_label ) {
+				$archive_label = $custom_label;
+			} elseif ( $category && ! is_wp_error( $category ) && ! empty( $category->name ) ) {
+				$archive_label = sprintf(
+					/* translators: %s: category name */
+					__( 'See More %s', 'andreian' ),
+					$category->name
+				);
+			} else {
+				$archive_label = __( 'See More', 'andreian' );
+			}
 
 			if ( $archive_url && ! is_wp_error( $archive_url ) ) {
 				printf(
