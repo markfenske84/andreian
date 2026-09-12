@@ -70,6 +70,17 @@
 		return next;
 	}
 
+	function decodeTitle( html ) {
+		if ( ! html ) {
+			return '';
+		}
+
+		const stripped = String( html ).replace( /<[^>]+>/g, '' );
+		const doc = new DOMParser().parseFromString( stripped, 'text/html' );
+
+		return doc.documentElement.textContent || '';
+	}
+
 	function LayoutPreview( props ) {
 		return el(
 			Button,
@@ -210,7 +221,7 @@
 								'span',
 								{ className: 'andreian-card__title' },
 								post && post.title
-									? post.title.replace( /<[^>]+>/g, '' )
+									? decodeTitle( post.title )
 									: __( 'Choose post', 'andreian' )
 							)
 						)
@@ -253,7 +264,7 @@
 														assignPost( post.id );
 													},
 												},
-												post.title.rendered.replace( /<[^>]+>/g, '' )
+												decodeTitle( post.title.rendered )
 											)
 										);
 									} )

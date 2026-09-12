@@ -60,7 +60,7 @@ if ( $current_category_id ) {
 }
 
 $primary_cat   = ! empty( $categories ) ? $categories[0] : null;
-$title         = get_the_title( $post_id );
+$title         = html_entity_decode( wp_strip_all_tags( get_the_title( $post_id ) ), ENT_QUOTES, 'UTF-8' );
 $permalink     = get_permalink( $post_id );
 $image_sizes   = 'full' === $layout
 	? '(max-width: 1200px) 100vw, 1200px'
@@ -137,7 +137,7 @@ if ( $priority ) {
 
 		<?php if ( $show_excerpt ) : ?>
 			<?php
-			$excerpt = trim( (string) get_the_excerpt( $post_id ) );
+			$excerpt = html_entity_decode( trim( (string) get_the_excerpt( $post_id ) ), ENT_QUOTES, 'UTF-8' );
 			if ( $excerpt && ! preg_match( '/(\.\.\.|…)$/u', $excerpt ) ) {
 				$excerpt .= '…';
 			}
