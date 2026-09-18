@@ -32,19 +32,11 @@
 	</div>
 
 	<div class="site-header__brand _container">
-		<?php if ( is_front_page() ) : ?>
-			<h1 class="site-wordmark-heading">
-				<a class="site-wordmark" href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
-					<?php echo esc_html( get_bloginfo( 'name' ) ?: __( 'The Andreia Philosophy', 'andreian' ) ); ?>
-				</a>
-			</h1>
-		<?php else : ?>
-			<p class="site-wordmark-heading">
-				<a class="site-wordmark" href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
-					<?php echo esc_html( get_bloginfo( 'name' ) ?: __( 'The Andreia Philosophy', 'andreian' ) ); ?>
-				</a>
-			</p>
-		<?php endif; ?>
+		<p class="site-wordmark-heading">
+			<a class="site-wordmark" href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
+				<?php echo esc_html( get_bloginfo( 'name' ) ?: __( 'The Andreia Philosophy', 'andreian' ) ); ?>
+			</a>
+		</p>
 	</div>
 
 	<div class="site-header__navigation">
