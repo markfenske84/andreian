@@ -197,9 +197,40 @@ function andreian_preload_heading_font() {
 add_action( 'wp_head', 'andreian_preload_heading_font', 1 );
 
 /**
+ * Whether an SEO plugin is expected to print <meta name="description">.
+ *
+ * Theme fallback output is skipped when a known plugin manages this tag so
+ * crawlers never see two competing descriptions.
+ *
+ * @return bool
+ */
+function andreian_seo_plugin_outputs_description() {
+	$detected = defined( 'RANK_MATH_VERSION' )
+		|| defined( 'WPSEO_VERSION' )
+		|| defined( 'AIOSEO_VERSION' )
+		|| function_exists( 'aioseo' )
+		|| defined( 'SEOPRESS_VERSION' )
+		|| defined( 'THE_SEO_FRAMEWORK_VERSION' )
+		|| function_exists( 'the_seo_framework' )
+		|| defined( 'SLIM_SEO_VER' )
+		|| defined( 'SQ_VERSION' );
+
+	/**
+	 * Filter whether the theme should defer to an SEO plugin for the description tag.
+	 *
+	 * @param bool $detected True when a known SEO plugin is active.
+	 */
+	return (bool) apply_filters( 'andreian_seo_plugin_outputs_description', $detected );
+}
+
+/**
  * Provide a server-rendered description when no SEO plugin manages metadata.
  */
 function andreian_meta_description() {
+	if ( andreian_seo_plugin_outputs_description() ) {
+		return;
+	}
+
 	if ( is_front_page() ) {
 		$description = get_bloginfo( 'description' );
 	} elseif ( is_singular() ) {
