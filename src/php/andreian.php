@@ -45,7 +45,12 @@ function andreian_initialize() {
 	add_theme_support( 'post-thumbnails' );
 	set_post_thumbnail_size( 125, 125, true );
 	add_image_size( 'andreian-card', 720, 540, true );
+	// 16:9 crops. Intermediate widths let core emit a real srcset when
+	// templates request 'andreian-feature' (phones should not download 1920w).
 	add_image_size( 'andreian-feature', 1920, 1080, true );
+	add_image_size( 'andreian-feature-1400', 1400, 788, true );
+	add_image_size( 'andreian-feature-1024', 1024, 576, true );
+	add_image_size( 'andreian-feature-640', 640, 360, true );
 	add_theme_support( 'menus' );
 	add_theme_support( 'title-tag' );
 	add_theme_support( 'align-wide' );
