@@ -100,6 +100,28 @@ function andreian_print_image_preload( $attachment_id, $size, $sizes ) {
  * @return void
  */
 function andreian_preload_lcp_image() {
+	if ( is_front_page() && ! is_home() ) {
+		$hero_ids = function_exists( 'andreian_get_hero_tiles_post_ids' )
+			? andreian_get_hero_tiles_post_ids( 1 )
+			: array();
+
+		if ( empty( $hero_ids ) ) {
+			return;
+		}
+
+		$thumbnail_id = (int) get_post_thumbnail_id( $hero_ids[0] );
+
+		if ( $thumbnail_id ) {
+			andreian_print_image_preload(
+				$thumbnail_id,
+				'andreian-feature',
+				'(max-width: 640px) 100vw, (max-width: 1200px) 58vw, 700px'
+			);
+		}
+
+		return;
+	}
+
 	if ( is_singular( 'post' ) ) {
 		$post_id = get_queried_object_id();
 
