@@ -12,5 +12,3 @@ define( 'THEME_SVGS', get_template_directory_uri() . '/assets/svg' );
 require_once 'src/php/andreian.php';
 include_once 'src/php/theme.php';
 include_once 'src/php/customizer.php';
-
-// redeploy trigger 2026-09-22

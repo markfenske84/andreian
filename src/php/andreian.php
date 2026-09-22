@@ -115,6 +115,8 @@ function andreian_localize() {
 		array(
 			'ajaxurl'            => admin_url( 'admin-ajax.php' ),
 			'mobile_menu_layout' => get_theme_mod( 'mobile_menu_layout', 'dropdown' ),
+			'kit_form_id'        => defined( 'ANDREIAN_CONVERTKIT_FORM_ID' ) ? ANDREIAN_CONVERTKIT_FORM_ID : '',
+			'kit_form_uid'       => defined( 'ANDREIAN_CONVERTKIT_FORM_UID' ) ? ANDREIAN_CONVERTKIT_FORM_UID : '',
 		)
 	);
 }

@@ -7,6 +7,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+define( 'ANDREIAN_CONVERTKIT_FORM_ID', '9684991' );
+define( 'ANDREIAN_CONVERTKIT_FORM_UID', 'f80dc1f686' );
+
 /**
  * Keep ConvertKit QuickTags (and its empty <h1> script template) off public pages.
  *
@@ -46,6 +49,6 @@ function andreian_render_convertkit_cta( $wrapper_class = 'post-cta' ) {
 	printf(
 		'<div class="%1$s">%2$s</div>',
 		esc_attr( $wrapper_class ),
-		do_shortcode( '[convertkit form=9684991]' ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- ConvertKit plugin output.
+		do_shortcode( '[convertkit form=' . ANDREIAN_CONVERTKIT_FORM_ID . ']' ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- ConvertKit plugin output.
 	);
 }
