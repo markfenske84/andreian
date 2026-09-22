@@ -7,7 +7,7 @@
 
 	document.addEventListener('ckjs:submission:complete', function (event) {
 		var form = event.target;
-		if (!kitFormUid || !form || !form.matches || !form.matches('form.formkit-form[data-uid="' + kitFormUid + '"]')) {
+		if (!kitFormUid || !kitFormId || !form || !form.matches || !form.matches('form.formkit-form[data-uid="' + kitFormUid + '"]')) {
 			return;
 		}
 		if (typeof window.gtag !== 'function') {
