@@ -27,6 +27,58 @@ function andreian_asset_version( $file_path ) {
 	return $fallback;
 }
 
+/**
+ * Append filemtime cache-busters to Classic Editor (TinyMCE) theme stylesheets.
+ *
+ * add_editor_style() URLs have no version query string, so browsers/CDNs can
+ * keep stale dist/css/theme.min.css and editor.min.css after deploy.
+ *
+ * @param string[] $stylesheets Editor stylesheet URLs.
+ * @return string[]
+ */
+function andreian_version_editor_stylesheets( $stylesheets ) {
+	if ( ! is_array( $stylesheets ) ) {
+		return $stylesheets;
+	}
+
+	$roots = array(
+		array(
+			'uri'  => get_template_directory_uri(),
+			'path' => get_template_directory(),
+		),
+	);
+
+	if ( is_child_theme() ) {
+		$roots[] = array(
+			'uri'  => get_stylesheet_directory_uri(),
+			'path' => get_stylesheet_directory(),
+		);
+	}
+
+	foreach ( $stylesheets as $index => $url ) {
+		foreach ( $roots as $root ) {
+			$prefix = trailingslashit( $root['uri'] );
+			if ( 0 !== strpos( $url, $prefix ) ) {
+				continue;
+			}
+
+			$relative    = substr( $url, strlen( $prefix ) );
+			$relative    = strtok( $relative, '?' );
+			$file_path   = $root['path'] . '/' . $relative;
+			$clean_url   = remove_query_arg( 'ver', $url );
+			$stylesheets[ $index ] = add_query_arg(
+				'ver',
+				andreian_asset_version( $file_path ),
+				$clean_url
+			);
+			break;
+		}
+	}
+
+	return $stylesheets;
+}
+add_filter( 'editor_stylesheets', 'andreian_version_editor_stylesheets' );
+
 function andreian_initialize() {
 	remove_action( 'welcome_panel', 'wp_welcome_panel' );
 	remove_action( 'wp_head', 'rsd_link' );
