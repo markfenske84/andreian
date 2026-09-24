@@ -13,6 +13,18 @@ body.mce-content-body.wp-autoresize {
 	margin: 0 !important;
 	padding: 1.25rem 1.5rem !important;
 	box-sizing: border-box;
+
+	// Block-level centered images otherwise expand to max-width: 100% and break TinyMCE resize.
+	img.aligncenter {
+		width: fit-content;
+		max-width: 100%;
+		height: auto;
+	}
+
+	.wp-caption.aligncenter {
+		width: auto;
+		max-width: 100%;
+	}
 }
 
 .editor-styles-wrapper {

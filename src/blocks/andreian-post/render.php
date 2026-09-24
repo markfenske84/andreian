@@ -205,9 +205,14 @@ function andreian_render_post_block( $attributes, $content, $block ) {
 	);
 
 	$sidebar_posts_to_show = min( 15, max( 1, (int) ( $attributes['sidebarPostsToShow'] ?? 9 ) ) );
-	$sidebar_title         = isset( $attributes['sidebarTitle'] ) && '' !== trim( $attributes['sidebarTitle'] )
-		? $attributes['sidebarTitle']
-		: __( 'Updated', 'andreian' );
+	$sidebar_title = isset( $attributes['sidebarTitle'] ) && '' !== trim( $attributes['sidebarTitle'] )
+		? trim( $attributes['sidebarTitle'] )
+		: __( 'Random', 'andreian' );
+
+	// Earlier block defaults saved "Updated" on the homepage Latest Entries block.
+	if ( 'Updated' === $sidebar_title ) {
+		$sidebar_title = __( 'Random', 'andreian' );
+	}
 
 	$sidebar_exclude = array_merge(
 		array_filter( array_map( 'absint', $attributes['excludePostIds'] ?? array() ) ),

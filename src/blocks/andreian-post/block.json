@@ -73,7 +73,7 @@
 		},
 		"sidebarTitle": {
 			"type": "string",
-			"default": "Updated"
+			"default": "Random"
 		},
 		"excludeFeaturedPosts": {
 			"type": "boolean",

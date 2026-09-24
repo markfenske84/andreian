@@ -32,7 +32,7 @@ get_header();
 			<div class="single-article__hero-inner _container">
 				<?php get_template_part( 'src/components/post-breadcrumbs' ); ?>
 				<header class="entry-header">
-					<h1 class="entry-title"><?php the_title(); ?></h1>
+					<h1 class="entry-title"<?php echo function_exists( 'aht_headline_attributes' ) ? aht_headline_attributes( get_the_ID() ) : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped in helper. ?>><?php the_title(); ?></h1>
 					<?php if ( andreian_get_short_description() ) : ?>
 						<p class="entry-deck"><?php echo esc_html( andreian_get_short_description() ); ?></p>
 					<?php endif; ?>

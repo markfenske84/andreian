@@ -110,7 +110,7 @@ if ( $priority ) {
 			</a>
 		<?php endif; ?>
 
-		<<?php echo esc_attr( $heading ); ?> class="andreian-card__title">
+		<<?php echo esc_attr( $heading ); ?> class="andreian-card__title"<?php echo function_exists( 'aht_headline_attributes' ) ? aht_headline_attributes( $post_id ) : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped in helper. ?>>
 			<a href="<?php echo esc_url( $permalink ); ?>">
 				<span><?php echo esc_html( $title ); ?></span>
 			</a>

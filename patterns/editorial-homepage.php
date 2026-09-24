@@ -24,7 +24,7 @@
 		<!-- wp:heading {"textAlign":"center","className":"section-title"} -->
 		<h2 class="wp-block-heading has-text-align-center section-title">Latest Entries</h2>
 		<!-- /wp:heading -->
-		<!-- wp:andreian/post {"postsToShow":10,"layout":"list","offset":0,"showExcerpt":true,"showRandomSidebar":true,"sidebarPostsToShow":9,"sidebarTitle":"Updated","excludeFeaturedPosts":true} /-->
+		<!-- wp:andreian/post {"postsToShow":10,"layout":"list","offset":0,"showExcerpt":true,"showRandomSidebar":true,"sidebarPostsToShow":9,"sidebarTitle":"Random","excludeFeaturedPosts":true} /-->
 	</div>
 	<!-- /wp:group -->
 

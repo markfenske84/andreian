@@ -36,7 +36,7 @@ iframe[src*='dailymotion.com'] {
 	margin: 0.5em 0 1em 1.5em;
 }
 
-.aligncenter {
+.aligncenter:not(img) {
 	clear: both;
 	display: block;
 	margin-left: auto;
@@ -47,21 +47,27 @@ iframe[src*='dailymotion.com'] {
 .wp-caption.aligncenter,
 figure.aligncenter,
 .wp-block-image.aligncenter {
-	display: block;
-	width: fit-content;
+	display: table;
 	max-width: 100%;
 	margin-left: auto;
 	margin-right: auto;
 }
 
-img.aligncenter,
+img.aligncenter {
+	clear: both;
+	display: block;
+	width: fit-content;
+	max-width: 100%;
+	height: auto;
+	margin-left: auto;
+	margin-right: auto;
+}
+
 .aligncenter img {
 	display: block;
 	width: auto;
 	max-width: 100%;
 	height: auto;
-	margin-left: auto;
-	margin-right: auto;
 }
 
 a:has(> img.aligncenter) {

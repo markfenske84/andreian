@@ -80,7 +80,7 @@ $slideshow_id = wp_unique_id( 'andreian-random-slideshow-' );
 							</a>
 						<?php endif; ?>
 
-						<h2 class="andreian-card__title">
+						<h2 class="andreian-card__title"<?php echo function_exists( 'aht_headline_attributes' ) ? aht_headline_attributes( $post_id ) : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped in helper. ?>>
 							<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
 						</h2>
 

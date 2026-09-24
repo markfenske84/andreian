@@ -39,7 +39,7 @@
 		showSidebar: { type: 'boolean', default: false },
 		showRandomSidebar: { type: 'boolean', default: false },
 		sidebarPostsToShow: { type: 'number', default: 9 },
-		sidebarTitle: { type: 'string', default: 'Updated' },
+		sidebarTitle: { type: 'string', default: 'Random' },
 		excludeFeaturedPosts: { type: 'boolean', default: false },
 		showArchiveLink: { type: 'boolean', default: false },
 		archiveLinkLabel: { type: 'string', default: '' },
@@ -476,7 +476,7 @@
 					settings.layout === 'list' && settings.showRandomSidebar
 						? el( TextControl, {
 								label: __( 'Sidebar slideshow title', 'andreian' ),
-								value: settings.sidebarTitle || 'Updated',
+								value: settings.sidebarTitle || 'Random',
 								onChange: function ( value ) {
 									setAttributes( { sidebarTitle: value } );
 								},
