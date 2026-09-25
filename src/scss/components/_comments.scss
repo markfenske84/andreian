@@ -233,6 +233,18 @@
 		}
 	}
 
+	.comment-form-recaptcha-disclosure {
+		margin: 0;
+		font-family: $font-family-meta;
+		font-size: 0.75rem;
+		line-height: 1.45;
+		color: $color-muted;
+
+		a {
+			@include link-hover-opacity;
+		}
+	}
+
 	.form-submit {
 		margin-top: 0.5rem;
 	}

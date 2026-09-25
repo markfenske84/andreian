@@ -227,6 +227,7 @@ include_once 'functions/duplicate-posts.php';
 include_once 'functions/quick-featured-images.php';
 include_once 'functions/blog-post.php';
 include_once 'functions/convertkit-cta.php';
+include_once 'functions/comment-recaptcha.php';
 include_once 'functions/random-post.php';
 include_once 'functions/slugify.php';
 include_once 'functions/svgs.php';
