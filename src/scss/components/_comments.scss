@@ -250,6 +250,11 @@
 	}
 }
 
+// v3 floating badge — hidden per Google policy when .comment-form-recaptcha-disclosure is shown.
+.grecaptcha-badge {
+	visibility: hidden;
+}
+
 @include breakpoint('sm') {
 	.comment-list .children {
 		margin-left: 1.25rem;

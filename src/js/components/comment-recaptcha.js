@@ -22,6 +22,20 @@
 
 	var submitting = false;
 
+	function primeRecaptcha() {
+		if (typeof grecaptcha === 'undefined') {
+			return;
+		}
+
+		grecaptcha.ready(function () {
+			grecaptcha.execute(config.siteKey, { action: config.action }).then(function (token) {
+				tokenInput.value = token;
+			});
+		});
+	}
+
+	primeRecaptcha();
+
 	form.addEventListener('submit', function (event) {
 		if (submitting) {
 			return;

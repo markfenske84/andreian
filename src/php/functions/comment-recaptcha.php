@@ -44,7 +44,7 @@ function andreian_recaptcha_score_threshold() {
  * @return bool
  */
 function andreian_recaptcha_show_on_comment_form() {
-	if ( ! andreian_recaptcha_is_configured() || is_user_logged_in() ) {
+	if ( ! andreian_recaptcha_is_configured() ) {
 		return false;
 	}
 
@@ -78,16 +78,16 @@ function andreian_recaptcha_should_verify_comment( $commentdata ) {
 }
 
 /**
- * Enqueue Google reCAPTCHA v3 and theme handler on post comment forms.
+ * Register reCAPTCHA before the theme script is enqueued (priority 999).
  */
-function andreian_recaptcha_enqueue_scripts() {
+function andreian_recaptcha_register_scripts() {
 	if ( ! andreian_recaptcha_show_on_comment_form() ) {
 		return;
 	}
 
 	$site_key = ANDREIAN_RECAPTCHA_SITE_KEY;
 
-	wp_enqueue_script(
+	wp_register_script(
 		'google-recaptcha',
 		add_query_arg( 'render', rawurlencode( $site_key ), 'https://www.google.com/recaptcha/api.js' ),
 		array(),
@@ -98,21 +98,32 @@ function andreian_recaptcha_enqueue_scripts() {
 		)
 	);
 
+	wp_enqueue_script( 'google-recaptcha' );
+
 	if ( wp_script_is( 'theme', 'registered' ) ) {
-		$wp_scripts = wp_scripts();
-		$wp_scripts->registered['theme']->deps[] = 'google-recaptcha';
+		wp_scripts()->registered['theme']->deps[] = 'google-recaptcha';
+	}
+}
+add_action( 'wp_enqueue_scripts', 'andreian_recaptcha_register_scripts', 998 );
+
+/**
+ * Pass config to the bundled theme script after it is registered.
+ */
+function andreian_recaptcha_localize_scripts() {
+	if ( ! andreian_recaptcha_show_on_comment_form() ) {
+		return;
 	}
 
 	wp_localize_script(
 		'theme',
 		'andreianRecaptcha',
 		array(
-			'siteKey' => $site_key,
+			'siteKey' => ANDREIAN_RECAPTCHA_SITE_KEY,
 			'action'  => ANDREIAN_RECAPTCHA_V3_ACTION,
 		)
 	);
 }
-add_action( 'wp_enqueue_scripts', 'andreian_recaptcha_enqueue_scripts', 1000 );
+add_action( 'wp_enqueue_scripts', 'andreian_recaptcha_localize_scripts', 1000 );
 
 /**
  * Hidden token field and required v3 disclosure above the submit button.
