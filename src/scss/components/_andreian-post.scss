@@ -359,26 +359,41 @@
 	}
 
 	&__dot {
-		position: relative;
-		width: 0.7rem;
-		height: 0.7rem;
+		--slideshow-dot-size: 0.7rem;
+		--slideshow-dot-target: 2.75rem;
+
+		display: inline-flex;
+		flex-shrink: 0;
+		align-items: center;
+		justify-content: center;
+		width: var(--slideshow-dot-target);
+		height: var(--slideshow-dot-target);
+		margin: calc((var(--slideshow-dot-size) - var(--slideshow-dot-target)) / 2);
 		padding: 0;
-		border: 2px solid $color-text;
-		border-radius: 50%;
+		border: 0;
+		border-radius: 0;
 		background: transparent;
 		cursor: pointer;
-		transition: background-color 0.2s ease, opacity 0.2s ease;
 		@include link-hover-opacity;
 
-		&::after {
+		&::before {
 			content: '';
-			position: absolute;
-			inset: -0.45rem;
+			display: block;
+			width: var(--slideshow-dot-size);
+			height: var(--slideshow-dot-size);
+			box-sizing: border-box;
+			border: 2px solid $color-text;
+			border-radius: 50%;
+			background: transparent;
+			transition: background-color 0.2s ease;
 		}
 
 		&.is-active {
 			opacity: 1;
-			background: $color-text;
+
+			&::before {
+				background: $color-text;
+			}
 		}
 	}
 
@@ -565,8 +580,7 @@
 	}
 
 	.andreian-random-slideshow__dot {
-		width: 0.85rem;
-		height: 0.85rem;
+		--slideshow-dot-size: 0.85rem;
 	}
 
 	.andreian-posts--list .andreian-card__content {

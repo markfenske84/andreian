@@ -230,8 +230,7 @@ function andreian_render_post_block( $attributes, $content, $block ) {
 				$attributes,
 				array(
 					'posts_per_page' => $sidebar_posts_to_show,
-					'orderby'        => 'modified',
-					'order'          => 'DESC',
+					'orderby'        => 'rand',
 					'offset'         => 0,
 					'post__not_in'   => array_values( array_unique( $sidebar_exclude ) ),
 				)
