@@ -204,7 +204,7 @@ function andreian_render_post_block( $attributes, $content, $block ) {
 		wp_is_json_request()
 	);
 
-	$sidebar_posts_to_show = min( 15, max( 1, (int) ( $attributes['sidebarPostsToShow'] ?? 9 ) ) );
+	$sidebar_posts_to_show = min( 15, max( 1, (int) ( $attributes['sidebarPostsToShow'] ?? 12 ) ) );
 	$sidebar_title = isset( $attributes['sidebarTitle'] ) && '' !== trim( $attributes['sidebarTitle'] )
 		? trim( $attributes['sidebarTitle'] )
 		: __( 'Random', 'andreian' );

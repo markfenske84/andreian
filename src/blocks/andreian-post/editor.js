@@ -38,7 +38,7 @@
 		showExcerpt: { type: 'boolean', default: false },
 		showSidebar: { type: 'boolean', default: false },
 		showRandomSidebar: { type: 'boolean', default: false },
-		sidebarPostsToShow: { type: 'number', default: 9 },
+		sidebarPostsToShow: { type: 'number', default: 12 },
 		sidebarTitle: { type: 'string', default: 'Random' },
 		excludeFeaturedPosts: { type: 'boolean', default: false },
 		showArchiveLink: { type: 'boolean', default: false },

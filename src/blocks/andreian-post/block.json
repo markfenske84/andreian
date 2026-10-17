@@ -69,7 +69,7 @@
 		},
 		"sidebarPostsToShow": {
 			"type": "number",
-			"default": 9
+			"default": 12
 		},
 		"sidebarTitle": {
 			"type": "string",

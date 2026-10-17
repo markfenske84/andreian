@@ -24,7 +24,7 @@ $slideshow_id = wp_unique_id( 'andreian-random-slideshow-' );
 	id="<?php echo esc_attr( $slideshow_id ); ?>"
 	aria-roledescription="<?php esc_attr_e( 'carousel', 'andreian' ); ?>"
 	aria-label="<?php echo esc_attr( $title ); ?>"
-	data-autoplay="6000">
+	data-autoplay="5000">
 	<h3 class="andreian-random-slideshow__title widget-title"><?php echo esc_html( $title ); ?></h3>
 
 	<div class="andreian-random-slideshow__viewport">
@@ -101,21 +101,17 @@ $slideshow_id = wp_unique_id( 'andreian-random-slideshow-' );
 
 	<?php if ( $slide_count > 1 ) : ?>
 		<div class="andreian-random-slideshow__controls">
-			<button
-				class="andreian-random-slideshow__button andreian-random-slideshow__button--prev"
-				type="button"
-				aria-controls="<?php echo esc_attr( $slideshow_id ); ?>"
-				aria-label="<?php esc_attr_e( 'Previous slide', 'andreian' ); ?>">
-				<?php echo svg( 'ico-chevron-up', 'andreian-random-slideshow__icon' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Theme SVG asset. ?>
-			</button>
-
-			<button
-				class="andreian-random-slideshow__button andreian-random-slideshow__button--next"
-				type="button"
-				aria-controls="<?php echo esc_attr( $slideshow_id ); ?>"
-				aria-label="<?php esc_attr_e( 'Next slide', 'andreian' ); ?>">
-				<?php echo svg( 'ico-chevron-up', 'andreian-random-slideshow__icon' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Theme SVG asset. ?>
-			</button>
+			<div class="andreian-random-slideshow__dots">
+				<?php for ( $index = 1; $index <= $slide_count; $index++ ) : ?>
+					<button
+						class="andreian-random-slideshow__dot<?php echo 1 === $index ? ' is-active' : ''; ?>"
+						type="button"
+						<?php echo 1 === $index ? 'aria-current="true"' : ''; ?>
+						data-slide-index="<?php echo esc_attr( $index - 1 ); ?>">
+						<span class="sr-only"><?php echo esc_html( sprintf( __( 'Slide %d', 'andreian' ), $index ) ); ?></span>
+					</button>
+				<?php endfor; ?>
+			</div>
 		</div>
 	<?php endif; ?>
 
