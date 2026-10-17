@@ -316,8 +316,8 @@
 	&__controls {
 		display: flex;
 		align-items: center;
-		justify-content: space-between;
-		gap: 0.75rem;
+		justify-content: center;
+		gap: 1.5rem;
 		margin-top: 1rem;
 	}
 
@@ -326,14 +326,20 @@
 		flex-shrink: 0;
 		align-items: center;
 		justify-content: center;
-		width: 2rem;
-		height: 2rem;
+		width: 2.75rem;
+		height: 2.75rem;
 		padding: 0;
-		border: 2px solid $color-text;
-		background: transparent;
+		border: 2pt solid $color-text;
+		background: $color-background;
 		color: $color-text;
 		cursor: pointer;
-		@include link-hover-opacity;
+		transition: background-color 0.2s ease, color 0.2s ease;
+
+		&:hover,
+		&:focus-visible {
+			background: $color-text;
+			color: $color-background;
+		}
 
 		&--prev .andreian-random-slideshow__icon {
 			transform: rotate(-90deg);
@@ -346,54 +352,11 @@
 
 	&__icon {
 		display: block;
-		width: 0.875rem;
-		height: 0.875rem;
-	}
+		width: 1.25rem;
+		height: 1.25rem;
 
-	&__dots {
-		display: flex;
-		flex: 1;
-		align-items: center;
-		justify-content: center;
-		gap: 0.7rem;
-	}
-
-	&__dot {
-		--slideshow-dot-size: 0.7rem;
-		--slideshow-dot-target: 2.75rem;
-
-		display: inline-flex;
-		flex-shrink: 0;
-		align-items: center;
-		justify-content: center;
-		width: var(--slideshow-dot-target);
-		height: var(--slideshow-dot-target);
-		margin: calc((var(--slideshow-dot-size) - var(--slideshow-dot-target)) / 2);
-		padding: 0;
-		border: 0;
-		border-radius: 0;
-		background: transparent;
-		cursor: pointer;
-		@include link-hover-opacity;
-
-		&::before {
-			content: '';
-			display: block;
-			width: var(--slideshow-dot-size);
-			height: var(--slideshow-dot-size);
-			box-sizing: border-box;
-			border: 2px solid $color-text;
-			border-radius: 50%;
-			background: transparent;
-			transition: background-color 0.2s ease;
-		}
-
-		&.is-active {
-			opacity: 1;
-
-			&::before {
-				background: $color-text;
-			}
+		svg {
+			stroke-width: 2.6;
 		}
 	}
 
@@ -577,10 +540,6 @@
 
 	.andreian-random-slideshow__title {
 		text-align: center;
-	}
-
-	.andreian-random-slideshow__dot {
-		--slideshow-dot-size: 0.85rem;
 	}
 
 	.andreian-posts--list .andreian-card__content {

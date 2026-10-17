@@ -109,18 +109,6 @@ $slideshow_id = wp_unique_id( 'andreian-random-slideshow-' );
 				<?php echo svg( 'ico-chevron-up', 'andreian-random-slideshow__icon' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Theme SVG asset. ?>
 			</button>
 
-			<div class="andreian-random-slideshow__dots">
-				<?php for ( $index = 1; $index <= $slide_count; $index++ ) : ?>
-					<button
-						class="andreian-random-slideshow__dot<?php echo 1 === $index ? ' is-active' : ''; ?>"
-						type="button"
-						<?php echo 1 === $index ? 'aria-current="true"' : ''; ?>
-						data-slide-index="<?php echo esc_attr( $index - 1 ); ?>">
-						<span class="sr-only"><?php echo esc_html( sprintf( __( 'Slide %d', 'andreian' ), $index ) ); ?></span>
-					</button>
-				<?php endfor; ?>
-			</div>
-
 			<button
 				class="andreian-random-slideshow__button andreian-random-slideshow__button--next"
 				type="button"

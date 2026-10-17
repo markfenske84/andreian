@@ -8,7 +8,6 @@ document.addEventListener( 'DOMContentLoaded', function () {
 
 function initRandomSlideshow( slideshow ) {
 	const slides = Array.from( slideshow.querySelectorAll( '.andreian-random-slideshow__slide' ) );
-	const dots = Array.from( slideshow.querySelectorAll( '.andreian-random-slideshow__dot' ) );
 	const prevButton = slideshow.querySelector( '.andreian-random-slideshow__button--prev' );
 	const nextButton = slideshow.querySelector( '.andreian-random-slideshow__button--next' );
 	const liveRegion = slideshow.querySelector( '.andreian-random-slideshow__live' );
@@ -37,17 +36,6 @@ function initRandomSlideshow( slideshow ) {
 			slide.classList.toggle( 'is-active', isActive );
 			slide.setAttribute( 'aria-hidden', isActive ? 'false' : 'true' );
 			slide.toggleAttribute( 'inert', ! isActive );
-		} );
-
-		dots.forEach( function ( dot, index ) {
-			const isActive = index === currentIndex;
-			dot.classList.toggle( 'is-active', isActive );
-
-			if ( isActive ) {
-				dot.setAttribute( 'aria-current', 'true' );
-			} else {
-				dot.removeAttribute( 'aria-current' );
-			}
 		} );
 
 		if ( liveRegion ) {
@@ -94,17 +82,6 @@ function initRandomSlideshow( slideshow ) {
 			startAutoplay();
 		} );
 	}
-
-	dots.forEach( function ( dot ) {
-		dot.addEventListener( 'click', function () {
-			const targetIndex = parseInt( dot.dataset.slideIndex, 10 );
-
-			if ( Number.isInteger( targetIndex ) ) {
-				setSlide( targetIndex );
-				startAutoplay();
-			}
-		} );
-	} );
 
 	slideshow.addEventListener( 'mouseenter', stopAutoplay );
 	slideshow.addEventListener( 'mouseleave', startAutoplay );

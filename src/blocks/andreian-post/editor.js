@@ -453,7 +453,7 @@
 						? el( ToggleControl, {
 								label: __( 'Show sidebar slideshow', 'andreian' ),
 								help: __(
-									'Displays recently updated posts in a slideshow, with the Homepage Latest Sidebar widget area beneath it.',
+									'Displays random posts in a slideshow, with the Homepage Latest Sidebar widget area beneath it.',
 									'andreian'
 								),
 								checked: settings.showRandomSidebar,
