@@ -316,8 +316,8 @@
 	&__controls {
 		display: flex;
 		align-items: center;
-		justify-content: center;
-		gap: 1.5rem;
+		justify-content: flex-start;
+		gap: max(0.85rem, env(safe-area-inset-left, 0px));
 		margin-top: 1rem;
 	}
 
