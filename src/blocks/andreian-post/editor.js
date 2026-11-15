@@ -38,6 +38,7 @@
 		showExcerpt: { type: 'boolean', default: false },
 		showSidebar: { type: 'boolean', default: false },
 		showRandomSidebar: { type: 'boolean', default: false },
+		randomSlideshowSpeed: { type: 'number' },
 		sidebarPostsToShow: { type: 'number', default: 12 },
 		sidebarTitle: { type: 'string', default: 'Random' },
 		excludeFeaturedPosts: { type: 'boolean', default: false },
@@ -79,6 +80,16 @@
 		const doc = new DOMParser().parseFromString( stripped, 'text/html' );
 
 		return doc.documentElement.textContent || '';
+	}
+
+	function getRandomSlideshowSpeedAttribute( value ) {
+		const seconds = parseInt( value, 10 );
+
+		if ( ! Number.isInteger( seconds ) || seconds < 1 || seconds > 60 ) {
+			return undefined;
+		}
+
+		return seconds;
 	}
 
 	function LayoutPreview( props ) {
@@ -459,6 +470,25 @@
 								checked: settings.showRandomSidebar,
 								onChange: function ( value ) {
 									setAttributes( { showRandomSidebar: value } );
+								},
+						  } )
+						: null,
+					settings.layout === 'list' && settings.showRandomSidebar
+						? el( RangeControl, {
+								label: __( 'Slideshow speed (seconds)', 'andreian' ),
+								help: __(
+									'How long each slide stays visible. Whole seconds from 1 to 60. Leave empty to use the Customizer setting (default 5 seconds).',
+									'andreian'
+								),
+								value: getRandomSlideshowSpeedAttribute( settings.randomSlideshowSpeed ),
+								min: 1,
+								max: 60,
+								step: 1,
+								allowReset: true,
+								onChange: function ( value ) {
+									setAttributes( {
+										randomSlideshowSpeed: getRandomSlideshowSpeedAttribute( value ),
+									} );
 								},
 						  } )
 						: null,

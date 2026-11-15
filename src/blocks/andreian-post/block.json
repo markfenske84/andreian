@@ -67,6 +67,9 @@
 			"type": "boolean",
 			"default": false
 		},
+		"randomSlideshowSpeed": {
+			"type": "number"
+		},
 		"sidebarPostsToShow": {
 			"type": "number",
 			"default": 12
