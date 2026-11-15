@@ -6,11 +6,34 @@ document.addEventListener( 'DOMContentLoaded', function () {
 	} );
 } );
 
+function parseRandomSlideshowAutoplayMs( value ) {
+	const parsed = parseInt( value, 10 );
+
+	if ( ! Number.isInteger( parsed ) || parsed < 1000 || parsed > 60000 ) {
+		return 0;
+	}
+
+	return parsed;
+}
+
+function getRandomSlideshowAutoplayMs( slideshow ) {
+	const fromAttribute = parseRandomSlideshowAutoplayMs( slideshow.dataset.autoplay );
+
+	if ( fromAttribute ) {
+		return fromAttribute;
+	}
+
+	const localized = window.andreian_localize && window.andreian_localize.random_slideshow_autoplay;
+
+	// 5000ms matches the speed previously hard-coded on the slideshow.
+	return parseRandomSlideshowAutoplayMs( localized ) || 5000;
+}
+
 function initRandomSlideshow( slideshow ) {
 	const slides = Array.from( slideshow.querySelectorAll( '.andreian-random-slideshow__slide' ) );
 	const dots = Array.from( slideshow.querySelectorAll( '.andreian-random-slideshow__dot' ) );
 	const liveRegion = slideshow.querySelector( '.andreian-random-slideshow__live' );
-	const autoplayMs = parseInt( slideshow.dataset.autoplay, 10 ) || 6000;
+	const autoplayMs = getRandomSlideshowAutoplayMs( slideshow );
 	const prefersReducedMotion = window.matchMedia( '(prefers-reduced-motion: reduce)' ).matches;
 
 	if ( slides.length <= 1 ) {

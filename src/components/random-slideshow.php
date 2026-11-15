@@ -24,7 +24,7 @@ $slideshow_id = wp_unique_id( 'andreian-random-slideshow-' );
 	id="<?php echo esc_attr( $slideshow_id ); ?>"
 	aria-roledescription="<?php esc_attr_e( 'carousel', 'andreian' ); ?>"
 	aria-label="<?php echo esc_attr( $title ); ?>"
-	data-autoplay="5000">
+	data-autoplay="<?php echo esc_attr( andreian_get_random_slideshow_autoplay_ms() ); ?>">
 	<h3 class="andreian-random-slideshow__title widget-title"><?php echo esc_html( $title ); ?></h3>
 
 	<div class="andreian-random-slideshow__viewport">
