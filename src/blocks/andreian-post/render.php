@@ -338,8 +338,9 @@ function andreian_render_post_block( $attributes, $content, $block ) {
 							'src/components/random-slideshow',
 							null,
 							array(
-								'query' => $random_query,
-								'title' => $sidebar_title,
+								'query'            => $random_query,
+								'title'            => $sidebar_title,
+								'autoplay_seconds' => $attributes['randomSlideshowSpeed'] ?? null,
 							)
 						);
 						?>

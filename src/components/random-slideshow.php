@@ -9,9 +9,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$query       = isset( $args['query'] ) && $args['query'] instanceof WP_Query ? $args['query'] : null;
-$title       = isset( $args['title'] ) ? $args['title'] : __( 'Random', 'andreian' );
-$slide_count = $query ? (int) $query->post_count : 0;
+$query            = isset( $args['query'] ) && $args['query'] instanceof WP_Query ? $args['query'] : null;
+$title            = isset( $args['title'] ) ? $args['title'] : __( 'Random', 'andreian' );
+$slide_count      = $query ? (int) $query->post_count : 0;
+$autoplay_seconds = isset( $args['autoplay_seconds'] ) ? $args['autoplay_seconds'] : null;
+$autoplay_ms      = function_exists( 'andreian_resolve_random_slideshow_autoplay_ms' )
+	? andreian_resolve_random_slideshow_autoplay_ms( $autoplay_seconds )
+	: 5000;
 
 if ( ! $query || ! $query->have_posts() ) {
 	return;
@@ -24,7 +28,7 @@ $slideshow_id = wp_unique_id( 'andreian-random-slideshow-' );
 	id="<?php echo esc_attr( $slideshow_id ); ?>"
 	aria-roledescription="<?php esc_attr_e( 'carousel', 'andreian' ); ?>"
 	aria-label="<?php echo esc_attr( $title ); ?>"
-	data-autoplay="<?php echo esc_attr( andreian_get_random_slideshow_autoplay_ms() ); ?>">
+	data-autoplay="<?php echo esc_attr( $autoplay_ms ); ?>">
 	<h3 class="andreian-random-slideshow__title widget-title"><?php echo esc_html( $title ); ?></h3>
 
 	<div class="andreian-random-slideshow__viewport">
